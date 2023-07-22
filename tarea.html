@@ -14,17 +14,17 @@
     <div class="a b">
         <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
             <div>
-                <div> Bienvenido: 
-                <input class="outline-none" type="text" id="usuarioLogueado" readonly>
+                <div class="mb-4"> <b class="text-xl">Bienvenido:</b> 
+                    <input class="outline-none w-60" type="text" id="usuarioLogueado" readonly>
                 </div>
-                <button class="mostrar" id="cerrarSesion">Cerrar Sesion</button>
+                <button class="mostrar mb-2 border-2 border-blue-500 rounded-[20px] w-32 hover:bg-blue-500 hover:text-white" id="cerrarSesion">Cerrar Sesion</button>
             </div>        
         </section>
 
         <section class="mt-5 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
-            <div>
-                <input id="agregarTarea" class="" type="text" >
-                <button class="" id="guardarTarea">Registrar Tarea</button>
+            <div class="flex items-center space-x-2 my-4">
+                <input id="agregarTarea"  class="outline" type="text" >
+                <button class="border-2 border-blue-500 rounded-[20px] w-32 hover:bg-blue-500 hover:text-white" id="guardarTarea">Registrar Tarea</button>
             </div>        
         </section>
     </div>
