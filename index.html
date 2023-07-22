@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script type="module" src="js/main.js"></script>
+</head>
+<body>
+    <h1 class="text-center text-3xl mt-4 mb-10">Tareas Del Dia A Dia</h1>
+    
+    <section class="container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
+        <h2>Registro De Usuarios</h2>
+        <div>
+            <p>Correo</p>
+            <input id="correo" type="email" placeholder="Ingrese Correo">
+        </div>
+        <div>
+            <p>Clave</p>
+            <input id="clave" type="password" placeholder="Ingrese Contraseña">
+        </div>
+
+        <div>
+           <button class="border-2 border-red-500 rounded-[20px] w-32" id="registrar">Registrar</button>
+        </div>
+    </section>
+
+    <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
+        <h2>Ingreso De Usuarios</h2>
+        <div>
+            <p>Correo</p>
+            <input id="correo1" type="email" placeholder="Ingrese Correo">
+        </div>
+        <div>
+            <p>Clave</p>
+            <input id="clave1" type="password" placeholder="Ingrese Contraseña">
+        </div>
+
+        <div>
+           <button class="border-2 border-red-500 rounded-[20px] w-32" id="registrar1">Entrar</button>
+        </div>
+    </section>
+
+    <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
+        <div>
+            <div id="usuarioLogueado">
+               
+            </div>
+            <button class="mostrar hidden" id="cerrarSesion">Cerrar Sesion</button>
+        </div>
+        
+    </section>
+</body>
+</html>

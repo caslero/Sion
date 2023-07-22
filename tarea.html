@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas</title>
+    <link rel="stylesheet" href="css/tarea.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer>history.forward() </script>
+    <script type="module" src="js/tarea.js"></script>
+</head>
+<body>
+
+    <div class="a b">
+        <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
+            <div>
+                <div> Bienvenido: 
+                <input class="outline-none" type="text" id="usuarioLogueado" readonly>
+                </div>
+                <button class="mostrar" id="cerrarSesion">Cerrar Sesion</button>
+            </div>        
+        </section>
+
+        <section class="mt-5 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
+            <div>
+                <input id="agregarTarea" class="" type="text" >
+                <button class="" id="guardarTarea">Registrar Tarea</button>
+            </div>        
+        </section>
+    </div>
+</body>
+</html>
