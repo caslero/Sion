@@ -34,9 +34,12 @@ function observador() {
             // User is signed out
             console.log('Ningun usuario activo');
             a.innerHTML = `<h1>Error 404 Not Found</h1>
-                            <a href="index.html">Inicie Sesion</a>
+                            <a class="c" href="index.html">Inicie Sesion</a>
             `;
+           
+           
             a.classList.add('b')
+
             // ...
         }
     });
