@@ -1,9 +1,516 @@
 
 body {
-    background-color: rgb(225, 236, 236);
+    background-color: #f1ecec;
 }
-
 .ocultar {
     background-color: brown;
 }
 
+
+
+/** Aqui comienza la clase de la section principal de la aplicacion */
+.seccion-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: -8px;
+}
+
+img {
+    width: 300px;
+    height: 340px;
+}
+
+
+.btn-registrar {
+    width: 180px;
+    height: 50px;
+    border: 1px solid #7ddcf5;
+    background-color: #939d9d;
+    border-radius: 30px;
+    color: #7ddcf5;
+    font-size: 18px;
+    font-weight: 700;
+    transition: all;
+    transition-duration: 900ms;
+}
+.btn-registrar:hover {
+    width: 180px;
+    height: 50px;
+    background-color: #7ddcf5;
+    border: 1px solid #939d9d;
+    opacity: 0.9;
+    color: #939d9d;
+    font-weight: 700;
+    border-radius: 30px;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 900ms;
+}
+/** Aqui termina la clase de la section principal de la aplicacion */
+
+
+@media (min-width: 150px) {
+    .btn-contenedor {
+        width: 400px;
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .btn-entrar {
+        width: 120px;
+        height: 35px;
+        border: 1px solid #7ddcf5;
+        background-color: #939d9d;
+        border-radius: 30px;
+        color: #7ddcf5;
+        font-size: 13px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        transition: all;
+        transition-duration: 900ms;
+    }
+    .btn-entrar:hover {
+        width: 120px;
+        height: 35px;
+        background-color: #7ddcf5;
+        opacity: 0.9;
+        color: #939d9d;
+        font-weight: 700;
+        border-radius: 30px;
+        font-size: 13px;
+        transition: all;
+        transition-duration: 900ms;
+    }
+
+    .seccion-usuarios {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 5px;
+        margin-right: 5px;
+        background-color: #555e5e;
+        opacity: 0.9;
+    }
+   .seccion-usuarios:hover {
+        opacity: 1;
+    }
+
+    .seccion-usuarios1 {
+        display: flex; 
+        flex-direction: column;
+        justify-content: center;       
+        align-items: center;
+        width: auto;
+        margin-top: 70px;
+        background-color: #555e5e;
+        opacity: 0.9;
+
+    }
+    .seccion-usuarios1:hover {
+        opacity: 1;
+    }
+
+    .a {      
+        top: 0px;
+        height: 100%;
+        width: 100%;
+    }
+    .modal {
+        /* display: flex;    */
+        border: 1px solid green;
+        position: fixed;
+        margin: 0;
+        top: -70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex; 
+        justify-content: center;
+        background-color: #555e5e;
+        transition: all;
+        transition-duration: 1000ms;
+       
+    }
+
+    .alinear {
+        display: flex;
+        position: absolute;
+        margin-top: 150px;
+    }
+
+    .registrar-usuario {
+        border: 1px solid #939d9d;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .login-usuario {
+        border: 1px solid #939d9d;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 50%;
+        height: 300px;
+        width: 500px;      
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .campos-registro-usuarios {
+        width: 95%;
+        height: 40px;
+        margin-right: 5px;
+        margin-left: 5px;
+        border: 1px solid #7ddcf5;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        background-color: #939d9d;
+        border-radius: 10px;
+    }
+    
+    .info-registro-usuarios {
+        font-size: 18px;
+        color: #7ddcf5;
+        width: 22%;
+        padding: 5px;
+    }
+
+    .input-registro-usuarios {
+        outline: none;
+        width: 70%;
+        height: 27px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 20px;
+        color: #555e5e;
+        font-weight: 700;
+        transition: all;
+        transition-duration: 900ms;
+    }
+    .input-registro-usuarios:hover {
+        outline: none;
+        border: 1px solid #7ddcf5;
+        transition: all;
+        transition-duration: 900ms;
+
+    }
+    .input-registro-usuarios::placeholder {
+        text-align: center;
+        font-size: 15px;
+        color: #555e5e;
+    }
+
+    .titulo-tareas {
+        color: #7ddcf5;
+        font-size: 10px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
+    .titulo-principal {
+        color: #7ddcf5;
+        font-size: 35px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .titulo-secundario {
+        color: #7ddcf5;
+        font-size: 12px;
+        text-align: center;
+        font-weight: 700;
+        margin-top: -20px;
+    }
+    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
+
+    header {
+        width: 100%;
+    }
+    nav {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .hamburguesa {
+        display: none;
+    }
+
+    .hamburguesa-modal {
+        position: fixed;
+        top: 0;
+        left: -6px;
+        width: 100%;
+        height: 100%;
+        background-color: #f1ecec; 
+        display: flex;
+        flex-direction: column;   
+    }
+
+    .menu-hamburguesa {
+        width: 100px;
+        height: 40px;
+        border: 1px solid #7ddcf5;
+        background-color: #939d9d;
+        color: #7ddcf5;
+        border-radius: 20px;
+        font-weight: 700;
+    }
+    .menu-hamburguesa:hover {
+        width: 100px;
+        height: 40px;
+        border: 2px solid #939d9d;
+        background-color: #7ddcf5;
+        color: #939d9d;
+        border-radius: 20px;
+        font-weight: 700;
+    }
+
+    .botones-modal-movil {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn-registrar-movil1 {
+        border: 1px solid #7ddcf5;
+        width: 130px;
+        height: 50px;
+        margin-top: 50px;
+        margin-left: 5px;
+        border-radius: 20px;
+        background-color: #939d9d;
+        color: #7ddcf5;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    .btn-registrar-movil2 {
+        border: 1px solid #7ddcf5;
+        width: 130px;
+        height: 50px;
+        margin-top: 50px;
+        margin-right: 5px;
+        border-radius: 20px;
+        background-color: #939d9d;
+        color: #7ddcf5;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .titulo-registro-usuario {
+        font-size: 25px;
+        color: #7ddcf5;
+        margin-top: 5px;
+    }
+
+}
+
+
+
+
+@media (min-width: 500px) {
+    .btn-contenedor {
+        width: 400px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .btn-entrar {
+        width: 150px;
+        height: 40px;
+        border: 1px solid #7ddcf5;
+        background-color: #939d9d;
+        border-radius: 30px;
+        color: #7ddcf5;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    .btn-entrar:hover {
+        width: 150px;
+        height: 40px;
+        border: 1px solid #939d9d;
+        background-color: #7ddcf5;
+        opacity: 0.9;
+        color: #939d9d;
+        font-weight: 700;
+        border-radius: 30px;
+        font-size: 15px;
+    }
+
+    .seccion-usuarios {
+        display: none; 
+        flex-direction: column;
+        justify-content: space-between;       
+        align-items: center;
+        margin-top: 70px;
+        height: 100%;
+        background-color: #555e5e;
+        opacity: 0.9;
+
+    }
+   .seccion-usuarios:hover {
+        opacity: 1;
+    }
+
+    .seccion-usuarios1 {
+        display: flex; 
+        flex-direction: column;
+        justify-content: center;       
+        align-items: center;
+        width: auto;
+        margin-top: 70px;
+        background-color: #555e5e;
+        opacity: 0.9;
+
+    }
+    .seccion-usuarios1:hover {
+        opacity: 1;
+    }
+
+    .a {      
+        top: 0px;
+        height: 100%;
+        width: 100%;
+    }
+    .modal {
+        /* display: flex;    */
+        border: 1px solid green;
+        position: fixed;
+        margin: 0;
+        top: -70px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex; 
+        justify-content: center;
+        background-color: #555e5e;
+        transition: all;
+        transition-duration: 1000ms;
+       
+    }
+
+
+    .alinear {
+        display: flex;
+        position: absolute;
+        margin-top: 150px;
+    }
+
+    .registrar-usuario {
+        border: 1px solid #939d9d;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 50%;
+        height: 300px;
+        width: 500px;      
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-usuario {
+        border: 1px solid #939d9d;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 50%;
+        height: 300px;
+        width: 500px;      
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .campos-registro-usuarios {
+        width: 95%;
+        height: 50px;
+        margin-right: 5px;
+        margin-left: 5px;
+        border: 1px solid #7ddcf5;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        background-color: #939d9d;
+        border-radius: 10px;
+    }
+
+    .info-registro-usuarios {
+        font-size: 22px;
+        color: #7ddcf5;
+        width: 20%;
+        padding: 5px;
+    }
+    .input-registro-usuarios {
+        outline: none;
+        width: 75%;
+        height: 35px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 20px;
+        color: #6e7272;
+        font-weight: 700;
+        border: #555e5e;
+        transition: all;
+        transition-duration: 900ms;
+    }
+    .input-registro-usuarios:hover {
+        border: 1px solid #7ddcf5;
+        transition: all;
+        transition-duration: 400ms;
+        transform: scaleY(1.2);
+       
+    }
+    .input-registro-usuarios::placeholder {
+        text-align: center;
+        font-size: 15px;
+        color: #555e5e;
+    }
+
+    .titulo-tareas {
+        color: #7ddcf5;
+        font-size: 40px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
+    .titulo-principal {
+        color: #7ddcf5;
+        font-size: 50px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .titulo-secundario {
+        color: #7ddcf5;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 700;
+        margin-top: -20px;
+    }
+    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
+
+    header {
+        display: none;
+    }
+}
+    

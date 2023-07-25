@@ -4,7 +4,7 @@ import './index.js'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { auth, db } from './index.js';
-
+import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
 
 let a = document.querySelector('.a');
 
@@ -14,8 +14,28 @@ let cerrarSesion = document.getElementById('cerrarSesion');
 
 cerrarSesion.addEventListener('click', logOut);
 
+
+function mostrar() {
+  
+  const dbRef = ref(getDatabase());
+ console.log(dbRef);
+  // get(child(dbRef, `users/${a}`)).then((snapshot) => {
+  //   if (snapshot.exists()) {
+  //     console.log(snapshot.val());
+  //   } else {
+  //     console.log("No data available");
+  //   }
+  // }).catch((error) => {
+  //   console.error(error);
+  // });
+}
+
+mostrar();
+
+
 function observador() {
     const auth = getAuth();
+    console.log(auth);
     onAuthStateChanged(auth, (user) => {
        
         if (user) {
@@ -28,6 +48,7 @@ function observador() {
             //usuarioLogueado.innerHTML = name;
            
             console.log('Usuario Activo');
+           
 
             // ...
             } else {
@@ -84,6 +105,7 @@ function logOut() {
     console.log(error);
     });
 }
+
 
 
 

@@ -4,53 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>    
     <script type="module" src="js/main.js"></script>
 </head>
 <body>
-    <h1 class="text-center text-3xl mt-4 mb-10">Tareas Del Dia A Dia</h1>
-    
-    <section class="container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
-        <h2 class="text-center text-2xl">Registro De Usuarios</h2>
-        <div class="flex flex-col space-y-2">
-            <b>Correo</b>
-            <input class="outline" id="correo" type="email" placeholder="Ingrese Correo">
-        </div>
-        <div class="flex flex-col space-y-2">
-            <b>Clave</b>
-            <input class="outline" id="clave" type="password" placeholder="Ingrese Contraseña">
-        </div>
-
-        <div>
-           <button class="mb-2 border-2 border-blue-500 rounded-[20px] w-32 hover:bg-blue-500 hover:text-white" id="registrar">Registrar</button>
-        </div>
-    </section>
-
-    <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
-        <h2 class="text-center text-2xl">Ingreso De Usuarios</h2>
-        <div class="flex flex-col space-y-2">
-            <b>Correo</b>
-            <input class="outline" id="correo1" type="email" placeholder="Ingrese Correo">
-        </div>
-        <div class="flex flex-col space-y-2">
-            <b>Clave</b>
-            <input class="outline" id="clave1" type="password" placeholder="Ingrese Contraseña">
-        </div>
-
-        <div>
-           <button class="mb-2 border-2 border-blue-500 rounded-[20px] w-32 hover:bg-blue-500 hover:text-white" id="registrar1">Entrar</button>
-        </div>
-    </section>
-
-    <section class="mt-10 container mx-auto lg:px-28 max-w-[600px] space-y-4 flex flex-col justify-between items-center border-2 border-red-500">
-        <div>
-            <div id="usuarioLogueado">
-               
+    <header>
+        <button class="menu-hamburguesa">Menu</button>
+        <nav class="hamburguesa">
+            <div class="botones-modal-movil">
+                <button class="btn-registrar-movil1 registrarUsuario">Registrar Usuario</button>
+                <button class="btn-registrar-movil2 loginUsuario">Ingresar Al Sistema</button>
             </div>
-            <button class="mostrar hidden" id="cerrarSesion">Cerrar Sesion</button>
+            <div>
+                <img src="img/tareas.png" alt="">
+            </div> 
+        </nav>
+       
+    </header>
+    <div class="seccion-principal">
+        <h1 class="titulo-principal">Tareas Diarias</h1>
+        <h5 class="titulo-secundario">Aqui Podra Agregar Las Tareas Del Dia Y Asi Tener Un Dia Mas Productivo</h5>
+        <div class="btn-contenedor">
+            <button id="registrarUsuario" class="btn-registrar">Registrar Usuario</button>
+            <button id="loginUsuario" class="btn-registrar">Ingresar Al Sistema</button>            
         </div>
-        
-    </section>
+        <img src="img/tareas.png" alt="">
+    </div>
+   
+    <div class="a">
+        <section class="seccion-usuarios">
+            <!-- <h1 class="titulo-tareas">Tareas Diarias</h1> -->
+
+                <div class="registrar-usuario">
+                    <h2 class="titulo-registro-usuario">Registro De Usuarios</h2>
+
+                    <div class="campos-registro-usuarios">
+                        <b class="info-registro-usuarios">Nombre</b>
+                        <input class="input-registro-usuarios" id="nombre" type="email" placeholder="Ingrese nombre">
+                    </div>
+                    <div class="campos-registro-usuarios">
+                        <b class="info-registro-usuarios">Correo</b>
+                        <input class="input-registro-usuarios" id="correo" type="email" placeholder="Ingrese Correo">
+                    </div>
+                    <div class="campos-registro-usuarios">
+                        <b class="info-registro-usuarios">Clave</b>
+                        <input class="input-registro-usuarios" id="clave" type="password" placeholder="Ingrese Contraseña">
+                    </div>
+
+                    <div>
+                        <button class="btn-entrar" id="registrar">Registrar</button>
+                        <button class="btn-entrar" id="regresar">Regresar</button>
+                    </div>
+                </div>
+
+                <div class="login-usuario">
+                    <h2 class="titulo-registro-usuario">Ingreso De Usuarios</h2>
+                    <div class="campos-registro-usuarios">
+                        <b class="info-registro-usuarios">Correo</b>
+                        <input class="input-registro-usuarios" id="correo1" type="email" placeholder="Ingrese Correo">
+                    </div>
+                    <div class="campos-registro-usuarios">
+                        <b class="info-registro-usuarios">Clave</b>
+                        <input class="input-registro-usuarios" id="clave1" type="password" placeholder="Ingrese Contraseña">
+                    </div>
+
+                    <div>
+                        <button class="btn-entrar" id="registrar1">Entrar</button>
+                        <button class="btn-entrar" id="regresarLogin">Regresar</button>
+                    </div>
+                </div>
+                  
+        </section>
+    </div>
+
+    <script src="js/a.js"></script>
 </body>
 </html>
