@@ -13,6 +13,25 @@
 }
 
 
+@media (min-width: 150px) {
+    .listar {
+        border-bottom: 2px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #7ddcf5;
+        font-size: 20px;
+        font-weight: 700;
+        height: 50px;
+     }
+     
+     .listar-input {
+         background-color: #939d9d;
+         width: 100px;
+     }
+}
+
+@media (min-width: 500px) {
 .listar {
    border-bottom: 2px solid white;
    display: flex;
@@ -27,3 +46,5 @@
 .listar-input {
     background-color: #939d9d;
 }
+}
+
