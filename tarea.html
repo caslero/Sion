@@ -14,29 +14,31 @@
 <body>
 
     <div class="a b">
-        <section class="mt-10 container mx-auto lg:px-28 px-4 space-y-4 flex flex-col justify-between items-center">
-            <div class="bg-[#939d9d] w-full px-4 flex items-center justify-center space-x-5 h-[70px]">
-                <div class="bg-white px-4 h-[40px] w-full border-[1px] border-[#7ddcf5] rounded-[20px] flex items-center justify-center space-x-4">
-                    <b class="md:text-xl text-md text-[#7ddcf5]">Bienvenido:</b> 
+        <section class="mt-10 max-w-[800px] container mx-auto lg:px-28 px-4 space-y-4 flex flex-col justify-between items-center">
+            <div class="bg-[#939d9d] w-full flex items-center justify-center space-x-5 h-[70px]">
+                <div class="bg-white h-[40px] w-[60%] border-[1px] border-[#7ddcf5] rounded-[20px] flex items-center justify-center space-x-4">
+                    <b class="md:text-xl text-sm text-[#7ddcf5]">Bienvenido:</b> 
                     <input class="outline-none w-16 md:w-60 us bg-[#939d9d]" type="text" id="usuarioLogueado" readonly>
                     <input class="outline-none w-16 md:w-40 bg-white usa hidden text-[#939d9d] font-[700] text-xl" id="nombreUsua" type="text" readonly>
                 </div>
-                <div>
-                    <button class="mostrar w-10 text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="cerrarSesion">Cerrar Sesion</button>
+                <div class="w-[30%]">
+                    <button class="mostrar w-full text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="cerrarSesion">Cerrar Sesion</button>
                 </div> 
             </div>       
         </section>
 
-        <section class="mt-5 container mx-auto lg:px-28 space-y-4 px-4">
+        <section class="max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-4">
             <div class="w-full flex items-center justify-center space-x-4 px-4 h-20 border-[#7ddcf5] bg-[#939d9d] w-full">
-                <div class="w-full h-10 border-2 border-[#7ddcf5] rounded-[30px] flex justify-center bg-white">
-                    <input id="agregarTarea"  class=" outline-none w-[90%] h-[10px] rounded-[30px]" type="text" required>
-                </div>               
-                <button class="mostrar w-10 text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="guardarTarea">Registrar Tarea</button>
+                <div class="w-[60%] h-10 border-2 border-[#7ddcf5] rounded-[30px] flex justify-center items-center bg-white">
+                    <input id="agregarTarea"  class=" outline-none w-[90%] h-[10px] rounded-[30px] text-center" type="text" placeholder="Ingrese Tarea.." required>
+                </div>
+                <div class="w-[30%]">              
+                    <button class="mostrar w-full text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="guardarTarea">Registrar Tarea</button>
+                </div>
             </div>        
         </section>
 
-        <section class="container mx-auto lg:px-28 px-4">
+        <section class="max-w-[800px] container mx-auto lg:px-28 px-4">
             <div class="w-full bg-[#939d9d] mt-10">
                 <div class="ocultare">
                     <div id="mostrarTareas"></div>
