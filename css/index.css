@@ -53,6 +53,7 @@ img {
 /** Aqui termina la clase de la section principal de la aplicacion */
 
 
+
 @media (min-width: 150px) {
     .btn-contenedor {
         width: 400px;
@@ -511,6 +512,38 @@ img {
 
     header {
         display: none;
+    }
+
+
+
+
+
+
+
+
+    .btn-entrar-tarea {
+        width: 180px;
+        height: 40px;
+        border: 2px solid #7ddcf5;
+        background-color: rgb(255, 255, 255);
+        border-radius: 30px;
+        color: #939d9d;
+        font-size: 13px;
+        font-weight: 700;
+        transition: all;
+        transition-duration: 900ms;
+    }
+    .btn-entrar-tarea:hover {
+        width: 180px;
+        height: 40px;
+        border: 2px solid white;
+        background-color: #7ddcf5;
+        border-radius: 30px;
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        transition: all;
+        transition-duration: 900ms;
     }
 }
     

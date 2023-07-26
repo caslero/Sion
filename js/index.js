@@ -5,9 +5,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
 
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
+import { getDatabase} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -47,3 +47,8 @@ const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const database = getDatabase(app);
+
+export let getTareas = () => getDocs(collection(db, 'Usuarios'))
+export let getTareasGuardadas = () => getDocs(collection(db, 'Tareas'))
+
+export let onGetTareas = (callback) => onSnapshot(collection(db, 'Tareas'), callback)
