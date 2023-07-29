@@ -9,39 +9,55 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer>history.forward() </script>
     <script type="module" src="js/tarea.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
 
 </head>
 <body>
 
     <div class="a b">
         <section class="mt-10 max-w-[800px] container mx-auto lg:px-28 px-4 space-y-4 flex flex-col justify-between items-center">
-            <div class="bg-[#939d9d] w-full flex items-center justify-center space-x-5 h-[70px]">
-                <div class="bg-white h-[40px] w-[60%] border-[1px] border-[#7ddcf5] rounded-[20px] flex items-center justify-center space-x-4">
+            <div class="bg-[#939d9d] w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 md:h-[70px] h-24 -mt-5">
+                <div class="w-full flex items-center justify-center bg-white md:h-[40px] md:mt-0 md:mb-0 mb-4 md:w-[60%]  border-[1px] border-[#7ddcf5] rounded-[20px] space-x-4">
                     <b class="md:text-xl text-sm text-[#7ddcf5]">Bienvenido:</b> 
                     <input class="outline-none w-16 md:w-60 us bg-[#939d9d]" type="text" id="usuarioLogueado" readonly>
-                    <input class="outline-none w-16 md:w-40 bg-white usa hidden text-[#939d9d] font-[700] text-xl" id="nombreUsua" type="text" readonly>
+                    <input class="outline-none w-32 md:w-40 bg-white usa hidden text-[#939d9d] font-[700] text-xl" id="nombreUsua" type="text" readonly>
                 </div>
-                <div class="w-[30%]">
-                    <button class="mostrar w-full text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="cerrarSesion">Cerrar Sesion</button>
+                <div class="md:w-[30%] w-40 flex items-center justify-center">
+                    <button class="mostrar w-full text-lg h-10 border-2 border-[#7ddcf5] text-[#7ddcf5] font-[700] bg-[white] rounded-[20px] hover:bg-[#7ddcf5] hover:border-white hover:text-[#939d9d]" id="cerrarSesion">Cerrar Sesion</button>
                 </div> 
             </div>       
         </section>
 
-        <section class="max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-4">
-            <div class="w-full flex items-center justify-center space-x-4 px-4 h-20 border-[#7ddcf5] bg-[#939d9d] w-full">
-                <div class="w-[60%] h-10 border-2 border-[#7ddcf5] rounded-[30px] flex justify-center items-center bg-white">
-                    <input id="agregarTarea"  class=" outline-none w-[90%] h-[10px] rounded-[30px] text-center" type="text" placeholder="Ingrese Tarea.." required>
+        <section class="max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-4  flex flex-col justify-between items-center">
+            <div class="w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 space-y-5 md:space-y-0 md:h-20 h-32 border-[#7ddcf5] bg-[#939d9d] w-full">
+                <div class="md:w-[60%] w-full mt-2 md:mt-0 h-10 border-2 border-[#7ddcf5] rounded-[30px] flex justify-center items-center bg-white">
+                    <input id="agregarTarea"  class="outline-none w-[90%] h-[35px] rounded-[30px] text-center" type="text" placeholder="Ingrese Tarea.." required>
                 </div>
-                <div class="w-[30%]">              
-                    <button class="mostrar w-full text-sm h-10 border-2 border-white text-red-500 rounded-[20px]" id="guardarTarea">Registrar Tarea</button>
+                <div class="md:w-[30%] w-40 flex items-center justify-center">              
+                    <button class="mostrar w-full text-lg h-10 border-2 border-[#7ddcf5] text-[#7ddcf5] font-[700] bg-[white] rounded-[20px] hover:bg-[#7ddcf5] hover:border-white hover:text-[#939d9d]" id="guardarTarea">Registrar Tarea</button>
                 </div>
             </div>        
         </section>
 
         <section class="max-w-[800px] container mx-auto lg:px-28 px-4">
-            <div class="w-full bg-[#939d9d] mt-10">
+            <div class="w-full bg-[#939d9d] md:mt-10 mt-4">
                 <div class="ocultare">
-                    <div id="mostrarTareas"></div>
+                    <ul id="mostrarTareas" class="checkear">
+                        <li class="listare">
+                            <div class="space-x-4 input-contenedor">
+                              <input type="checkbox"  clase=""/>                       
+                              <input id="lista" class="asa lista w-full" type="text" value="${tareass}" readonly>                            
+                            </div>
+                            <div class="btn-contenedor">
+                                <button class="js-edit">
+                                    <i class="ri-pencil-fill"></i>
+                                  </button>
+                                  <button class="js-delete">
+                                    <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
+                                  </button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>

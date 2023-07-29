@@ -1,14 +1,18 @@
 import './index.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
-import { auth, db } from './index.js';
+import { auth, db, getTareas } from './index.js';
+
+let mostrarT = await getTareas();
+
 
 
 let ver = document.querySelector('.ver');
 console.log(ver);
 
 
-
+let nombreUsuario = '';
+let t = '';
 
 
 
@@ -27,27 +31,64 @@ function registrar() {
     const auth = getAuth();
         //let usuarioLogueado = document.getElementById('usuarioLogueado').value;
 
-        addDoc(collection(db, "Usuarios"), {
-            Usuario: nombre,
-            Correo: correo
-          });
-          console.log("usuario registrado con exito: " + nombre);
-       
-    createUserWithEmailAndPassword(auth, correo, clave)
-    .then(() => {
-       verificar();
-    }).then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        // ...
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        // ..
-    });
-    //console.log(correo, clave);
+        mostrarT.forEach((doc) => {
+              
+            nombreUsuario = doc.data().Correo;
+            t = doc.data().Usuario;
+            
+            if (correo === nombreUsuario) {
+                console.log('Usuario no esta disponible');
+
+                createUserWithEmailAndPassword(auth, correo, clave)
+                    .then(() => {
+                    verificar();
+                }).then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    // ...
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                    // ..
+                    
+              });
+             } else {
+                console.log('Registro con exito');
+                  addDoc(collection(db, "Usuarios"), {
+                      Usuario: nombre,
+                      Correo: correo
+                    });
+                    console.log("usuario registrado con exito: " + nombre);
+                    let exito = document.querySelector('.exito');
+                    exito.classList.remove('hidden')              
+            
+             }
+
+        });
+
+
+          createUserWithEmailAndPassword(auth, correo, clave)
+            .then(() => {
+                 verificar();
+              }).then((userCredential) => {
+                  // Signed in 
+                  const user = userCredential.user;
+                  // ...
+              }).catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  console.log(errorCode);
+                  console.log(errorMessage);
+                  // ..
+              });
+            //console.log(correo, clave);
+
+    document.getElementById('correo').value = '';
+    document.getElementById('clave').value = '';
+    document.getElementById('nombre').value = '';
+      
 }
 
 

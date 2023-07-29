@@ -24,7 +24,9 @@ let mostrarT = await getTareas();
 let verTareas = await getTareasGuardadas();
 let tareaGuardada = '';
 let t = '';
-
+let idTarea = '';
+let statusTarea = '';
+let claseTarea = '';
 
 
 //  window.addEventListener('DOMContentLoaded', async () => {
@@ -92,6 +94,8 @@ let t = '';
 // //     }    
 // //   });
 //  });
+
+
 let ocultar = document.querySelector('.ocultare');
  function mostrarTareasUsuarioActivo() {
   ocultar.classList.remove('hidden')
@@ -125,25 +129,38 @@ let ocultar = document.querySelector('.ocultare');
             console.log('Registro con exito');
 
             onGetTareas((mostrarTareas) => {
-             let tareass = '';
+              let tareass = '';
+
+              let idTarea = '';
+              let statusTarea = '';
+              let claseTarea = '';
+
+
+
                  mostrarTareas.forEach((doc) => {
                    uActivo = doc.data().Usuario
                    if (uActivo === name) {
+
                     tareass =  doc.data().Tarea
-                     tarea = tarea +  `<li class="space-x-4 flex listar">
-                          <label class="space-x-4 marcar">
-                              <input type="checkbox"  clase=""/>                       
-                              <input id="lista" class="asa lista listar-input" type="text" value="${tareass}" readonly>                            
-                          </label>
-                          <div class="actions">
-                              <button class="js-edit">
-                                  editar
-                              </button>
-                              <button class="js-delete">
-                                 borrar
-                              </button>
-                          </div>
-                      </li>`;
+                    statusTarea = doc.data().status;
+                    claseTarea = doc.data().clase;
+                    idTarea = doc.data().id;
+                     tarea = tarea +  `<li class="listare" data-clase="${claseTarea}" data-status="${statusTarea}">
+                                          <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
+                                            <input type="checkbox"  clase="sin-checkear" id="${idTarea}" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                                            <input id="lista" class="asa lista input-tarea outline-none" type="text" value="${tareass}" readonly>                            
+                                          </label>
+                                          <div class="btn-contenedore md:basis-[20%] md:px-5 pr-2 md:pr-0 space-x-2">
+                                           <button class="js-edit circulos">
+                                                 <i class="ri-pencil-fill"></i>
+                                               </button>
+                                               <button class="js-delete circulos">
+                                                 <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
+                                               </button>
+                                          </div>
+                                      </li>`;
+
+                                      
                    
                    }
                  })
@@ -234,7 +251,7 @@ function observador() {
             } else {
             // User is signed out
             console.log('Ningun usuario activo');
-            a.innerHTML = `<h1>Error 404 Not Found</h1>
+            a.innerHTML = `<h1>Error!!! Debe Iniciar Sesion</h1>
                             <a class="c" href="index.html">Inicie Sesion</a>
             `;
            
@@ -263,11 +280,14 @@ guardarTarea.addEventListener('click', async (e) => {
         try {
             let usuarioLogueado = document.getElementById('usuarioLogueado').value;
             const docRef = await addDoc(collection(db, "Tareas"), {
+              id: Date.now(),
               Usuario: usuarioLogueado,
-              Tarea: agregarTarea
+              Tarea: agregarTarea,
+              status: "pending",
+              clase: "desmarcar"
             });
             console.log("Document written with ID: ", docRef.id);
-            
+            document.getElementById('agregarTarea').value = '';
             mostrarTareasUsuarioActivo();
           } catch (e) {
             console.error("Error adding document: ", e);
@@ -276,6 +296,46 @@ guardarTarea.addEventListener('click', async (e) => {
          
 
 });
+
+
+document.addEventListener('keyup', async function(event) {
+  if(event.key == 'Enter') {
+ 
+  s()
+    let agregarTarea = document.getElementById('agregarTarea').value;
+     const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+        const nombres = user.email;
+        document.getElementById('usuarioLogueado').value = nombres;
+       
+        });  
+
+        try {
+            let usuarioLogueado = document.getElementById('usuarioLogueado').value;
+            const docRef = await addDoc(collection(db, "Tareas"), {
+              id: Date.now(),
+              Usuario: usuarioLogueado,
+              Tarea: agregarTarea,
+              status: "pending",
+              clase: "desmarcar"
+            });
+
+            document.getElementById('agregarTarea').value = '';
+            console.log("Document written with ID: ", docRef.id);
+            
+            mostrarTareasUsuarioActivo();
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+          //document.getElementById('mostrarTareas').innerHTML = ''; 
+        }
+
+});
+
+
+
+
+
 
 
 
@@ -346,3 +406,42 @@ observador();
 // }
 
 //r()
+
+
+let sinCheckear = document.querySelector('.checkear');
+sinCheckear.addEventListener('click', updateStatus);
+let todos = [];
+
+function updateStatus(e) {
+
+  mostrarT.forEach((doc) => {
+    todos.push({
+      id: doc.data().id,
+      Usuario: doc.data().Usuario,
+      Tarea: doc.data().Tarea,
+      status: "pending",
+      clase: "desmarcar"      
+    })
+  });
+
+  let a = todos;
+  
+  const $status = e.target.closest('input[type="checkbox"]');
+  const $clase = e.target.closest('input[type="checkbox"]');
+
+  if (!$status) return;
+
+  const $li = $status.closest("li"),
+         id = $li.dataset.id,
+    status = $status.checked ? "completed" : "pending",
+    clase = $clase.checked ? "marcar" : "desmarcar",
+     currentIndex = a.findIndex((todo) => todo.id == id);
+
+   $li.dataset.status = status;
+   $li.dataset.clase = clase;
+
+   a[currentIndex].status = status;
+   a[currentIndex].clase = clase;
+
+  //eliminarMarcados();
+}
