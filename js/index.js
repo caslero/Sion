@@ -5,7 +5,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
 
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 
 import { getDatabase} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
 
@@ -52,3 +52,11 @@ export let getTareas = () => getDocs(collection(db, 'Usuarios'))
 export let getTareasGuardadas = () => getDocs(collection(db, 'Tareas'))
 
 export let onGetTareas = (callback) => onSnapshot(collection(db, 'Tareas'), callback)
+
+export let borrarTarea = (id) => deleteDoc(doc(db, "Tareas", id));
+
+export let cambiarTarea = (id) => getDoc(doc(db, 'Tareas', id));
+
+export let tareaActualizada = (id, nuevaT) => updateDoc(doc(db, 'Tareas', id), nuevaT);
+//export let tareaActualizada = (id, usuario, tarea, status, clase) => updateDoc(doc(db, 'Tareas', id), usuario, tarea, status, clase);
+

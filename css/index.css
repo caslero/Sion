@@ -320,6 +320,31 @@ img {
         margin-top: 5px;
     }
 
+    .validar-correo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #7ddcf5;
+        width: 100%;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #6e7272;
+        color: #7ddcf5;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .validar-correo:hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        width: 100%;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #7ddcf5;
+        color: #555e5e;
+    }
+
 }
 
 
@@ -538,6 +563,29 @@ img {
         font-weight: 700;
         transition: all;
         transition-duration: 900ms;
+    }
+
+    .validar-correo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #7ddcf5;
+        width: 100%;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #6e7272;
+        color: #7ddcf5;
+    }
+    .validar-correo:hover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        width: 100%;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #7ddcf5;
+        color: #555e5e;
     }
 }
     

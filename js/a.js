@@ -6,17 +6,20 @@ registrarUsuario.addEventListener('click', rUsuario);
 let regUsuario = document.getElementById('registrarUsuario');
 regUsuario.addEventListener('click', rUsuario);
 
+/** Inicio, Cuando presiono el boton de registrar un usuario llamamos a esta funcion
+ que muestra una pantalla modal solo de registro de usuarios */
 function rUsuario() {
     let modalCompleta = document.querySelector('.a');
     let modal = document.querySelector('.seccion-usuarios');
 
     modalCompleta.classList.remove('a');
     modal.classList.remove('seccion-usuarios');
-    console.log('funciona');
+
     modal.classList.add('seccion-usuarios1');
     modalCompleta.classList.add('modal');
 }
-
+/** Fin, Cuando presiono el boton de registrar un usuario llamamos a esta funcion
+ que muestra una pantalla modal solo de registro de usuarios */
 
 
 let loginUsuario = document.querySelector('.loginUsuario');
