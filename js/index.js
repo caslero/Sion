@@ -55,8 +55,4 @@ export let onGetTareas = (callback) => onSnapshot(collection(db, 'Tareas'), call
 
 export let borrarTarea = (id) => deleteDoc(doc(db, "Tareas", id));
 
-export let cambiarTarea = (id) => getDoc(doc(db, 'Tareas', id));
-
 export let tareaActualizada = (id, nuevaT) => updateDoc(doc(db, 'Tareas', id), nuevaT);
-//export let tareaActualizada = (id, usuario, tarea, status, clase) => updateDoc(doc(db, 'Tareas', id), usuario, tarea, status, clase);
-

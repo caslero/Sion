@@ -101,6 +101,7 @@ body li[data-clase="marcar"] input[type="text"] {
     text-decoration: line-through;
     color: #fa6450;
     opacity: 0.9;
+    border: 2px solid red;
   }
 
      
@@ -206,7 +207,7 @@ body li[data-status="pending"] input[type="checkbox"] {
 
 body li[data-clase="marcar"] input[type="text"] {
     text-decoration: line-through;
-    color: #fa6450;
+    color: red;
     opacity: 0.9;
     border: 2px solid red;
   }

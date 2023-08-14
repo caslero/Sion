@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from 
 import { getFirestore, collection, addDoc, getDocs, doc, onSnapshot, deleteDoc} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { auth, db } from './index.js';
 import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
-import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, cambiarTarea, tareaActualizada} from './index.js'
+import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada} from './index.js'
 let nombreUsuario = '';
 
 let a = document.querySelector('.a');
@@ -95,11 +95,12 @@ let claseTarea = '';
 // //   });
 //  });
 
-
+let btnEliminar = document.querySelector('.btnEliminar');
 let ocultar = document.querySelector('.ocultare');
 
 
 function mostrarTareasUsuarioActivo() {
+  
   ocultar.classList.remove('hidden')
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
@@ -112,6 +113,7 @@ function mostrarTareasUsuarioActivo() {
             const name = user.email;
             let uActivo = '';
             let tarea = '';
+            let i = 0;
           
       mostrarT.forEach((doc) => {
               
@@ -124,6 +126,7 @@ function mostrarTareasUsuarioActivo() {
             usa.classList.remove('hidden')
             document.getElementById('nombreUsua').value = t;
 
+
             console.log('Registro con exito');
 
             onGetTareas((mostrarTareas) => {
@@ -132,18 +135,27 @@ function mostrarTareasUsuarioActivo() {
               let idTarea = '';
               let statusTarea = '';
               let claseTarea = '';
+              let cantidadTareas = [];
+              let contador = 0;
                 mostrarTareas.forEach((doc) => {
                   uActivo = doc.data().Usuario
+
+                  
+                  btnEliminar.innerHTML = `<b>${contador} Tareas Activas</b>`;
                   if (uActivo === name) {
+                    contador++;                   
+                    cantidadTareas.push({Tareas: idTarea})
+
+                   
 
                     tareass =  doc.data().Tarea
                     statusTarea = doc.data().status;
                     claseTarea = doc.data().clase;
                     idTarea = doc.data().id;
-                    tarea = tarea +  `<li class="listare" id="${idTarea}" data-clase="perro" data-status="${statusTarea}">
+                    tarea = tarea +  `<li class="listare" id="${idTarea}" data-clase="${claseTarea}" data-status="${statusTarea}">
                                           <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
-                                            <input type="checkbox"  clase="sin-checkear" id="${idTarea}" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
-                                            <input id="${idTarea}" class="asa lista input-tarea outline-none" type="text" value="${tareass}" readonly>                            
+                                            <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                                            <input id="${idTarea}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
                                           </label>
                                           <div class="btn-contenedore md:basis-[20%] md:px-5 pr-2 md:pr-0 space-x-2">
                                               <button class="js-edit   circulos" id="${doc.id}">
@@ -154,16 +166,23 @@ function mostrarTareasUsuarioActivo() {
                                               </button>
                                           </div>
                                       </li>`;
-
+                                     
+                              
+                                      if (cantidadTareas.length >= 2) {                                
+                                        btnEliminar.innerHTML = `<b>${cantidadTareas.length} Tareas Activas</b>`;
+                                      } else {
+                                        if (cantidadTareas.length == 0) {
+                                          console.log('cero tareas');
+                                        }
+                                        btnEliminar.innerHTML = `<b>${contador} Tareas Activas</b>`;
+                                      }
                                       
-                   
-                   }
-                
+                   } 
                  })
                  //console.log('las tareas son r: ' + tarea);
                 
                  document.getElementById('mostrarTareas').innerHTML = tarea;
-                 //document.getElementById('lista').value = tareass;
+                 
 
             });
         }
@@ -375,102 +394,47 @@ observador();
 
 
 let sinCheckear = document.querySelector('.checkear');
-sinCheckear.addEventListener('click', updateStatus);
-let todos = [];
+sinCheckear.addEventListener('click', cambiarEstadoTarea);
 
-function updateStatus(e) {
-
-  mostrarT.forEach((doc) => {
-    todos.push({
-      id: doc.data().id,
-      Usuario: doc.data().Usuario,
-      Tarea: doc.data().Tarea,
-      status: "pending",
-      clase: "desmarcar"      
-    })
-  });
-
- 
+function cambiarEstadoTarea(e) {
   
-  const $status = e.target.closest('input[type="checkbox"]');
-  const $clase = e.target.closest('input[type="checkbox"]');
+  const statuTarea = e.target.closest('input[type="checkbox"]');
+  const claseTarea = e.target.closest('input[type="checkbox"]');
 
-  if (!$status) return;
-
-  const $li = $status.closest("li"),
-         id = $li.dataset.id,
-    status = $status.checked ? "completed" : "pending",
-    clase = $clase.checked ? "marcar" : "desmarcar",
-     currentIndex = todos.findIndex((todo) => todo.id == id);
-
-   $li.dataset.status = status;
-   $li.dataset.clase = clase;
-
-   todos[currentIndex].status = status;
-   todos[currentIndex].clase = clase;
-
-  //eliminarMarcados();
+  if (!statuTarea) return;
+    const status = statuTarea.checked ? "completed" : "pending"
+    const clase = claseTarea.checked ? "marcar" : "desmarcar"
+    
+    let id = statuTarea.id;
+    tareaActualizada(id, {status: status, clase: clase})
+    mostrarTareasUsuarioActivo();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 let editarTarea = document.querySelector('.checkear');
 editarTarea.addEventListener('click', actualizarTareas);
 
-async function actualizarTareas(e) {
+function actualizarTareas(e) {
 
-  let id = '';
-  let usuario = '';
   let tarea = '';
-  let status = '';
-  let clase = '';
-
-  const editarUnaTarea = e.target.closest(".js-edit");
-  if (!editarUnaTarea) return;
-
-  // let doc = await cambiarTarea(editarUnaTarea.id);
+  const botonEditarUnaTarea = e.target.closest(".js-edit");
   
-  // id = doc.data().id;
-  // usuario = doc.data().Usuario;
-  // tarea = doc.data().Tarea;
-  // status = doc.data().status;
-  // clase = doc.data().clase;
-
-  let input = editarUnaTarea.closest("li").querySelector('input[type="text"]');
+  if (!botonEditarUnaTarea) return;
+    const id = botonEditarUnaTarea.id;
+    const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
   
-
     if (input.hasAttribute("readonly")) {
       input.removeAttribute("readonly");
-      console.log('Editando');
-      console.log(editarUnaTarea.id);
+      console.log('Editando..');
     } else {
-      input.setAttribute("readonly", "");
-      console.log('Editado Correctamente');
-      console.log(editarUnaTarea.id);
-      //tareaActualizada(editarUnaTarea.id, {id: id, Tarea:input});
+      input.setAttribute("readonly", "");     
+      tarea = input.value;      
+      tareaActualizada(id, {Tarea: tarea})
+      mostrarTareasUsuarioActivo();
+      console.log('Tarea Actualizada');
     }
-   //input.addEventListener("keyup", tareaActualizada(doc.data().id));
-   //input.addEventListener("keyup", tareaActualizada(editarUnaTarea.id, {id: id, Usuario: usuario, Tarea: input, status: status, clase: clase}));
 }
-
-
-
-
-
 
 let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
@@ -478,7 +442,6 @@ borrarIndividual.addEventListener('click', eliminarElementos);
 function eliminarElementos(e)  {
   const borrarUnaTarea = e.target.closest(".js-delete");
   if (!borrarUnaTarea) return;
-  console.log('Borrando...');  
   borrarTarea(borrarUnaTarea.id)
   mostrarTareasUsuarioActivo();  
 }
