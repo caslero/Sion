@@ -2,10 +2,10 @@
 
 import './index.js'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, doc, onSnapshot, deleteDoc} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
+import { collection, addDoc} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { auth, db } from './index.js';
-import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
-import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada} from './index.js'
+//import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
+import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada, borrarLista } from './index.js'
 let nombreUsuario = '';
 
 let a = document.querySelector('.a');
@@ -22,11 +22,8 @@ let verTareasActivas = document.getElementById('mostrarTareas');
 
 let mostrarT = await getTareas();
 let verTareas = await getTareasGuardadas();
-let tareaGuardada = '';
 let t = '';
-let idTarea = '';
-let statusTarea = '';
-let claseTarea = '';
+
 
 
 //  window.addEventListener('DOMContentLoaded', async () => {
@@ -115,6 +112,7 @@ function mostrarTareasUsuarioActivo() {
             let tarea = '';
             let i = 0;
           
+          
       mostrarT.forEach((doc) => {
               
         nombreUsuario = doc.data().Correo;
@@ -137,16 +135,13 @@ function mostrarTareasUsuarioActivo() {
               let claseTarea = '';
               let cantidadTareas = [];
               let contador = 0;
+              let contadorClase = 0;
                 mostrarTareas.forEach((doc) => {
                   uActivo = doc.data().Usuario
-
                   
-                  btnEliminar.innerHTML = `<b>${contador} Tareas Activas</b>`;
                   if (uActivo === name) {
-                    contador++;                   
-                    cantidadTareas.push({Tareas: idTarea})
-
-                   
+                    contador++;
+                    
 
                     tareass =  doc.data().Tarea
                     statusTarea = doc.data().status;
@@ -167,21 +162,30 @@ function mostrarTareasUsuarioActivo() {
                                           </div>
                                       </li>`;
                                      
-                              
-                                      if (cantidadTareas.length >= 2) {                                
-                                        btnEliminar.innerHTML = `<b>${cantidadTareas.length} Tareas Activas</b>`;
-                                      } else {
-                                        if (cantidadTareas.length == 0) {
-                                          console.log('cero tareas');
-                                        }
-                                        btnEliminar.innerHTML = `<b>${contador} Tareas Activas</b>`;
-                                      }
                                       
-                   } 
+                                      
+                   }
+                   if (claseTarea == 'marcar') {
+                    cantidadTareas.push({n: idTarea})
+                    contadorClase++;
+                  } 
                  })
                  //console.log('las tareas son r: ' + tarea);
+                 
                 
                  document.getElementById('mostrarTareas').innerHTML = tarea;
+                 if (cantidadTareas.length != 0) {
+                  document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado">borrar marcados</button>`;
+                 } else {
+                  document.querySelector('.btnMarcar').innerHTML = ''
+                 }
+                 
+                  if (contador >= 1) {
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado">borrar todo</button>`;
+                  } else {
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div>`;
+                  }
+                 
                  
 
             });
@@ -193,8 +197,7 @@ function mostrarTareasUsuarioActivo() {
 }
 
 
-function s(){
-  
+function s(){  
   ocultar.classList.add('hidden')
   document.getElementById('mostrarTareas').innerHTML = '';
 }
@@ -203,91 +206,50 @@ function s(){
 
 
 mostrarTareasUsuarioActivo();
-      
 
-// window.addEventListener('DOMContentLoaded', async () => {
-//   onGetTareas((mostrarTareas) => {
-
-//     mostrarTareas.forEach((doc) => {
-//       let tarea = doc.data();
-//       console.log(tarea.Tarea);
-//     })
-//   })
-
-//   //   document.getElementById('mostrarTareas').innerHTML = `${tar}`;
-// });
 
 
 
 function observador() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-
-      // function aparece(user) {
-         let user1 = user;
-      //    const usuario = user.email;    
+  
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    let user1 = user;
     
-        if(user1.emailVerified == false) {
-           console.log('Usuario no Verificado');
-           location = 'index.html';
-        } else {
-          if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/auth.user
-
-            //const docRef = await addDoc(collection(db, "Usuarios"), {
-              //let getTareas = () => getDocs(collection(db, 'Tareas'))
-
-            //window.addEventListener('DOMContentLoaded', async () => {
-
-            const uid = user.uid;            
-            const name = user.email;
-            let uActivo = '';
-            let tarea = '';
-            mostrarUsuarioActivo();
+    if(user1.emailVerified == false) {
+      console.log('Usuario no Verificado');
+      location = 'index.html';
+    } else {
+      
+      if (user) {
+        const uid = user.uid;
+        const name = user.email;
+        
+        mostrarUsuarioActivo();
+        
+        function mostrarUsuarioActivo() {
+          mostrarT.forEach((doc) => {
+            nombreUsuario = doc.data().Correo;
+            t = doc.data().Usuario;
             
-            function mostrarUsuarioActivo() {
-              mostrarT.forEach((doc) => {
-              
-                nombreUsuario = doc.data().Correo;
-                t = doc.data().Usuario;
-                  if (nombreUsuario === name) {
-                   let us = document.querySelector('.us');
-                   let usa = document.querySelector('.usa');
-                   us.classList.add('hidden')
-                   usa.classList.remove('hidden')
-                   document.getElementById('nombreUsua').value = t;
+            if (nombreUsuario === name) {
+              let us = document.querySelector('.us');
+              let usa = document.querySelector('.usa');
+              us.classList.add('hidden')
+              usa.classList.remove('hidden')
+              document.getElementById('nombreUsua').value = t;
 
-                  }
-              });
-
-            
-            };
-
-
-            
-            document.getElementById('usuarioLogueado').value = name;
-            //usuarioLogueado.innerHTML = name;
-           
-            console.log('Usuario Activo');
-           
-
-            // ...
-            } else {
-            // User is signed out
-            // console.log('Ningun usuario activo');
-            // a.innerHTML = `<h1>Error!!! Debe Iniciar Sesion</h1>
-            //                 <a class="c" href="index.html">Inicie Sesion</a>
-            // `;
-
-            location = 'index.html';
-           
-           
-            a.classList.add('b')
-
-            // ...
-        }
-        }      
+            }
+          });
+        };
+        
+        document.getElementById('usuarioLogueado').value = name;
+        console.log('Usuario Activo');
+      } else {
+        location = 'index.html';
+        a.classList.add('b')
+      }
+    }      
     });
 }
 
@@ -310,8 +272,11 @@ async function guardarNuevaTarea() {
     
     onAuthStateChanged(auth, (user) => {
       const nombres = user.email;
-      document.getElementById('usuarioLogueado').value = nombres;
+      const idUsuario = user.uid;
+      document.getElementById('usuarioLogueado').value = nombres;     
     });
+
+    
     
     try {
       let usuarioLogueado = document.getElementById('usuarioLogueado').value;
@@ -322,7 +287,7 @@ async function guardarNuevaTarea() {
         status: "pending",
         clase: "desmarcar"
       });
-      console.log("Identificador de la tarea registrada: ", docRef.id);
+      //console.log("Identificador de la tarea registrada: ", docRef.id);
       document.getElementById('agregarTarea').value = '';
       
       mostrarTareasUsuarioActivo();
@@ -333,7 +298,8 @@ async function guardarNuevaTarea() {
 };
 
 
-document.addEventListener('keyup', async function(event) {
+document.addEventListener('keyup', guardarNuevaTarea2)
+async function guardarNuevaTarea2(event) {
   
   let agregarTarea = document.getElementById('agregarTarea').value;
   
@@ -365,7 +331,7 @@ document.addEventListener('keyup', async function(event) {
       }
     }
   }
-});
+};
 
 
 
@@ -419,7 +385,7 @@ function actualizarTareas(e) {
 
   let tarea = '';
   const botonEditarUnaTarea = e.target.closest(".js-edit");
-  
+ 
   if (!botonEditarUnaTarea) return;
     const id = botonEditarUnaTarea.id;
     const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
@@ -444,4 +410,94 @@ function eliminarElementos(e)  {
   if (!borrarUnaTarea) return;
   borrarTarea(borrarUnaTarea.id)
   mostrarTareasUsuarioActivo();  
+}
+
+
+let borrarT = document.querySelector('.btnEliminar');
+borrarT.addEventListener('click', eliminarListaCompleta);
+
+function eliminarListaCompleta(e) {
+  const borrarTodasTarea = e.target.closest(".borrado");
+  if (!borrarTodasTarea) return;
+
+  let borrarTodasTareas = document.getElementById('mostrarTareas');
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {       
+    if (user) {             
+      const name = user.email;
+      let uActivo = '';
+      let id = '';           
+          
+      mostrarT.forEach((doc) => {              
+        nombreUsuario = doc.data().Correo;
+       
+        if (nombreUsuario === name) {         
+          onGetTareas((mostrarTareas) => {
+            mostrarTareas.forEach((doc) => {
+
+              uActivo = doc.data().Usuario
+              
+              if (uActivo === name) {
+                id = doc.id;
+
+                borrarLista(id)
+                borrarTodasTareas.classList.add('hidden');               
+                mostrarTareasUsuarioActivo();                
+              }
+            });
+          });
+        }
+      });
+    }
+  });
+}
+
+
+
+
+
+
+
+let borrarMarcados = document.querySelector('.btnEliminar');
+borrarMarcados.addEventListener('click', eliminarMarcados);
+
+
+
+function eliminarMarcados(e) {
+  const borrarMarcado = e.target.closest(".marcado");
+  if (!borrarMarcado) return;
+
+  let quitarMarcado = document.getElementById('mostrarTareas');
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {       
+    if (user) {             
+      const name = user.email;
+      let uActivo = '';
+      let id = '';
+      let clase = '';           
+          
+      mostrarT.forEach((doc) => {              
+        nombreUsuario = doc.data().Correo;
+       
+        if (nombreUsuario === name) {         
+          onGetTareas((mostrarTareas) => {
+            mostrarTareas.forEach((doc) => {
+
+              uActivo = doc.data().Usuario
+              
+              if (uActivo === name) {
+                id = doc.id;
+                clase = doc.data().clase;
+                if (clase === 'marcar') {
+                  borrarLista(id)
+                  //quitarMarcado.classList.add('hidden');
+                  mostrarTareasUsuarioActivo();
+                }       
+              }
+            });
+          });
+        }
+      });
+    }
+  });
 }
