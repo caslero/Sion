@@ -8,6 +8,9 @@ import { auth, db } from './index.js';
 import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada, borrarLista } from './index.js'
 let nombreUsuario = '';
 
+let redireccionar = document.querySelector('.eliminarTodo');
+      redireccionar.classList.add('hidden');
+
 let a = document.querySelector('.a');
 
 a.classList.remove('b')
@@ -103,6 +106,7 @@ function mostrarTareasUsuarioActivo() {
   onAuthStateChanged(auth, (user) => {
        
     if (user) {
+      redireccionar.classList.remove('hidden');
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
 
@@ -212,7 +216,17 @@ function s(){
 
 
 function observador() {
-  mostrarTareasUsuarioActivo();
+  
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      mostrarTareasUsuarioActivo();
+    } else {      
+      let redireccionar = document.querySelector('.eliminarTodo');
+      redireccionar.classList.add('hidden');
+      location = 'index.html';
+    }
+  });
 }
 
 
