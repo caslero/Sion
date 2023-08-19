@@ -210,7 +210,28 @@ body li[data-clase="marcar"] input[type="text"] {
     color: red;
     opacity: 0.9;
     border: 2px solid red;
-  }
+}
+
+.borrarTodo {
+    width: 180px;
+    height: 45px;
+    border: 1px solid #7ddcf5;
+    background-color: white;
+    border-radius: 30px;
+    color: #7ddcf5;
+    font-size: 20px;
+    font-weight: 700;
+}
+.borrarTodo:hover {
+    width: 180px;
+    height: 45px;
+    border: 2px solid white;
+    background-color: #7ddcf5;
+    border-radius: 30px;
+    color: #939d9d;
+    font-size: 20px;
+    font-weight: 700;
+}
 
 
 

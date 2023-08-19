@@ -49,6 +49,7 @@ export const db = getFirestore(app);
 export const database = getDatabase(app);
 
 export let getTareas = () => getDocs(collection(db, 'Usuarios'))
+
 export let getTareasGuardadas = () => getDocs(collection(db, 'Tareas'))
 
 export let onGetTareas = (callback) => onSnapshot(collection(db, 'Tareas'), callback)

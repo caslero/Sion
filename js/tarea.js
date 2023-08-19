@@ -21,7 +21,7 @@ let verTareasActivas = document.getElementById('mostrarTareas');
 
 
 let mostrarT = await getTareas();
-let verTareas = await getTareasGuardadas();
+
 let t = '';
 
 
@@ -123,9 +123,10 @@ function mostrarTareasUsuarioActivo() {
             us.classList.add('hidden')
             usa.classList.remove('hidden')
             document.getElementById('nombreUsua').value = t;
-
-
-            console.log('Registro con exito');
+            document.getElementById('usuarioLogueado').value = nombreUsuario;
+            
+            let quitarMarcado = document.getElementById('mostrarTareas');
+            quitarMarcado.classList.remove('hidden');
 
             onGetTareas((mostrarTareas) => {
               let tareass = '';
@@ -175,13 +176,13 @@ function mostrarTareasUsuarioActivo() {
                 
                  document.getElementById('mostrarTareas').innerHTML = tarea;
                  if (cantidadTareas.length != 0) {
-                  document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado">borrar marcados</button>`;
+                  document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo">borrar marcados</button>`;
                  } else {
                   document.querySelector('.btnMarcar').innerHTML = ''
                  }
                  
                   if (contador >= 1) {
-                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado">borrar todo</button>`;
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado borrarTodo">borrar todo</button>`;
                   } else {
                    document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div>`;
                   }
@@ -205,52 +206,13 @@ function s(){
 
 
 
-mostrarTareasUsuarioActivo();
+//mostrarTareasUsuarioActivo();
 
 
 
 
 function observador() {
-  
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    let user1 = user;
-    
-    if(user1.emailVerified == false) {
-      console.log('Usuario no Verificado');
-      location = 'index.html';
-    } else {
-      
-      if (user) {
-        const uid = user.uid;
-        const name = user.email;
-        
-        mostrarUsuarioActivo();
-        
-        function mostrarUsuarioActivo() {
-          mostrarT.forEach((doc) => {
-            nombreUsuario = doc.data().Correo;
-            t = doc.data().Usuario;
-            
-            if (nombreUsuario === name) {
-              let us = document.querySelector('.us');
-              let usa = document.querySelector('.usa');
-              us.classList.add('hidden')
-              usa.classList.remove('hidden')
-              document.getElementById('nombreUsua').value = t;
-
-            }
-          });
-        };
-        
-        document.getElementById('usuarioLogueado').value = name;
-        console.log('Usuario Activo');
-      } else {
-        location = 'index.html';
-        a.classList.add('b')
-      }
-    }      
-    });
+  mostrarTareasUsuarioActivo();
 }
 
 
@@ -322,7 +284,7 @@ async function guardarNuevaTarea2(event) {
           status: "pending",
           clase: "desmarcar"
         });
-        console.log("Identificador de la tarea registrada: ", docRef.id);
+        //console.log("Identificador de la tarea registrada: ", docRef.id);
         document.getElementById('agregarTarea').value = '';
         
         mostrarTareasUsuarioActivo();
@@ -368,11 +330,16 @@ function cambiarEstadoTarea(e) {
   const claseTarea = e.target.closest('input[type="checkbox"]');
 
   if (!statuTarea) return;
+
+    let quitarMarcado = document.getElementById('mostrarTareas');
+
     const status = statuTarea.checked ? "completed" : "pending"
     const clase = claseTarea.checked ? "marcar" : "desmarcar"
     
     let id = statuTarea.id;
+    quitarMarcado.classList.add('hidden')
     tareaActualizada(id, {status: status, clase: clase})
+    quitarMarcado.classList.add('hidden')
     mostrarTareasUsuarioActivo();
 }
 
@@ -387,6 +354,9 @@ function actualizarTareas(e) {
   const botonEditarUnaTarea = e.target.closest(".js-edit");
  
   if (!botonEditarUnaTarea) return;
+
+    let quitarMarcado = document.getElementById('mostrarTareas');
+    
     const id = botonEditarUnaTarea.id;
     const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
   
@@ -397,6 +367,7 @@ function actualizarTareas(e) {
       input.setAttribute("readonly", "");     
       tarea = input.value;      
       tareaActualizada(id, {Tarea: tarea})
+      quitarMarcado.classList.add('hidden')
       mostrarTareasUsuarioActivo();
       console.log('Tarea Actualizada');
     }
@@ -416,40 +387,30 @@ function eliminarElementos(e)  {
 let borrarT = document.querySelector('.btnEliminar');
 borrarT.addEventListener('click', eliminarListaCompleta);
 
-function eliminarListaCompleta(e) {
+async function eliminarListaCompleta(e) {
+  let verTareas = await getTareasGuardadas();
   const borrarTodasTarea = e.target.closest(".borrado");
   if (!borrarTodasTarea) return;
 
-  let borrarTodasTareas = document.getElementById('mostrarTareas');
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {       
-    if (user) {             
-      const name = user.email;
-      let uActivo = '';
-      let id = '';           
-          
-      mostrarT.forEach((doc) => {              
-        nombreUsuario = doc.data().Correo;
-       
-        if (nombreUsuario === name) {         
-          onGetTareas((mostrarTareas) => {
-            mostrarTareas.forEach((doc) => {
 
-              uActivo = doc.data().Usuario
-              
-              if (uActivo === name) {
-                id = doc.id;
+  let quitarMarcado = document.getElementById('mostrarTareas');
+  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let usuario = '';
+  let clase = '';
+  let id = 0;
+  let i = 0;
+  
+    verTareas.forEach((doc) => {
+      usuario = doc.data().Usuario;
+      clase = doc.data().clase;
+      id = doc.id
 
-                borrarLista(id)
-                borrarTodasTareas.classList.add('hidden');               
-                mostrarTareasUsuarioActivo();                
-              }
-            });
-          });
-        }
-      });
-    }
-  });
+      if (correoUsuarioActivo === usuario) {
+        borrarLista(id)
+        quitarMarcado.classList.add('hidden')
+        mostrarTareasUsuarioActivo();
+      }
+    });
 }
 
 
@@ -463,41 +424,34 @@ borrarMarcados.addEventListener('click', eliminarMarcados);
 
 
 
-function eliminarMarcados(e) {
+async function eliminarMarcados(e) {
+  let verTareas = await getTareasGuardadas();
+  
   const borrarMarcado = e.target.closest(".marcado");
-  if (!borrarMarcado) return;
-
+  if (!borrarMarcado) return; 
+  
   let quitarMarcado = document.getElementById('mostrarTareas');
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {       
-    if (user) {             
-      const name = user.email;
-      let uActivo = '';
-      let id = '';
-      let clase = '';           
-          
-      mostrarT.forEach((doc) => {              
-        nombreUsuario = doc.data().Correo;
-       
-        if (nombreUsuario === name) {         
-          onGetTareas((mostrarTareas) => {
-            mostrarTareas.forEach((doc) => {
+  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let usuario = '';
+  let clase = '';
+  let id = 0;
+  let i = 0;
+  
+    verTareas.forEach((doc) => {
+      usuario = doc.data().Usuario;
+      clase = doc.data().clase;
+      id = doc.id
 
-              uActivo = doc.data().Usuario
-              
-              if (uActivo === name) {
-                id = doc.id;
-                clase = doc.data().clase;
-                if (clase === 'marcar') {
-                  borrarLista(id)
-                  //quitarMarcado.classList.add('hidden');
-                  mostrarTareasUsuarioActivo();
-                }       
-              }
-            });
-          });
-        }
-      });
-    }
-  });
+      if (correoUsuarioActivo === usuario && clase === 'marcar') {
+        i++;
+        quitarMarcado.classList.add('hidden')    
+         borrarLista(id)
+         quitarMarcado.classList.add('hidden')
+         mostrarTareasUsuarioActivo();
+      } else if (correoUsuarioActivo === usuario && clase === 'desmarcar') {
+        i = 0;
+        quitarMarcado.classList.add('hidden')
+        mostrarTareasUsuarioActivo();               
+      }
+    });  
 }
