@@ -213,6 +213,9 @@ body li[data-clase="marcar"] input[type="text"] {
 }
 
 .borrarTodo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 180px;
     height: 45px;
     border: 1px solid #7ddcf5;
@@ -223,6 +226,9 @@ body li[data-clase="marcar"] input[type="text"] {
     font-weight: 700;
 }
 .borrarTodo:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 180px;
     height: 45px;
     border: 2px solid white;

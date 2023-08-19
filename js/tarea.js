@@ -1,11 +1,17 @@
 //alert('hola')
 
 import './index.js'
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { collection, addDoc} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { auth, db } from './index.js';
 //import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
 import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada, borrarLista } from './index.js'
+
+
+/** 2000 > 2 segundos */
+
+let miliSegundos = 120000;
+
 let nombreUsuario = '';
 
 let redireccionar = document.querySelector('.eliminarTodo');
@@ -186,9 +192,9 @@ function mostrarTareasUsuarioActivo() {
                  }
                  
                   if (contador >= 1) {
-                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado borrarTodo">borrar todo</button>`;
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado borrarTodo">borrar todo</button>`;
                   } else {
-                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4">${contador} tarea activa</div>`;
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div>`;
                   }
                  
                  
@@ -208,19 +214,48 @@ function s(){
 }
 
 
-
-
-//mostrarTareasUsuarioActivo();
-
-
-
-
-function observador() {
-  
+let n = 0;
+function observador() {  
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      document.addEventListener("keypress", contarCerrarSesion);
+      document.addEventListener("click", contarCerrarSesion);
+      document.addEventListener('mousemove', contarCerrarSesion)
+
+      // function reiniciarContador() {
+
+      //   window.setInterval(function(){
+      //     n++;
+      //     console.log('Iniciando Conteo ' + n);
+
+      //     if (n == 60) {
+      //       logOut()
+      //     } 
+      //   }, 1000);
+        
+      //   document.addEventListener('keyup', toque)
+      //   function toque() {
+      //     console.log('Contando de nuevo');
+      //     n = 0,
+      //     window.setInterval(function(){
+      //       n++;
+      //       console.log(n);
+      //       if (n == 60) {
+      //         logOut()
+      //       } 
+      //     }, 1000);
+                   
+      //   }
+      // }
+
+      // reiniciarContador()
+      // //contar();
+      
       mostrarTareasUsuarioActivo();
+       setTimeout(function(){
+         logOut()
+     }, 14400000);
     } else {      
       let redireccionar = document.querySelector('.eliminarTodo');
       redireccionar.classList.add('hidden');
@@ -228,8 +263,6 @@ function observador() {
     }
   });
 }
-
-
 
 
 let guardarTarea = document.getElementById('guardarTarea');
@@ -468,4 +501,17 @@ async function eliminarMarcados(e) {
         mostrarTareasUsuarioActivo();               
       }
     });  
+}
+
+
+function contarCerrarSesion(e) {
+  if (e.target) {
+    n = 0;
+    window.setInterval(function(){      
+      n++;
+      if (n == 360000) {
+        logOut();
+      }
+    }, 1000);
+  } 
 }

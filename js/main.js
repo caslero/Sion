@@ -5,7 +5,8 @@ import { db, getTareas } from './index.js';
 
 let mostrarT = await getTareas();
 
-
+let sesionActiva = document.querySelector('.sesionActiva');
+sesionActiva.classList.add('hidden')
 
 let ver = document.querySelector('.ver');
 //console.log(ver);
@@ -100,9 +101,11 @@ function observador() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
+            sesionActiva.classList.add('hidden')
+            location = "tarea.html"
             const uid = user.uid;
         } else {            
-            
+            sesionActiva.classList.remove('hidden')
         }
     });
 }
@@ -162,16 +165,6 @@ function verificar() {
 //      })
    
 // }
-
-
-
-
-
-
-
-
-
-
 
 
 
