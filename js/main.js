@@ -1,5 +1,5 @@
 import './index.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { db, getTareas } from './index.js';
 
@@ -226,6 +226,26 @@ function entrarSistema() {
         //  console.log(errorMessage);
     });
 // [END auth_signin_password_modular]
+}
+
+let claveOlvidada = document.getElementById('claveOlvidada');
+claveOlvidada.addEventListener('click', cambiarClave);
+
+function cambiarClave() {
+    console.log('clave cambiada');
+    let correo1 = document.getElementById('correo1').value;
+    //let clave1 = document.getElementById('clave1').value;
+    
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, correo1)
+    .then(() => {
+        // Password reset email sent!
+        // ..
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+    });
 }
 
 
