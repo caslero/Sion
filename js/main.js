@@ -25,74 +25,76 @@ let registroUsuarios = document.getElementById('registrar');
 registroUsuarios.addEventListener('click', registrar);
 
 function registrar() {
+    let msjUsuario = document.getElementById('registroExitosoUsuario');
+
     let correo = document.getElementById('correo').value;
     let clave = document.getElementById('clave').value;
     let nombre = document.getElementById('nombre').value;
 
+    if (correo == '' || clave == '' || nombre == '') {
+        console.log('error al registrar');
+        document.getElementById('registroExitosoUsuario').innerHTML = 'Error al registrar' 
+        
+    } else {
+
     const auth = getAuth();
-        //let usuarioLogueado = document.getElementById('usuarioLogueado').value;
+    //let usuarioLogueado = document.getElementById('usuarioLogueado').value;
 
-         mostrarT.forEach((doc) => {
-              
-             nombreUsuario = doc.data().Correo;
-             t = doc.data().Usuario;
-            
-             if (correo === nombreUsuario) {
-                 console.log('Usuario no esta disponible');
+    mostrarT.forEach((doc) => {          
+         nombreUsuario = doc.data().Correo;
+         t =  doc.data().Usuario;
+    });
 
+        if (correo === nombreUsuario) {
+            msjUsuario.classList.remove('hidden');            
+            msjUsuario.innerHTML = `<span>Usuario No disponible</span>`;
+
+            setTimeout(function(){
+                msjUsuario.classList.add('hidden');  
+            }, 5000);
+
+        }  else {
                  createUserWithEmailAndPassword(auth, correo, clave)
-                     .then(() => {
-                     verificar();
-                 }).then((userCredential) => {
-                     // Signed in 
-                     const user = userCredential.user;
-                     // ...
-                 }).catch((error) => {
-                     const errorCode = error.code;
-                     const errorMessage = error.message;
-                     console.log(errorCode);
-                     console.log(errorMessage);
-                     // ..
-                    
-               });
-              } else {
-                //console.log('Registro con exito');
-                  addDoc(collection(db, "Usuarios"), {
-                      Usuario: nombre,
-                      Correo: correo
+                 .then(() => {
+                    addDoc(collection(db, "Usuarios"), {
+                        Usuario: nombre,
+                        Correo: correo
                     });
-                    console.log("usuario registrado con exito: " + nombre);
-                    let exito = document.querySelector('.exito');
-                    exito.classList.remove('hidden')
+                      
+                    msjUsuario.classList.remove('hidden');
+                    msjUsuario.innerHTML = `<span>Usuaio Registrado con exito</span>`;
                     
-                    createUserWithEmailAndPassword(auth, correo, clave)
-                    .then(() => {
-                         verificar();
-                         location = 'index.html'
-                      }).then((userCredential) => {
-                          // Signed in 
-                          const user = userCredential.user;
-                         
-                          // ...
-                      }).catch((error) => {
-                          const errorCode = error.code;
-                          const errorMessage = error.message;
-                          console.log(errorCode);
-                          console.log(errorMessage);
-                          // ..
-                      });
-                    //console.log(correo, clave);
-            
-              }
+                    setTimeout(function(){
+                        location = 'index.html';
+                    }, 5000);
 
-         });
+                      let exito = document.querySelector('.exito');
+                      exito.classList.remove('hidden')
 
+                      verificar();
+                      location = 'index.html'
+                   }).then((userCredential) => {
+                       // Signed in 
+                       const user = userCredential.user;
+                     
+                       // ...
+                   }).catch((error) => {
+                       const errorCode = error.code;
+                       const errorMessage = error.message;
+                       console.log(errorCode);
+                       console.log(errorMessage);
+                       // ..
+                   });
+                 //console.log(correo, clave);
+        
+        }
+        document.getElementById('correo').value = '';
+        document.getElementById('clave').value = '';
+        document.getElementById('nombre').value = '';
+        return;
+        
+    }
 
-         
-
-    document.getElementById('correo').value = '';
-    document.getElementById('clave').value = '';
-    document.getElementById('nombre').value = '';
       
 }
 
@@ -177,55 +179,60 @@ function entrarSistema() {
     let clave1 = document.getElementById('clave1').value;
     const auth = getAuth();
 
-  
+    if (correo1) {
+        signInWithEmailAndPassword(auth, correo1, clave1)
+        .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        const usuario = user.email;
+       console.log(user.emailVerified);
 
-     signInWithEmailAndPassword(auth, correo1, clave1)
-         .then((userCredential) => {
-         // Signed in 
-         const user = userCredential.user;
-         const usuario = user.email;
-        console.log(user.emailVerified);
+       if (user.emailVerified == true) {
+           location = 'tarea.html';
+           let ocultarValidacion = document.querySelector('.ocultar-validacion');
+           ocultarValidacion.classList.add('hidden');
+       } else {
+           console.log('Error debe validar el correo enviado');
+           document.getElementById('validar').innerHTML = `<div class="validar-correo">Debe validar el correo</div>
+                                                           <div class="validar-correo" id="nuevoCodigo">Enviar Nuevo Codigo</div>
+                                                           `;
+           
+           let nuevoCodigo = document.getElementById('nuevoCodigo');
+           nuevoCodigo.addEventListener('click', reenviarCodigo);
+                                                           
+           function reenviarCodigo() {
+               console.log('Hola nuevo codigo');
 
-        if (user.emailVerified == true) {
-            location = 'tarea.html';
-            let ocultarValidacion = document.querySelector('.ocultar-validacion');
-            ocultarValidacion.classList.add('hidden');
-        } else {
-            console.log('Error debe validar el correo enviado');
-            document.getElementById('validar').innerHTML = `<div class="validar-correo">Debe validar el correo</div>
-                                                            <div class="validar-correo" id="nuevoCodigo">Enviar Nuevo Codigo</div>
-                                                            `;
-            
-            let nuevoCodigo = document.getElementById('nuevoCodigo');
-            nuevoCodigo.addEventListener('click', reenviarCodigo);
-                                                            
-            function reenviarCodigo() {
-                console.log('Hola nuevo codigo');
+               const auth = getAuth();
+               sendEmailVerification(auth.currentUser)
+                   .then(() => {
+                   // Email verification sent!
+                   // ...
+                   console.log('Enviando Correo');
+               }).catch((error) => {
+                   // An error happened.
+                   console.log(error);
+               });
+           }
+       }
+       // ...
+       }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
 
-                const auth = getAuth();
-                sendEmailVerification(auth.currentUser)
-                    .then(() => {
-                    // Email verification sent!
-                    // ...
-                    console.log('Enviando Correo');
-                }).catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                });
-            }
-        }
-        // ...
-        }).catch((error) => {
-         const errorCode = error.code;
-         const errorMessage = error.message;
+        document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-white">Error al registrar</div>`;
 
-         document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-white">Usuario no registrado</div>`;
-
-         //carlosjperazab@gmail.com
-        //  console.log(errorCode);
-        //  console.log(errorMessage);
-    });
+        //carlosjperazab@gmail.com
+       //  console.log(errorCode);
+       //  console.log(errorMessage);
+   });
 // [END auth_signin_password_modular]
+        
+    } else {
+        console.log('campo de correo vacio');
+    }
+
+    
 }
 
 let claveOlvidada = document.getElementById('claveOlvidada');
