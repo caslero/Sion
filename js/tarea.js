@@ -154,12 +154,13 @@ function mostrarTareasUsuarioActivo() {
                   
                 if (uActivo === name) {
                   
-                  contador++;               
+                  contador++;            
 
                   tareass =  doc.data().Tarea
                   statusTarea = doc.data().status;
                   claseTarea = doc.data().clase;
                   idTarea = doc.data().id;
+                  
                   tarea = tarea +  `<li class="listare" id="${idTarea}" data-clase="${claseTarea}" data-status="${statusTarea}">
                                       <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
                                         <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
@@ -182,6 +183,10 @@ function mostrarTareasUsuarioActivo() {
                   contadorClase++;
                 } 
               })
+
+              if (contador == 0) {
+                document.getElementById('mostrarTareas').innerHTML = '';
+              }
               
               
                 if (cantidadTareas.length != 0) {
@@ -421,11 +426,10 @@ let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
 function eliminarElementos(e)  {
-  mostrarTareasRestantes.classList.add('mostrar-ocultar');
-
   const borrarUnaTarea = e.target.closest(".js-delete");
-  if (!borrarUnaTarea) return;   
-   
+  if (!borrarUnaTarea) return;
+  
+  mostrarTareasRestantes.classList.add('mostrar-ocultar');  
 
   borrarTarea(borrarUnaTarea.id)
 
@@ -457,16 +461,11 @@ async function eliminarListaCompleta(e) {
       clase = doc.data().clase;
       id = doc.id
 
-      if (correoUsuarioActivo === usuario) {
-
-          mostrarTareasRestantes.classList.add('mostrar-ocultar');
-        
+      if (correoUsuarioActivo === usuario) {        
         borrarLista(id)
-        
-        setTimeout(() => {
           mostrarTareasRestantes.classList.remove('mostrar-ocultar');
           mostrarTareasUsuarioActivo();
-        }, 100);
+      
       }
     });
 }
