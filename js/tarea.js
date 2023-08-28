@@ -154,8 +154,7 @@ function mostrarTareasUsuarioActivo() {
                   
                 if (uActivo === name) {
                   
-                  contador++;
-                  console.log(contador);                    
+                  contador++;               
 
                   tareass =  doc.data().Tarea
                   statusTarea = doc.data().status;
