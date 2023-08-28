@@ -108,8 +108,7 @@ let ocultar = document.querySelector('.ocultare');
 
 function mostrarTareasUsuarioActivo() {
   mostrarTareasRestantes.classList.remove('mostrar-ocultar'); 
-  let quitarMarcado = document.getElementById('mostrarTareas');
-  quitarMarcado.classList.remove('hidden')
+ 
   
   ocultar.classList.remove('hidden')
   const auth = getAuth();
@@ -138,12 +137,9 @@ function mostrarTareasUsuarioActivo() {
             usa.classList.remove('hidden')
             document.getElementById('nombreUsua').value = t;
             document.getElementById('usuarioLogueado').value = nombreUsuario;
-            
-            let quitarMarcado = document.getElementById('mostrarTareas');
-            
+           
 
             let tareass = '';
-
             let idTarea = '';
             let statusTarea = '';
             let claseTarea = '';
@@ -402,7 +398,7 @@ function actualizarTareas(e) {
  
   if (!botonEditarUnaTarea) return;
 
-    let quitarMarcado = document.getElementById('mostrarTareas');
+  mostrarTareasRestantes.classList.remove('mostrar-ocultar'); 
     
     const id = botonEditarUnaTarea.id;
     const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
@@ -412,11 +408,15 @@ function actualizarTareas(e) {
       console.log('Editando..');
     } else {
       input.setAttribute("readonly", "");     
-      tarea = input.value;      
-      tareaActualizada(id, {Tarea: tarea})
-      quitarMarcado.classList.add('hidden')
-      mostrarTareasUsuarioActivo();
-      console.log('Tarea Actualizada');
+      tarea = input.value; 
+
+      tareaActualizada(id, {Tarea: tarea});
+    
+      setTimeout(() => {
+        mostrarTareasRestantes.classList.remove('mostrar-ocultar');
+        console.log('Tarea Actualizada');
+        mostrarTareasUsuarioActivo();
+      }, 100);
     }
 }
 
