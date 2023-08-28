@@ -154,7 +154,8 @@ function mostrarTareasUsuarioActivo() {
                   
                 if (uActivo === name) {
                   
-                  contador++;                    
+                  contador++;
+                  console.log(contador);                    
 
                   tareass =  doc.data().Tarea
                   statusTarea = doc.data().status;
@@ -175,10 +176,7 @@ function mostrarTareasUsuarioActivo() {
                                       </div>
                                     </li>`;
                   document.getElementById('mostrarTareas').innerHTML = tarea;
-                } else {
-                  contador = 0;                 
-                  document.getElementById('mostrarTareas').innerHTML = '';
-                }
+                } 
                 
                 if (claseTarea == 'marcar') {
                   cantidadTareas.push({n: idTarea})
