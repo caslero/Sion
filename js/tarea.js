@@ -191,8 +191,6 @@ function mostrarTareasUsuarioActivo() {
                   document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo">borrar marcados</button>`;
                 } else {
                   document.querySelector('.btnMarcar').innerHTML = ''
-                  document.querySelector('.mostrarTareas').innerHTML = ''
-                  
                 }
                 
                 if (contador >= 1) {
