@@ -424,10 +424,18 @@ let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
 function eliminarElementos(e)  {
+  mostrarTareasRestantes.classList.add('mostrar-ocultar');
+
   const borrarUnaTarea = e.target.closest(".js-delete");
-  if (!borrarUnaTarea) return;
+  if (!borrarUnaTarea) return;   
+   
+
   borrarTarea(borrarUnaTarea.id)
-  mostrarTareasUsuarioActivo();  
+
+  setTimeout(() => {
+    mostrarTareasRestantes.classList.remove('mostrar-ocultar');
+    mostrarTareasUsuarioActivo();
+  }, 100);
 }
 
 
