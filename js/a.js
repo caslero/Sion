@@ -36,7 +36,7 @@ function lUsuario() {
 
     registrarUsuario.classList.add('login-usuario')
     loginUsuario.classList.remove('login-usuario')
-
+    
     modalCompleta.classList.remove('a');
     modal.classList.remove('seccion-usuarios');
     console.log('funciona');

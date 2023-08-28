@@ -6,8 +6,10 @@ import { db, getTareas } from './index.js';
 let mostrarT = await getTareas();
 
 let sesionActiva = document.querySelector('.sesionActiva');
-sesionActiva.classList.add('hidden')
+sesionActiva.classList.remove('hidden')
 
+
+let bontonClaveOlvidada = document.querySelector('.claveOlvidada');
 let ver = document.querySelector('.ver');
 //console.log(ver);
 
@@ -32,8 +34,8 @@ function registrar() {
     let nombre = document.getElementById('nombre').value;
 
     if (correo == '' || clave == '' || nombre == '') {
-        console.log('error al registrar');
-        document.getElementById('registroExitosoUsuario').innerHTML = 'Error al registrar' 
+        msjUsuario.classList.remove('hidden')
+        msjUsuario.innerHTML = '<div class="text-red-500">Error, uno o varios campos vacios</div>' 
         
     } else {
 
@@ -57,22 +59,24 @@ function registrar() {
                  createUserWithEmailAndPassword(auth, correo, clave)
                  .then(() => {
                     addDoc(collection(db, "Usuarios"), {
+                        id: Date.now(),
                         Usuario: nombre,
                         Correo: correo
                     });
                       
                     msjUsuario.classList.remove('hidden');
-                    msjUsuario.innerHTML = `<span>Usuaio Registrado con exito</span>`;
+                    msjUsuario.innerHTML = `<span>Usuario Registrado con exito</span>`;
                     
+                    let exito = document.querySelector('.exito');
+                    exito.classList.remove('hidden')
+                    
+
+                    verificar();
                     setTimeout(function(){
                         location = 'index.html';
-                    }, 5000);
+                    }, 2000);
 
-                      let exito = document.querySelector('.exito');
-                      exito.classList.remove('hidden')
-
-                      verificar();
-                      location = 'index.html'
+                      //location = 'index.html'
                    }).then((userCredential) => {
                        // Signed in 
                        const user = userCredential.user;
@@ -90,8 +94,7 @@ function registrar() {
         }
         document.getElementById('correo').value = '';
         document.getElementById('clave').value = '';
-        document.getElementById('nombre').value = '';
-        return;
+        document.getElementById('nombre').value = '';       
         
     }
 
@@ -103,11 +106,14 @@ function observador() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            sesionActiva.classList.add('hidden')
-            location = "tarea.html"
-            const uid = user.uid;
-        } else {            
-            sesionActiva.classList.remove('hidden')
+            if (user.emailVerified == true) {
+                sesionActiva.classList.add('hidden')
+                location = "tarea.html"
+                const uid = user.uid;
+            } else {
+                console.log('Usuario nulo: ');
+                sesionActiva.classList.remove('hidden')
+            }
         }
     });
 }
@@ -170,9 +176,9 @@ function verificar() {
 
 
 
-let registroUsuarios1 = document.getElementById('registrar1');
+let entrar = document.getElementById('registrar1');
 
-registroUsuarios1.addEventListener('click', entrarSistema);
+entrar.addEventListener('click', entrarSistema);
 
 function entrarSistema() {
     let correo1 = document.getElementById('correo1').value;
@@ -182,54 +188,53 @@ function entrarSistema() {
     if (correo1) {
         signInWithEmailAndPassword(auth, correo1, clave1)
         .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        const usuario = user.email;
-       console.log(user.emailVerified);
+            // Signed in 
+            const user = userCredential.user;
+            const usuario = user.email;
+            console.log(user.emailVerified);
 
-       if (user.emailVerified == true) {
-           location = 'tarea.html';
-           let ocultarValidacion = document.querySelector('.ocultar-validacion');
-           ocultarValidacion.classList.add('hidden');
-       } else {
-           console.log('Error debe validar el correo enviado');
-           document.getElementById('validar').innerHTML = `<div class="validar-correo">Debe validar el correo</div>
-                                                           <div class="validar-correo" id="nuevoCodigo">Enviar Nuevo Codigo</div>
-                                                           `;
-           
-           let nuevoCodigo = document.getElementById('nuevoCodigo');
-           nuevoCodigo.addEventListener('click', reenviarCodigo);
-                                                           
-           function reenviarCodigo() {
-               console.log('Hola nuevo codigo');
+            if (user.emailVerified == true) {
+                location = 'tarea.html';
+                let ocultarValidacion = document.querySelector('.ocultar-validacion');
+                ocultarValidacion.classList.add('hidden');
+            } else {
+                console.log('Error debe validar el correo enviado');
+                document.getElementById('validar').innerHTML = `<div class="validar-correo">Debe validar el correo</div>
+                                                                <div class="validar-correo" id="nuevoCodigo">Enviar Nuevo Codigo</div>
+                                                                `;
+                
+                let nuevoCodigo = document.getElementById('nuevoCodigo');
+                nuevoCodigo.addEventListener('click', reenviarCodigo);
+                                                            
+                function reenviarCodigo() {
+                    console.log('Hola nuevo codigo');
 
-               const auth = getAuth();
-               sendEmailVerification(auth.currentUser)
-                   .then(() => {
-                   // Email verification sent!
-                   // ...
-                   console.log('Enviando Correo');
-               }).catch((error) => {
-                   // An error happened.
-                   console.log(error);
-               });
-           }
-       }
-       // ...
-       }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+                    const auth = getAuth();
+                    sendEmailVerification(auth.currentUser)
+                        .then(() => {
+                        // Email verification sent!
+                        // ...
+                        console.log('Enviando Correo');
+                    }).catch((error) => {
+                        // An error happened.
+                        console.log(error);
+                    });
+                }
+            }
+                // ...
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-        document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-white">Error al registrar</div>`;
-
-        //carlosjperazab@gmail.com
-       //  console.log(errorCode);
-       //  console.log(errorMessage);
-   });
-// [END auth_signin_password_modular]
+            document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-white">Datos incorrectos, verifique nuevamente</div>
+                                                                       <div class="text-white"><a href="index.html" class="text-blue-500 ">Registrar</a></div>`;
+            bontonClaveOlvidada.removeAttribute('disabled', '')
+        });
         
     } else {
         console.log('campo de correo vacio');
+        document.querySelector('.ocultar-validacion').innerHTML = '<div class="text-red-500">uno o varios campos vacios</div>'
+        bontonClaveOlvidada.setAttribute('disabled', '')
     }
 
     
@@ -239,20 +244,32 @@ let claveOlvidada = document.getElementById('claveOlvidada');
 claveOlvidada.addEventListener('click', cambiarClave);
 
 function cambiarClave() {
-    console.log('clave cambiada');
+    
     let correo1 = document.getElementById('correo1').value;
     //let clave1 = document.getElementById('clave1').value;
+    if (correo1) {
+        
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, correo1)
+        .then(() => {
+            // Password reset email sent!
+            // ..
+
+            console.log('existe');
+                
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.log(errorCode);
+            console.log(errorMessage);
+
+            document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-red-500">correo no valido</div>
+                                                                       <div class="text-blue-500">o <a href="index.html"> no esta registrado</a></div>`;
+            bontonClaveOlvidada.setAttribute('disabled', '')
+        });        
+    } 
     
-    const auth = getAuth();
-    sendPasswordResetEmail(auth, correo1)
-    .then(() => {
-        // Password reset email sent!
-        // ..
-    }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    });
 }
 
 

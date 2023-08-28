@@ -26,7 +26,7 @@
     
 
 
-    <div class="seccion-principal sesionActiva hidden">
+    <div class="seccion-principal sesionActiva">
         <h1 class="titulo-principal mt-4 md:mt-0">Tareas Diarias</h1>
         <h5 class="titulo-secundario mt-2 md:mt-0">Aqui Podra Agregar Las Tareas Del Dia Y Asi Tener Un Dia Mas Productivo</h5>
         <div class="btn-contenedor mt-4 md:mt-10">
@@ -44,15 +44,15 @@
 
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Nombre</b>
-                    <input class="input-registro-usuarios" id="nombre" type="email" placeholder="Ingrese nombre">
+                    <input class="input-registro-usuarios" id="nombre" type="email" placeholder="Ejemplo...">
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Correo</b>
-                    <input class="input-registro-usuarios" id="correo" type="email" placeholder="Ingrese Correo">
+                    <input class="input-registro-usuarios lowercase" id="correo" type="email" placeholder="ejemplo@ejemplo.com">
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Clave</b>
-                    <input class="input-registro-usuarios" id="clave" type="password" placeholder="Ingrese Contraseña">
+                    <input class="input-registro-usuarios" id="clave" type="password" placeholder="**********">
                 </div>
 
                 <div id="registroExitosoUsuario" class="hidden exito text-center text-[#7ddcf5] border-[1px] border-[#7ddcf5] w-[95%]  bg-[#939d9d] text-lg flex items-center justify-center mx-4 rounded-[10px] mb-4 font-[700]">
@@ -70,11 +70,11 @@
                 <h2 class="titulo-registro-usuario">Ingreso De Usuarios</h2>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Correo</b>
-                    <input class="input-registro-usuarios" id="correo1" type="email" placeholder="Ingrese Correo">
+                    <input class="input-registro-usuarios" id="correo1" type="email" placeholder="ejemplo@ejemplo.com" required>
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Clave</b>
-                    <input class="input-registro-usuarios" id="clave1" type="password" placeholder="Ingrese Contraseña">
+                    <input class="input-registro-usuarios" id="clave1" type="password" placeholder="**********" required>
                 </div>
 
                 <div>
@@ -83,7 +83,7 @@
                 </div>
                     <!-- Aqui termina el div o subseccion es para ingresar al sistema -->
                 <div>
-                    <button class="btn-entrar" id="claveOlvidada">olvido su clave</button>
+                    <button class="btn-entrar claveOlvidada" id="claveOlvidada">olvido su clave</button>
                 </div>
             </div>
 
