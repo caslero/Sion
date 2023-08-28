@@ -191,6 +191,8 @@ function mostrarTareasUsuarioActivo() {
                   document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo">borrar marcados</button>`;
                 } else {
                   document.querySelector('.btnMarcar').innerHTML = ''
+                  document.querySelector('.mostrarTareas').innerHTML = ''
+                  
                 }
                 
                 if (contador >= 1) {
@@ -424,11 +426,11 @@ let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
 function eliminarElementos(e)  {
-  
+  mostrarTareasRestantes.classList.add('mostrar-ocultar');
 
   const borrarUnaTarea = e.target.closest(".js-delete");
   if (!borrarUnaTarea) return;   
-   mostrarTareasRestantes.classList.add('mostrar-ocultar');
+   
 
   borrarTarea(borrarUnaTarea.id)
 
