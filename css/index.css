@@ -1,6 +1,6 @@
 
 body {
-    background-color: #f1ecec;
+    background-color: #f8dcdb;
 }
 .ocultar {
     background-color: brown;
@@ -9,15 +9,7 @@ body {
 
 
 /** Aqui comienza la clase de la section principal de la aplicacion */
-.seccion-principal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: -8px;
-}
+
 
 img {
     width: 300px;
@@ -224,12 +216,6 @@ img {
     }
 
     /** Inicio de la clase del titulo principal y secundario de la aplicacion */
-    .titulo-principal {
-        color: #7ddcf5;
-        font-size: 35px;
-        text-align: center;
-        font-weight: 700;
-    }
 
     .titulo-secundario {
         color: #7ddcf5;

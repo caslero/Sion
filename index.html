@@ -9,7 +9,7 @@
     <script type="module" src="js/main.js"></script>
 </head>
 <body>
-    <header>
+    <!-- <header>
         <button class="menu-hamburguesa">Menu</button>
         <nav class="hamburguesa">
             <div class="botones-modal-movil">
@@ -21,19 +21,24 @@
             </div> 
         </nav>
        
-    </header>
+    </header> -->
 
     
 
 
-    <div class="seccion-principal sesionActiva">
-        <h1 class="titulo-principal mt-4 md:mt-0">Tareas Diarias</h1>
-        <h5 class="titulo-secundario mt-2 md:mt-0">Aqui Podra Agregar Las Tareas Del Dia Y Asi Tener Un Dia Mas Productivo</h5>
+    <div class="seccion-principal sesionActiva container mx-auto lg:px-28 flex flex-col items-center">
+        <h1 class="mt-8 md:mt-0 text-[#493b27] text-3xl font-[700]">Tareas Diarias</h1>
         <div class="btn-contenedor mt-4 md:mt-10">
             <button id="registrarUsuario" class="btn-registrar">Registrar Usuario</button>
             <button id="loginUsuario" class="btn-registrar">Ingresar Al Sistema</button>            
         </div>
+
         <img src="img/tareas.png" alt="">
+
+        <div class="px-2 flex justify-between items-center space-x-2 w-full h-16">
+            <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] registrarUsuario">Registrar Usuario</button>
+            <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] loginUsuario">Ingresar Al Sistema</button>
+        </div>
     </div>
    
     <div class="a ocultarRegistro">

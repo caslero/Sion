@@ -59,15 +59,6 @@ function welcomeBackLogin() {
    location = 'index.html'
 }
 
-let menuHamburguesa = document.querySelector('.menu-hamburguesa');
-menuHamburguesa.addEventListener('click', menuMovil);
-
-function menuMovil() {
-    let a = document.querySelector('.hamburguesa');
-    a.classList.remove('hamburguesa')
-
-    a.classList.add('hamburguesa-modal')
-}
 
 
 
