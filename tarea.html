@@ -15,7 +15,7 @@
 <body>
 
     <div class="a b eliminarTodo">
-        <section class="mt-10 max-w-[800px] container mx-auto lg:px-28 px-2 space-y-4 flex flex-col justify-between items-center">
+        <section class="mt-10 md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 space-y-4 flex flex-col justify-between items-center">
             <div class="bg-[#939d9d] w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 md:h-[70px] h-24 -mt-5">
                 <div class="w-full flex items-center justify-center bg-white md:h-[40px] md:mt-0 md:mb-0 mb-4 md:w-[60%]  border-[1px] border-[#7ddcf5] rounded-[20px] space-x-4">
                     <b class="md:text-xl text-sm text-[#7ddcf5]">Bienvenido:</b> 
@@ -28,18 +28,18 @@
             </div>       
         </section>
 
-        <section class="max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-2  flex flex-col justify-between items-center">
+        <section class="md:max-w-[600px] lg:max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-2  flex flex-col justify-between items-center">
             <div class="w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 space-y-2 md:space-y-0 md:h-20 h-24 bg-[#7ddcf5] w-full px-4 md:px-0">
                 <div class="md:w-[60%] w-full  h-10 rounded-[30px] flex justify-center items-center bg-white  border-[1px] border-[#493b27]">
                     <input id="agregarTarea"  class="outline-none w-[90%] h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[15px] capitalize" type="text" placeholder="Ingrese Tarea.." required>
                 </div>
                 <div class="md:w-[30%] w-40 flex items-center justify-center">              
-                    <button class="mostrar text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] md:w-[250px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="guardarTarea">Registrar Tarea</button>
+                    <button class="mostrar text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] md:w-[250px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="guardarTarea">Agregar Tarea</button>
                 </div>
             </div>        
         </section>
 
-        <section class="max-w-[800px] container mx-auto lg:px-28 px-2 classLista">
+        <section class="md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 classLista">
             <div class="w-full bg-[#7ddcf5] md:mt-10 mt-4">
                 <div class="ocultare">
                     <ul id="mostrarTareas" class="checkear">
@@ -62,18 +62,15 @@
             </div>
         </section>
 
-        <section class="max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-2  flex flex-col justify-between items-center">
-            <div  class="btnEliminar space-y-2 w-full flex flex-col md:flex-row items-center justify-center px-2 md:flex-row  md:space-x-5 md:h-20 h-20 bg-[#7ddcf5] w-full">
-                
-                <div class="flex justify-between space-x-5">
-                    <div class="btnEliminarTodo"></div>
-                    <div class="btnMarcar "></div>
-                </div>
-
-                <div>
+        <section class="md:max-w-[600px] lg:max-w-[800px] mt-5 container mx-auto lg:px-28 px-2 ">
+            <div  class="btnEliminar space-y-2 sm:space-y-0 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between px-2 md:flex-row  md:space-x-5 h-24 bg-[#7ddcf5] w-full">
+                <div class="sm:ms-[10px]">
                     <div class="sinTareas "></div>
                 </div>
-                
+                <div class="flex justify-between space-x-4">
+                    <div class="btnEliminarTodo md:-ms-[30px]"></div>
+                    <div class="btnMarcar md:ms-2"></div>
+                </div>                
             </div>        
         </section>
 
