@@ -353,56 +353,40 @@ claveOlvidada.addEventListener('click', cambiarClave);
 
 function cambiarClave() {
     
+    const auth = getAuth();
     let correo1 = document.getElementById('correo1').value;
     let msj = document.getElementById('validar');
     let divMsj = document.getElementById('validar');
 
     if (correo1) {
-        const auth = getAuth();
-        let validar = auth.currentUser.emailVerified;
-
-        if (validar == true) {
-            sendPasswordResetEmail(auth, correo1)
-            .then(() => {
-                        // Password reset email sent!
-                        // ..
-                    
-            console.log('existe');
-                            
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-    
-                        console.log(errorCode);
-                        console.log(errorMessage);
-    
-                if (errorCode == 'auth/user-not-found') {
-                    msj.classList.remove('ocultarMsjValidacion')
-                    msj.classList.add('mostrarMsjValidacion')
-                    divMsj.innerHTML = `<div class="text-[#d05151]">Correo invalido</div>
-                                        <div class="text-blue-500"><a href="index.html">Registrarse</a></div>`;
-                            
-                           
-                }
-    
-                       
-    
-                        // document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-red-500">correo no valido</div>
-                        //                                                            <div class="text-blue-500">o <a href="index.html"> no esta registrado</a></div>`;
-                        // bontonClaveOlvidada.setAttribute('disabled', '')
-            });
-        } else {
+        bontonClaveOlvidada.setAttribute('enabled', '')
+        
+        sendPasswordResetEmail(auth, correo1)
+        .then(() => {
             msj.classList.remove('ocultarMsjValidacion')
             msj.classList.add('mostrarMsjValidacion')
-            divMsj.innerHTML = `<div class="text-[#d05151]">Validar correo</div>
-                                <div class="text-[#d05151]">Luego solicite cambio de clave</div>`;
+            divMsj.innerHTML = `<div class="text-[#d05151]">Enviando Correo, Cambio de clave</div>`;
                             
             setTimeout(() => {
                 msj.classList.remove('mostrarMsjValidacion')
                 msj.classList.add('ocultarMsjValidacion')
                 divMsj.innerHTML = '';
-            }, '5000');
-        }            
+            }, '5000');  
+                            
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            
+            console.log(errorCode);
+            console.log(errorMessage);
+            
+            if (errorCode == 'auth/user-not-found') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Correo invalido</div>
+                                        <div class="text-blue-500"><a href="index.html">Registrarse</a></div>`;
+            }
+        });  
     }    
 }
 
