@@ -39,7 +39,7 @@ function lUsuario() {
     
     modalCompleta.classList.remove('a');
     modal.classList.remove('seccion-usuarios');
-    console.log('funciona');
+    
     modal.classList.add('seccion-usuarios1');
     modalCompleta.classList.add('modal');
     loginUsuario.classList.add('registrar-usuario');

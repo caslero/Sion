@@ -9,92 +9,76 @@
     <script type="module" src="js/main.js"></script>
 </head>
 <body>
-    <!-- <header>
-        <button class="menu-hamburguesa">Menu</button>
-        <nav class="hamburguesa">
-            <div class="botones-modal-movil">
-                <button class="btn-registrar-movil1 registrarUsuario">Registrar Usuario</button>
-                <button class="btn-registrar-movil2 loginUsuario">Ingresar Al Sistema</button>
-            </div>
-            <div>
-                <img src="img/tareas.png" alt="">
-            </div> 
-        </nav>
-       
-    </header> -->
 
-    
-
-
-    <div class="seccion-principal sesionActiva container mx-auto lg:px-28 flex flex-col items-center">
-        <h1 class="mt-8 md:mt-0 text-[#493b27] text-3xl font-[700]">Tareas Diarias</h1>
-        <div class="btn-contenedor mt-4 md:mt-10">
-            <button id="registrarUsuario" class="btn-registrar">Registrar Usuario</button>
-            <button id="loginUsuario" class="btn-registrar">Ingresar Al Sistema</button>            
-        </div>
-
+    <div class="md:max-w-[700px] seccion-principal sesionActiva container mx-auto lg:px-28 flex flex-col items-center">
+        <h1 class="mt-8 text-[#493b27] text-3xl md:text-5xl tracking-[10px] font-[700]">Tareas Diarias</h1>
         <img src="img/tareas.png" alt="">
-
         <div class="px-2 flex justify-between items-center space-x-2 w-full h-16">
-            <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] registrarUsuario">Registrar Usuario</button>
-            <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] loginUsuario">Ingresar Al Sistema</button>
+            <button id="registrarUsuario" class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] registrarUsuario">Registrar Usuario</button>
+            <button id="loginUsuario"     class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] loginUsuario">Ingresar Al Sistema</button>
         </div>
     </div>
    
     <div class="a ocultarRegistro">
-        <section class="seccion-usuarios">
-
+        <section class="seccion-usuarios px-2">
+            
             <div class="registrar-usuario">
-                <h2 class="titulo-registro-usuario">Registro De Usuarios</h2>
+                <h2 class="text-[#493b27] text-2xl my-4 font-[600] md:text-3xl">Registro De Usuarios</h2>
 
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Nombre</b>
-                    <input class="input-registro-usuarios" id="nombre" type="email" placeholder="Ejemplo...">
+                    <input class="input-registro-usuarios outline-none border-[1px] border-[#493b27] border-opacity-50" id="nombre" type="email" placeholder="Ejemplo...">
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Correo</b>
-                    <input class="input-registro-usuarios lowercase" id="correo" type="email" placeholder="ejemplo@ejemplo.com">
+                    <input class="input-registro-usuarios lowercase  outline-none border-[1px] border-[#493b27] border-opacity-50" id="correo" type="email" placeholder="ejemplo@ejemplo.com">
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Clave</b>
-                    <input class="input-registro-usuarios" id="clave" type="password" placeholder="**********">
+                    <input class="input-registro-usuarios  outline-none border-[1px] border-[#493b27] border-opacity-50" id="clave" type="password" placeholder="**********">
                 </div>
 
-                <div id="registroExitosoUsuario" class="hidden exito text-center text-[#7ddcf5] border-[1px] border-[#7ddcf5] w-[95%]  bg-[#939d9d] text-lg flex items-center justify-center mx-4 rounded-[10px] mb-4 font-[700]">
+                <div id="registroExitosoUsuario" class="viejoHidden exito mx-4">
                     
                 </div>
 
-                <div>
-                    <button class="btn-entrar" id="registrar">Registrar</button>
-                    <button class="btn-entrar" id="regresar">Regresar</button>
+                <div class="w-full flex justify-between px-2 mb-4 space-x-2">
+                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="registrar">Registrar</button>
+                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="regresar">Regresar</button>
                 </div>
             </div>
 
                 <!-- Aqui empieza el div o subseccion es para ingresar al sistema -->
             <div class="login-usuario">
-                <h2 class="titulo-registro-usuario">Ingreso De Usuarios</h2>
+                <h2 class="text-[#493b27] text-2xl my-4 font-[600]">Ingreso De Usuarios</h2>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Correo</b>
-                    <input class="input-registro-usuarios" id="correo1" type="email" placeholder="ejemplo@ejemplo.com" required>
+                    <input class="input-registro-usuarios lowercase outline-none border-[1px] border-[#493b27] border-opacity-50" id="correo1" type="email" placeholder="ejemplo@ejemplo.com" required>
                 </div>
                 <div class="campos-registro-usuarios">
                     <b class="info-registro-usuarios">Clave</b>
-                    <input class="input-registro-usuarios" id="clave1" type="password" placeholder="**********" required>
+                    <input class="input-registro-usuarios outline-none border-[1px] border-[#493b27] border-opacity-50" id="clave1" type="password" placeholder="**********" required>
                 </div>
 
-                <div>
-                    <button class="btn-entrar" id="registrar1">Entrar</button>
-                    <button class="btn-entrar" id="regresarLogin">Regresar</button>
+                <!-- Inicio de los mensajes de validacion-->
+                <div id="validar" class="ocultar-validacion ocultarMsjValidacion flex flex-col">
+                        
+                </div>
+                <!-- Fin de los mensajes de validacion-->
+
+                <div class="w-full flex justify-between px-2 mb-4 space-x-2">
+                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="registrar1">Entrar</button>
+                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="regresarLogin">Registrarse</button>
                 </div>
                     <!-- Aqui termina el div o subseccion es para ingresar al sistema -->
-                <div>
-                    <button class="btn-entrar claveOlvidada" id="claveOlvidada">olvido su clave</button>
+                <div class="w-full flex justify-center mb-4">
+                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb] claveOlvidada" id="claveOlvidada">olvido su clave</button>
                 </div>
+
+                 
             </div>
 
-            <div id="validar" class="ocultar-validacion border-2 border-yellow-500 w-full container mx-auto flex justify-between space-x-2">
-                        
-            </div>
+           
         </section>
     </div>
 

@@ -109,33 +109,85 @@ let btnEliminar = document.querySelector('.btnEliminar');
 
 
 
-async function mostrarTareasUsuarioActivo() {
-  
-  
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-       
-    if (user) {
-      let nombre = user.email
-      let nombre2 = '';
-      //redireccionar.classList.remove('hidden');
-      document.getElementById('usuarioLogueado').value = user.email;
+async function mostrarTareasUsuarioActivo(user) {
 
-      mostrarT.forEach(doc => {
-        nombre2 = doc.data().Correo;
-        if (nombre === nombre2) {
-          document.getElementById('nombreUsua').value = doc.data().Usuario;
-        }
-        
-      })
 
-      tareasParaMostrar()
-           
+  let uActivo = user.email;
+  let tarea = '';
+  let tareass = '';
+  let idTarea = '';
+  let statusTarea = '';
+  let claseTarea = '';
+  let cantidadTareas = [];
+  let contador = 0;
+  let contadorClase = 0;
 
-            const uid = user.uid;            
-            const name = user.email;
-    }
-  });
+
+  const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+  const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {     
+
+      contador++;
+
+      tareass = doc.data().Tarea
+      idTarea = doc.data().id
+      claseTarea = doc.data().clase
+      statusTarea = doc.data().status
+      // doc.data() is never undefined for query doc snapshots
+      tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}">
+                                       <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
+                                         <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                                         <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+                                       </label>
+                                       <div class="btn-contenedore md:basis-[20%] md:px-5 pr-2 md:pr-0 space-x-2">
+                                         <button class="js-edit   circulos" id="${doc.id}">
+                                           <i class="ri-pencil-fill"></i>
+                                         </button>
+                                         <button class="js-delete circulos" id="${doc.id}">
+                                           <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
+                                         </button>
+                                       </div>
+                                     </li>`;
+
+
+
+      if (claseTarea == 'marcar') {
+        contadorClase++;
+        cantidadTareas.push({n: idTarea})
+      } 
+      //console.log(doc.id, " => ", doc.data());
+      
+      document.getElementById('mostrarTareas').innerHTML = tarea;
+      
+    });
+
+
+   
+              
+
+               if (contador == 0) {
+                 document.getElementById('mostrarTareas').innerHTML = '';
+               }
+              
+              
+                 if (cantidadTareas.length != 0) {
+                   document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
+                 } else {
+                   document.querySelector('.btnMarcar').innerHTML = ''
+                 }
+                
+                 if (contador >= 1) {
+                   document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
+                   document.querySelector('.sinTareas').innerHTML = `<div class="mr-4 borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+                   
+                 } else {
+                   document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+                   document.querySelector('.btnEliminarTodo').innerHTML = '';
+                }
+
+
+
   
 }
 
@@ -166,14 +218,25 @@ function observador() {
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      
+
+      let nombre = user.email
+      let nombre2 = '';
+      //redireccionar.classList.remove('hidden');
       document.getElementById('usuarioLogueado').value = user.email;
+
+      mostrarT.forEach(doc => {
+        nombre2 = doc.data().Correo;
+        if (nombre === nombre2) {
+          document.getElementById('nombreUsua').value = doc.data().Usuario;
+        }
+        
+      })
     
       document.addEventListener("keypress", contarCerrarSesion);
       document.addEventListener("click", contarCerrarSesion);
       document.addEventListener('mousemove', contarCerrarSesion)     
       
-      mostrarTareasUsuarioActivo();
+      mostrarTareasUsuarioActivo(user);
 
 
     setTimeout(function(){
@@ -200,16 +263,6 @@ async function guardarNuevaTarea() {
   
   if (agregarTarea) {
    
-    const auth = getAuth();
-    
-    onAuthStateChanged(auth, (user) => {
-      const nombres = user.email;
-      const idUsuario = user.uid;
-      document.getElementById('usuarioLogueado').value = nombres;     
-    });
-
-    
-    
     try {
       let usuarioLogueado = document.getElementById('usuarioLogueado').value;
       const docRef = await addDoc(collection(db, "Tareas"), {
@@ -222,7 +275,7 @@ async function guardarNuevaTarea() {
       //console.log("Identificador de la tarea registrada: ", docRef.id);
       document.getElementById('agregarTarea').value = '';
       
-      mostrarTareasUsuarioActivo();
+      observador()
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -237,14 +290,6 @@ async function guardarNuevaTarea2(event) {
   
   if(event.key == 'Enter') {
     if (agregarTarea) {
-      
-      const auth = getAuth();
-      
-      onAuthStateChanged(auth, (user) => {
-        const nombres = user.email;
-        document.getElementById('usuarioLogueado').value = nombres;
-      });
-      
       try {
         let usuarioLogueado = document.getElementById('usuarioLogueado').value;
         const docRef = await addDoc(collection(db, "Tareas"), {
@@ -257,7 +302,7 @@ async function guardarNuevaTarea2(event) {
         //console.log("Identificador de la tarea registrada: ", docRef.id);
         document.getElementById('agregarTarea').value = '';
         
-        mostrarTareasUsuarioActivo();
+       observador()
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -294,22 +339,51 @@ observador();
 let sinCheckear = document.querySelector('.checkear');
 sinCheckear.addEventListener('click', cambiarEstadoTarea);
 
-function cambiarEstadoTarea(e) {
+async function cambiarEstadoTarea(e) {
+
+  let uActivo = document.getElementById('usuarioLogueado').value;
   
   const statuTarea = e.target.closest('input[type="checkbox"]');
   const claseTarea = e.target.closest('input[type="checkbox"]');
 
   if (!statuTarea) return;    
 
+  
     const status = statuTarea.checked ? "completed" : "pending"
     const clase = claseTarea.checked ? "marcar" : "desmarcar"
-    
     let id = statuTarea.id;
 
-    tareaActualizada(id, {status: status, clase: clase});
-    mostrarTareasUsuarioActivo();
-    
+    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      if (doc.id == id) {
+        tareaActualizada(id, {status: status, clase: clase});
+        observador()
+      }
+    });
+
+   
+       
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -349,18 +423,23 @@ function actualizarTareas(e) {
 let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
-function eliminarElementos(e)  {
+async function eliminarElementos(e)  {
+
+  let uActivo = document.getElementById('usuarioLogueado').value;
   const borrarUnaTarea = e.target.closest(".js-delete");
   if (!borrarUnaTarea) return;
-  
-  //mostrarTareasRestantes.classList.add('mostrar-ocultar');  
 
-  borrarTarea(borrarUnaTarea.id)
-  mostrarTareasUsuarioActivo();
-  // setTimeout(() => {
-  //   mostrarTareasRestantes.classList.remove('mostrar-ocultar');
-  //   mostrarTareasUsuarioActivo();
-  // }, 100);
+  let id = borrarUnaTarea.id;
+  
+    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      if (doc.id == id) {
+        borrarTarea(id)      
+        observador()       
+      }
+    });
 }
 
 
@@ -368,30 +447,21 @@ let borrarT = document.querySelector('.btnEliminar');
 borrarT.addEventListener('click', eliminarListaCompleta);
 
 async function eliminarListaCompleta(e) {
-  let verTareas = await getTareasGuardadas();
+  
+  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let id = 0;
   const borrarTodasTarea = e.target.closest(".borrado");
   if (!borrarTodasTarea) return;
 
-    //mostrarTareasRestantes.classList.add('mostrar-ocultar');
-   
-  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
-  let usuario = '';
-  let clase = '';
-  let id = 0;
-  let i = 0;
-  
-    verTareas.forEach((doc) => {
-      usuario = doc.data().Usuario;
-      clase = doc.data().clase;
-      id = doc.id
+  const q = query(collection(db, "Tareas"), where("Usuario", "==", correoUsuarioActivo));  
+  const querySnapshot = await getDocs(q);
 
-      if (correoUsuarioActivo === usuario) {        
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
         borrarLista(id)
-          //mostrarTareasRestantes.classList.remove('mostrar-ocultar');
-          mostrarTareasUsuarioActivo();
-      
-      }
+        //observador()
     });
+    observador()
 }
 
 
@@ -406,37 +476,27 @@ borrarMarcados.addEventListener('click', eliminarMarcados);
 
 
 async function eliminarMarcados(e) {
-  let verTareas = await getTareasGuardadas();
+
+  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let clase = '';
+  let id = 0;
   
   const borrarMarcado = e.target.closest(".marcado");
   if (!borrarMarcado) return; 
   
-  //let quitarMarcado = document.getElementById('mostrarTareas');
-  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
-  let usuario = '';
-  let clase = '';
-  let id = 0;
-  let i = 0;
-  //mostrarTareasRestantes.classList.add('mostrar-ocultar');
+  const q = query(collection(db, "Tareas"), where("Usuario", "==", correoUsuarioActivo));  
+  const querySnapshot = await getDocs(q);
 
-  
-    verTareas.forEach((doc) => {
-      usuario = doc.data().Usuario;
-      clase = doc.data().clase;
-      id = doc.id
+    querySnapshot.forEach((doc) => {
       
-      if (correoUsuarioActivo === usuario && clase === 'marcar') {
-        //mostrarTareasRestantes.classList.add('mostrar-ocultar');       
+      id = doc.id;
+      clase = doc.data().clase;
+      
+      if (clase == 'marcar') {
         borrarLista(id)
-        mostrarTareasUsuarioActivo();
-        
-        // setTimeout(() => {
-        //   mostrarTareasRestantes.classList.remove('mostrar-ocultar');
-        //   mostrarTareasUsuarioActivo();
-        // }, 100);
+        observador()
       }
-    
-  })
+    })
  
        
 }
@@ -456,84 +516,82 @@ function contarCerrarSesion(e) {
 
 
 
-async function tareasParaMostrar(user) {  
-  let usuarioLogueado = document.getElementById('usuarioLogueado').value;
-
-  let uActivo = '';
-            let tarea = '';
-            let i = 0;
-            let tareass = '';
-            let idTarea = '';
-            let statusTarea = '';
-            let claseTarea = '';
-            let cantidadTareas = [];
-            let contador = 0;
-            let contadorClase = 0;
-
-
-  const q = query(collection(db, "Tareas"), where("Usuario", "==", usuarioLogueado));
+// async function tareasParaMostrar(user) {
   
-  const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-
-      contador++;
-
-      tareass = doc.data().Tarea
-      idTarea = doc.data().id
-      claseTarea = doc.data().clase
-      statusTarea = doc.data().status
-      // doc.data() is never undefined for query doc snapshots
-      tarea = tarea +  `<li class="listare" id="${idTarea}" data-clase="${claseTarea}" data-status="${statusTarea}">
-                                       <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
-                                         <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
-                                         <input id="${idTarea}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
-                                       </label>
-                                       <div class="btn-contenedore md:basis-[20%] md:px-5 pr-2 md:pr-0 space-x-2">
-                                         <button class="js-edit   circulos" id="${doc.id}">
-                                           <i class="ri-pencil-fill"></i>
-                                         </button>
-                                         <button class="js-delete circulos" id="${doc.id}">
-                                           <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
-                                         </button>
-                                       </div>
-                                     </li>`;
+//   // let uActivo = user.email;
+//   // let tarea = '';
+//   // let tareass = '';
+//   // let idTarea = '';
+//   // let statusTarea = '';
+//   // let claseTarea = '';
+//   // let cantidadTareas = [];
+//   // let contador = 0;
+//   // let contadorClase = 0;
 
 
+//   // const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+  
+//   // const querySnapshot = await getDocs(q);
 
-      if (claseTarea == 'marcar') {
-        contadorClase++;
-        cantidadTareas.push({n: idTarea})
-      } 
-      //console.log(doc.id, " => ", doc.data());
+//   //   querySnapshot.forEach((doc) => {
+
+//   //     contador++;
+
+//   //     tareass = doc.data().Tarea
+//   //     idTarea = doc.data().id
+//   //     claseTarea = doc.data().clase
+//   //     statusTarea = doc.data().status
+//   //     // doc.data() is never undefined for query doc snapshots
+//   //     tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}">
+//   //                                      <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
+//   //                                        <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${idTarea}" ${statusTarea === "completed" ? "checked" : null}/>                       
+//   //                                        <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+//   //                                      </label>
+//   //                                      <div class="btn-contenedore md:basis-[20%] md:px-5 pr-2 md:pr-0 space-x-2">
+//   //                                        <button class="js-edit   circulos" id="${doc.id}">
+//   //                                          <i class="ri-pencil-fill"></i>
+//   //                                        </button>
+//   //                                        <button class="js-delete circulos" id="${doc.id}">
+//   //                                          <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
+//   //                                        </button>
+//   //                                      </div>
+//   //                                    </li>`;
+
+
+
+//   //     if (claseTarea == 'marcar') {
+//   //       contadorClase++;
+//   //       cantidadTareas.push({n: idTarea})
+//   //     } 
+//   //     //console.log(doc.id, " => ", doc.data());
       
-      document.getElementById('mostrarTareas').innerHTML = tarea;
+//   //     document.getElementById('mostrarTareas').innerHTML = tarea;
       
-    });
+//   //   });
 
 
    
               
 
-               if (contador == 0) {
-                 document.getElementById('mostrarTareas').innerHTML = '';
-               }
+//   //              if (contador == 0) {
+//   //                document.getElementById('mostrarTareas').innerHTML = '';
+//   //              }
               
               
-                 if (cantidadTareas.length != 0) {
-                   document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo">borrar marcados</button>`;
-                 } else {
-                   document.querySelector('.btnMarcar').innerHTML = ''
-                 }
+//   //                if (cantidadTareas.length != 0) {
+//   //                  document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo">borrar marcados</button>`;
+//   //                } else {
+//   //                  document.querySelector('.btnMarcar').innerHTML = ''
+//   //                }
                 
-                 if (contador >= 1) {
-                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado borrarTodo">borrar todo</button>`;
-                 } else {
-                   document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div>`;
-                 }
+//   //                if (contador >= 1) {
+//   //                  document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div><button id="${idTarea}" class="${claseTarea} borrado borrarTodo">borrar todo</button>`;
+//   //                } else {
+//   //                  document.querySelector('.btnEliminarTodo').innerHTML = `<div class="mr-4 borrarTodo">${contador} tarea activa</div>`;
+//   //                }
 
 
 
 
-}
+// }
 

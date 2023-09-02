@@ -19,11 +19,11 @@
 
 @media (min-width: 150px) {
     .listare {
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid #f8dcdb;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #7ddcf5;
+        color: #493b27;
         font-size: 20px;
         font-weight: 700;
         height: 50px;
@@ -39,7 +39,7 @@
     }
     
     .input-tarea {   
-        border: 2px solid #7ddcf5;
+        border: 1px solid #493b27;
         width: 100%;
         height: 35px;
         font-size: 20px;
@@ -62,9 +62,9 @@
         width: 40px;
         height: 40px;
         border-radius: 100%;
-        border: 2px solid #7ddcf5;
-        color: #7ddcf5;
-        background-color: white;
+        border: 2px solid #493b27;
+        color: #493b27;
+        background-color: #f8dcdb;
         font-size: 18px;
     }
     
@@ -72,40 +72,76 @@
         width: 40px;
         height: 40px;
         border-radius: 100%;
-        border: 2px solid white;
-        color: #939d9d;
-        background-color: #7ddcf5;
+        border: 2px solid #f8dcdb;
+        color: #493b27;
+        background-color: #f8dcdb;
     }
 
 
     
 body li input[type="text"]:read-only {
     background: transparent;
-    color: #7ddcf5;
+    color: #493b27;
     pointer-events: none;
 }
 
 body li[data-status="completed"] input[type="checkbox"] {
     appearance: none;
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 40px;
     border-radius: 100%;
-    background-color: red;
+    border: 1px solid #493b27;
+    background-color: #d05151;
 }
 
 body li[data-status="pending"] input[type="checkbox"] {
     appearance: none;
-    width: 30px;
-    height: 30px;
-    border: 2px solid #7ddcf5;
-    background-color: white;
+    width: 45px;
+    height: 40px;
+    border: 2px solid #493b27;
+    border-radius: 100%;
+    background-color: #f8dcdb;
 }
 
 body li[data-clase="marcar"] input[type="text"] {
     text-decoration: line-through;
-    color: #fa6450;
+    color: #d05151;
     opacity: 0.9;
-    border: 2px solid red;
+    border: 2px solid #d05151;
+  }
+
+
+  .tareas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 15px;
+    border: 1px solid #493b27;
+    width: 150px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #f8dcdb;
+  }
+  .tareas:hover {
+    background-color: #493b27;
+    color: #7ddcf5;
+    border: 1px solid #f8dcdb;
+  }
+
+  .btn-eliminar-todo {
+    color: #493b27;
+    font-size: 15px;
+    border: 2px solid #493b27;
+    width: 150px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #f8dcdb;
+  }
+  .btn-eliminar-todo:hover {
+    background-color: #493b27;
+    color: #7ddcf5;
+    border: 2px solid #f8dcdb;
   }
 
      

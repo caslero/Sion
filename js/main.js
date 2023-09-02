@@ -34,8 +34,13 @@ function registrar() {
     let nombre = document.getElementById('nombre').value;
 
     if (correo == '' || clave == '' || nombre == '') {
-        msjUsuario.classList.remove('hidden')
-        msjUsuario.innerHTML = '<div class="text-red-500">Error, uno o varios campos vacios</div>' 
+        msjUsuario.classList.remove('viejoHidden');
+        msjUsuario.classList.add('nuevoHidden');
+        msjUsuario.innerHTML = '<div>Error, uno o varios campos vacios</div>'
+        setTimeout(() => {
+            msjUsuario.classList.add('viejoHidden');
+            msjUsuario.innerHTML = '';
+        }, "4000"); 
         
     } else {
 
@@ -48,12 +53,14 @@ function registrar() {
     });
 
         if (correo === nombreUsuario) {
-            msjUsuario.classList.remove('hidden');            
-            msjUsuario.innerHTML = `<span>Usuario No disponible</span>`;
+            msjUsuario.classList.remove('viejoHidden');
+            msjUsuario.classList.add('nuevoHidden');         
+            msjUsuario.innerHTML = `<span>Correo en uso</span>`;
 
-            setTimeout(function(){
-                msjUsuario.classList.add('hidden');  
-            }, 5000);
+            setTimeout(() => {
+                msjUsuario.classList.add('viejoHidden');
+                msjUsuario.innerHTML = '';
+            }, "3000");
 
         }  else {
                  createUserWithEmailAndPassword(auth, correo, clave)
@@ -63,12 +70,14 @@ function registrar() {
                         Usuario: nombre,
                         Correo: correo
                     });
-                      
-                    msjUsuario.classList.remove('hidden');
+
+                    msjUsuario.classList.remove('viejoHidden');
+                    msjUsuario.classList.add('nuevoHidden');
                     msjUsuario.innerHTML = `<span>Usuario Registrado con exito</span>`;
-                    
-                    let exito = document.querySelector('.exito');
-                    exito.classList.remove('hidden')
+                    setTimeout(() => {
+                        msjUsuario.classList.add('viejoHidden');
+                        msjUsuario.innerHTML = '';
+                    }, "2000");
                     
 
                     verificar();
@@ -83,8 +92,36 @@ function registrar() {
                      
                        // ...
                    }).catch((error) => {
-                       const errorCode = error.code;
+                    const errorCode = error.code;
+                    
+                    if (errorCode == 'auth/invalid-email') {
+                        msjUsuario.classList.remove('viejoHidden');
+                        msjUsuario.classList.add('nuevoHidden');
+                        msjUsuario.innerHTML = `<span>Correo Invalido</span>`;                       
+                        setTimeout(() => {
+                            msjUsuario.classList.add('viejoHidden');
+                            msjUsuario.innerHTML = '';
+                        }, "3000");
+                    } else if (errorCode == 'auth/weak-password') {
+                        msjUsuario.classList.remove('viejoHidden');
+                        msjUsuario.classList.add('nuevoHidden');
+                        msjUsuario.innerHTML = `<span>Clave debe ser mayor a 6 digitos</span>`;
+                        setTimeout(() => {
+                            msjUsuario.classList.add('viejoHidden');
+                            msjUsuario.innerHTML = '';
+                        }, "3000");
+                    } else if (errorCode == 'auth/email-already-in-use') {
+                        msjUsuario.classList.remove('viejoHidden');
+                        msjUsuario.classList.add('nuevoHidden');
+                        msjUsuario.innerHTML = `<span>Correo en uso</span>`;
+                        setTimeout(() => {
+                            msjUsuario.classList.add('viejoHidden');
+                            msjUsuario.innerHTML = '';
+                        }, "3000");
+                    }
+
                        const errorMessage = error.message;
+                       
                        console.log(errorCode);
                        console.log(errorMessage);
                        // ..
@@ -92,6 +129,7 @@ function registrar() {
                  //console.log(correo, clave);
         
         }
+        
         document.getElementById('correo').value = '';
         document.getElementById('clave').value = '';
         document.getElementById('nombre').value = '';       
@@ -183,59 +221,129 @@ entrar.addEventListener('click', entrarSistema);
 function entrarSistema() {
     let correo1 = document.getElementById('correo1').value;
     let clave1 = document.getElementById('clave1').value;
+
+    let msj = document.getElementById('validar');
+    let divMsj = document.getElementById('validar');
     const auth = getAuth();
 
     if (correo1) {
+        bontonClaveOlvidada.setAttribute('enabled', '')
         signInWithEmailAndPassword(auth, correo1, clave1)
         .then((userCredential) => {
-            // Signed in 
             const user = userCredential.user;
             const usuario = user.email;
-            console.log(user.emailVerified);
-
+           
             if (user.emailVerified == true) {
                 location = 'tarea.html';
-                let ocultarValidacion = document.querySelector('.ocultar-validacion');
-                ocultarValidacion.classList.add('hidden');
             } else {
-                console.log('Error debe validar el correo enviado');
-                document.getElementById('validar').innerHTML = `<div class="validar-correo">Debe validar el correo</div>
-                                                                <div class="validar-correo" id="nuevoCodigo">Enviar Nuevo Codigo</div>
-                                                                `;
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[15px]">Debe validar el correo</div>
+                                    <div class="validar-correo" id="nuevoCodigo">Nuevo Codigo</div>
+                                    `;
                 
                 let nuevoCodigo = document.getElementById('nuevoCodigo');
                 nuevoCodigo.addEventListener('click', reenviarCodigo);
                                                             
                 function reenviarCodigo() {
-                    console.log('Hola nuevo codigo');
-
+                   
+                    setTimeout(() => {
+                        msj.classList.remove('mostrarMsjValidacion')
+                        msj.classList.add('ocultarMsjValidacion')
+                    }, '3000');
                     const auth = getAuth();
                     sendEmailVerification(auth.currentUser)
                         .then(() => {
                         // Email verification sent!
-                        // ...
-                        console.log('Enviando Correo');
+                        // ...                        
+                        msj.classList.remove('ocultarMsjValidacion')
+                        msj.classList.add('mostrarMsjValidacion')
+                        divMsj.innerHTML = `<div class="text-[#d05151]">Enviando Nuevo Codigo</div>`;
+                        
+                        setTimeout(() => {
+                            msj.classList.remove('mostrarMsjValidacion')
+                            msj.classList.add('ocultarMsjValidacion')
+                            divMsj.innerHTML = '';
+                        }, '5000');
                     }).catch((error) => {
                         // An error happened.
                         console.log(error);
                     });
                 }
             }
-                // ...
+
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(errorCode);
+            
 
-            document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-white">Datos incorrectos, verifique nuevamente</div>
-                                                                       <div class="text-white"><a href="index.html" class="text-blue-500 ">Registrar</a></div>`;
-            bontonClaveOlvidada.removeAttribute('disabled', '')
+            if (errorCode == 'auth/wrong-password') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Clave Errada</div>`;
+                setTimeout(() => {
+                    msj.classList.remove('mostrarMsjValidacion')
+                    msj.classList.add('ocultarMsjValidacion')
+                    divMsj.innerHTML = '';
+                }, '3000');
+            } else if (errorCode == 'auth/user-not-found') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Usuario no existe</div>
+                                    <div class="text-blue-500"><a href="index.html">Registrarse</a></div>`;
+            } else if (errorCode == 'auth/missing-password') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Campo de clave vacio</div>`;
+                setTimeout(() => {
+                    msj.classList.remove('mostrarMsjValidacion')
+                    msj.classList.add('ocultarMsjValidacion')
+                    divMsj.innerHTML = '';
+                }, '3000');
+            } else if (errorCode == 'auth/invalid-email') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Formato de correo invalido</div>`;
+                setTimeout(() => {
+                    msj.classList.remove('mostrarMsjValidacion')
+                    msj.classList.add('ocultarMsjValidacion')
+                    divMsj.innerHTML = '';
+                }, '3000');
+            } else if (errorCode == 'auth/too-many-requests') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Muchos intentos fallidos, recargando...</div>`;
+                setTimeout(() => {
+                    location = 'index.html'
+                }, '4000');
+            }
         });
         
-    } else {
-        console.log('campo de correo vacio');
-        document.querySelector('.ocultar-validacion').innerHTML = '<div class="text-red-500">uno o varios campos vacios</div>'
+    } else  if (correo1 == '') {
         bontonClaveOlvidada.setAttribute('disabled', '')
+        msj.classList.remove('ocultarMsjValidacion')
+        msj.classList.add('mostrarMsjValidacion')
+        divMsj.innerHTML = `<div class="text-[#d05151]">Campo de correo vacio</div>`;
+        
+        setTimeout(() => {
+            msj.classList.remove('mostrarMsjValidacion')
+            msj.classList.add('ocultarMsjValidacion')
+            divMsj.innerHTML = '';
+        }, '3000');        
+    } else  if (clave1 == '' &&  correo1 != '') {
+        bontonClaveOlvidada.setAttribute('disabled', '')
+        msj.classList.remove('ocultarMsjValidacion')
+        msj.classList.add('mostrarMsjValidacion')
+        divMsj.innerHTML = `<div class="text-[#d05151]">Campo de clave vacio</div>`;
+            
+        setTimeout(() => {
+            msj.classList.remove('mostrarMsjValidacion')
+            msj.classList.add('ocultarMsjValidacion')
+            divMsj.innerHTML = '';
+        }, '3000'); 
     }
+  
 
     
 }
@@ -246,30 +354,56 @@ claveOlvidada.addEventListener('click', cambiarClave);
 function cambiarClave() {
     
     let correo1 = document.getElementById('correo1').value;
-    //let clave1 = document.getElementById('clave1').value;
+    let msj = document.getElementById('validar');
+    let divMsj = document.getElementById('validar');
+
     if (correo1) {
-        
         const auth = getAuth();
-        sendPasswordResetEmail(auth, correo1)
-        .then(() => {
-            // Password reset email sent!
-            // ..
+        let validar = auth.currentUser.emailVerified;
 
+        if (validar == true) {
+            sendPasswordResetEmail(auth, correo1)
+            .then(() => {
+                        // Password reset email sent!
+                        // ..
+                    
             console.log('existe');
-                
-        }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-
-            console.log(errorCode);
-            console.log(errorMessage);
-
-            document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-red-500">correo no valido</div>
-                                                                       <div class="text-blue-500">o <a href="index.html"> no esta registrado</a></div>`;
-            bontonClaveOlvidada.setAttribute('disabled', '')
-        });        
-    } 
+                            
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
     
+                        console.log(errorCode);
+                        console.log(errorMessage);
+    
+                if (errorCode == 'auth/user-not-found') {
+                    msj.classList.remove('ocultarMsjValidacion')
+                    msj.classList.add('mostrarMsjValidacion')
+                    divMsj.innerHTML = `<div class="text-[#d05151]">Correo invalido</div>
+                                        <div class="text-blue-500"><a href="index.html">Registrarse</a></div>`;
+                            
+                           
+                }
+    
+                       
+    
+                        // document.querySelector('.ocultar-validacion').innerHTML = `<div class="text-red-500">correo no valido</div>
+                        //                                                            <div class="text-blue-500">o <a href="index.html"> no esta registrado</a></div>`;
+                        // bontonClaveOlvidada.setAttribute('disabled', '')
+            });
+        } else {
+            msj.classList.remove('ocultarMsjValidacion')
+            msj.classList.add('mostrarMsjValidacion')
+            divMsj.innerHTML = `<div class="text-[#d05151]">Validar correo</div>
+                                <div class="text-[#d05151]">Luego solicite cambio de clave</div>`;
+                            
+            setTimeout(() => {
+                msj.classList.remove('mostrarMsjValidacion')
+                msj.classList.add('ocultarMsjValidacion')
+                divMsj.innerHTML = '';
+            }, '5000');
+        }            
+    }    
 }
 
 
