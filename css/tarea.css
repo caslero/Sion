@@ -1,3 +1,88 @@
+
+
+
+.ocultarTarea {
+    display: none;
+}
+
+.ocultarTarea1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkear {
+    display: flex;
+    flex-direction: row;
+}
+
+.linea {
+    display: flex;
+}
+
+.activas {
+    width: 100%;
+    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.activas-ocultas {
+    width: 20%;
+    border: 2px solid blue;
+}
+
+.realizadas {
+    width: 20%;
+    border: 2px solid red;
+}
+.realizadas-ocultas {
+    width: 100%;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.eliminadas {
+    width: 20%;
+    border: 2px solid green;
+}
+.eliminadas-ocultas {
+    width: 100%;
+    border: 2px solid green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.vistasActivas {
+    display: flex;
+}
+.vistasActivas1 {
+    display: none;
+}
+
+.vistasRealizadas {
+    display: none;
+}
+.vistasRealizadas1 {
+    display: flex;
+}
+
+.vistasEliminadas {
+    display: none;
+}
+.vistasEliminadas1 {
+    display: flex;
+}
+
+
+
+
+
+
 .b {
     text-align: center;
     font-size: 50px;
@@ -218,6 +303,7 @@ body li[data-status="completed"] input[type="checkbox"] {
     border-radius: 100%;
     background-color: red;
     border: 2px solid #493b27;
+    cursor: pointer;
 }
 
 body li[data-status="pending"] input[type="checkbox"] {
@@ -226,6 +312,7 @@ body li[data-status="pending"] input[type="checkbox"] {
     height: 40px;
     border: 2px solid #493b27;
     background-color: #f8dcdb;
+    cursor: pointer;
 }
 
 body li[data-clase="marcar"] input[type="text"] {
