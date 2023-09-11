@@ -59,7 +59,6 @@ async function mostrarTareasUsuarioActivo(user) {
   let id = '';
   //let id1 = '';
 
-
   //const q1  = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
   const q = query(collection(db, "Tareas"), orderBy('id', 'asc'));
 
@@ -68,15 +67,15 @@ async function mostrarTareasUsuarioActivo(user) {
 
    // querySnapshot.forEach((doc1) => {
       querySnapshot1.forEach((doc) => {
-        id = doc.data().id;
-
-          contador++;
-          tareass = doc.data().Tarea
-          idTarea = doc.data().id
-          claseTarea = doc.data().clase
-          statusTarea = doc.data().status
-
+        
           if (doc.data().Usuario == uActivo) {
+            console.log(uActivo);
+            contador++;
+            tareass = doc.data().Tarea
+            idTarea = doc.data().id
+            claseTarea = doc.data().clase
+            statusTarea = doc.data().status
+
             tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}">
             <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
               <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
