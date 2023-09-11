@@ -1,6 +1,12 @@
 
 
 
+.progreso {
+    margin: auto;
+    display: block;
+    shape-rendering: auto;
+}
+
 .ocultarTarea {
     display: none;
 }
@@ -12,9 +18,9 @@
 
 .checkear {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
-
+/* 
 .linea {
     display: flex;
 }
@@ -43,7 +49,6 @@
     align-items: center;
 }
 
-
 .eliminadas {
     width: 20%;
     border: 2px solid green;
@@ -54,9 +59,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
-
+/* 
 .vistasActivas {
     display: flex;
 }
@@ -76,7 +81,7 @@
 }
 .vistasEliminadas1 {
     display: flex;
-}
+} */
 
 
 
@@ -140,8 +145,6 @@
         height: 40px;
         width: 30%;
     }
-
-
 
     .circulos {
         width: 40px;
@@ -229,8 +232,6 @@ body li[data-clase="marcar"] input[type="text"] {
     color: #7ddcf5;
     border: 2px solid #f8dcdb;
   }
-
-     
 }
 
 @media (min-width: 500px) {
@@ -241,8 +242,6 @@ body li[data-clase="marcar"] input[type="text"] {
    align-items: center;
    height: 50px;
    width: 100%;
-   padding-left: 30px;
-   padding-right: 30px;
 }
 
 .input-contenedor {
@@ -270,6 +269,9 @@ body li[data-clase="marcar"] input[type="text"] {
 
 
 .circulos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     height: 40px;
     border-radius: 100%;

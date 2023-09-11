@@ -7,6 +7,22 @@ body {
 }
 
 
+.progreso {
+    margin: auto;
+    display: block;
+    shape-rendering: auto;
+}
+
+.ocultarTarea {
+    display: none;
+}
+
+.ocultarTarea1 {
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 /** Aqui comienza la clase de la section principal de la aplicacion */
 

@@ -17,7 +17,7 @@ let ver = document.querySelector('.ver');
 let nombreUsuario = '';
 let t = '';
 
-
+let barraProgreso = document.getElementById('barraProgreso');
 
 
 let registroUsuarios = document.getElementById('registrar');
@@ -34,6 +34,7 @@ function registrar() {
     let nombre = document.getElementById('nombre').value;
 
     if (correo == '' || clave == '' || nombre == '') {
+        barraDeProgreso()
         msjUsuario.classList.remove('viejoHidden');
         msjUsuario.classList.add('nuevoHidden');
         msjUsuario.innerHTML = '<div>Error, uno o varios campos vacios</div>'
@@ -53,6 +54,7 @@ function registrar() {
     });
 
         if (correo === nombreUsuario) {
+            barraDeProgreso()
             msjUsuario.classList.remove('viejoHidden');
             msjUsuario.classList.add('nuevoHidden');         
             msjUsuario.innerHTML = `<span>Correo en uso</span>`;
@@ -63,6 +65,8 @@ function registrar() {
             }, "3000");
 
         }  else {
+
+            barraDeProgreso()
                  createUserWithEmailAndPassword(auth, correo, clave)
                  .then(() => {
                     addDoc(collection(db, "Usuarios"), {
@@ -82,6 +86,7 @@ function registrar() {
 
                     verificar();
                     setTimeout(function(){
+                        barraDeProgreso()
                         location = 'index.html';
                     }, 2000);
 
@@ -92,12 +97,13 @@ function registrar() {
                      
                        // ...
                    }).catch((error) => {
+                    barraDeProgreso()
                     const errorCode = error.code;
                     
                     if (errorCode == 'auth/invalid-email') {
                         msjUsuario.classList.remove('viejoHidden');
                         msjUsuario.classList.add('nuevoHidden');
-                        msjUsuario.innerHTML = `<span>Correo Invalido</span>`;                       
+                        msjUsuario.innerHTML = `<span>Formato de correo Invalido</span>`;                       
                         setTimeout(() => {
                             msjUsuario.classList.add('viejoHidden');
                             msjUsuario.innerHTML = '';
@@ -146,6 +152,7 @@ function observador() {
         if (user) {
             if (user.emailVerified == true) {
                 sesionActiva.classList.add('hidden')
+                barraDeProgreso()
                 location = "tarea.html"
                 const uid = user.uid;
             } else {
@@ -156,20 +163,8 @@ function observador() {
     });
 }
 
-
-
-// function aparece(user) {
-//     let user1 = user;
-//      const usuario = user.email;    
-//     console.log(user1.emailVerified);
-//     if(user1.emailVerified == false) {
-//        console.log('Usuario no Verificado');
-//        //location = 'index.html';
-//     }
-    
-// }
-
 function verificar() {
+    barraDeProgreso()
     const auth = getAuth();
     sendEmailVerification(auth.currentUser)
     .then(() => {
@@ -181,37 +176,6 @@ function verificar() {
         console.log(error);
     });
 }
-
-
-
-
-// let reVerificar = document.getElementById('reVerificar');
-// reVerificar.addEventListener('click', nuevaVerificacion);
-
-// function nuevaVerificacion () {
-//     let correo1 = document.getElementById('correo1').value;
-//     let clave1 = document.getElementById('clave1').value;
-//     const auth = getAuth();
-
-  
-
-//      signInWithEmailAndPassword(auth, correo1, clave1)
-//          .then((userCredential) => {
-//          // Signed in 
-//          const user = userCredential.user;
-//          const usuario = user.email;
-//         console.log(user.emailVerified);
-
-//         if (user.emailVerified == true) {
-//             location = 'tarea.html'
-//         } else {
-//             console.log('Error debe validar el correo enviado');
-//         }
-//          // ...
-//      })
-   
-// }
-
 
 
 let entrar = document.getElementById('registrar1');
@@ -234,6 +198,7 @@ function entrarSistema() {
             const usuario = user.email;
            
             if (user.emailVerified == true) {
+                barraDeProgreso()
                 location = 'tarea.html';
             } else {
                 msj.classList.remove('ocultarMsjValidacion')
@@ -246,7 +211,7 @@ function entrarSistema() {
                 nuevoCodigo.addEventListener('click', reenviarCodigo);
                                                             
                 function reenviarCodigo() {
-                   
+                   barraDeProgreso()
                     setTimeout(() => {
                         msj.classList.remove('mostrarMsjValidacion')
                         msj.classList.add('ocultarMsjValidacion')
@@ -273,6 +238,8 @@ function entrarSistema() {
             }
 
         }).catch((error) => {
+
+            barraDeProgreso()
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode);
@@ -360,6 +327,7 @@ function cambiarClave() {
 
     if (correo1) {
         bontonClaveOlvidada.setAttribute('enabled', '')
+        barraDeProgreso()
         
         sendPasswordResetEmail(auth, correo1)
         .then(() => {
@@ -374,6 +342,7 @@ function cambiarClave() {
             }, '5000');  
                             
         }).catch((error) => {
+            barraDeProgreso()
             const errorCode = error.code;
             const errorMessage = error.message;
             
@@ -385,6 +354,17 @@ function cambiarClave() {
                 msj.classList.add('mostrarMsjValidacion')
                 divMsj.innerHTML = `<div class="text-[#d05151]">Correo invalido</div>
                                         <div class="text-blue-500"><a href="index.html">Registrarse</a></div>`;
+            } else if (errorCode == 'auth/invalid-email') {
+                msj.classList.remove('ocultarMsjValidacion')
+                msj.classList.add('mostrarMsjValidacion')
+                divMsj.innerHTML = `<div class="text-[#d05151]">Formato de correo invalido</div>
+                                    <div class="text-[#d05151]">Ejemplo: <b class="text-blue-500">ejemplo@ejemplo.com</b></div>`;
+                
+                setTimeout(() => {
+                    msj.classList.remove('mostrarMsjValidacion')
+                    msj.classList.add('ocultarMsjValidacion')
+                    divMsj.innerHTML = '';
+                }, '10000'); 
             }
         });  
     }    
@@ -394,3 +374,12 @@ function cambiarClave() {
 
 observador();
 
+
+
+function barraDeProgreso() {
+    barraProgreso.classList.remove('ocultarTarea');
+  
+    setTimeout(() => {
+      barraProgreso.classList.add('ocultarTarea')
+    }, 3000)
+  }
