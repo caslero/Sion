@@ -1,5 +1,30 @@
 
 
+.prueba {
+    color: #ebd6de;
+}
+
+
+.degradado {
+    /* background: linear-gradient(top, white 20%, #f9f7f7 75%, #f8dcdb 5%); */
+    background: linear-gradient(white 30%, #f9f7f7 75%, #f8dcdb 99%);
+}
+
+
+
+
+
+body {
+    background-color: #f7e8ee; /*#493b27 #f8dcdb*/
+}
+
+.b {
+    text-align: center;
+    font-size: 50px;
+}
+
+
+
 
 .progreso {
     margin: auto;
@@ -16,82 +41,8 @@
     flex-direction: column;
 }
 
-.checkear {
-    display: flex;
-    flex-direction: column;
-}
-/* 
-.linea {
-    display: flex;
-}
-
-.activas {
-    width: 100%;
-    border: 2px solid blue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.activas-ocultas {
-    width: 20%;
-    border: 2px solid blue;
-}
-
-.realizadas {
-    width: 20%;
-    border: 2px solid red;
-}
-.realizadas-ocultas {
-    width: 100%;
-    border: 2px solid red;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.eliminadas {
-    width: 20%;
-    border: 2px solid green;
-}
-.eliminadas-ocultas {
-    width: 100%;
-    border: 2px solid green;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
-
-/* 
-.vistasActivas {
-    display: flex;
-}
-.vistasActivas1 {
-    display: none;
-}
-
-.vistasRealizadas {
-    display: none;
-}
-.vistasRealizadas1 {
-    display: flex;
-}
-
-.vistasEliminadas {
-    display: none;
-}
-.vistasEliminadas1 {
-    display: flex;
-} */
 
 
-
-
-
-
-.b {
-    text-align: center;
-    font-size: 50px;
-}
 
 .c {
     color: blue;
@@ -108,7 +59,9 @@
 
 
 @media (min-width: 150px) {
-    .listare {
+
+    
+    /* .listare {
         border-bottom: 2px solid #f8dcdb;
         display: flex;
         align-items: center;
@@ -118,14 +71,15 @@
         font-weight: 700;
         height: 50px;
         width: 100%; 
-     }
+     } */
 
      .input-contenedor {
         display: flex;
         height: 40px;
         width: 70%;
         flex-direction: row;
-        align-items: center; 
+        align-items: center;
+        cursor: pointer;  
     }
     
     .input-tarea {   
@@ -136,7 +90,7 @@
         font-weight: 700;
         border-radius: 10px;
         text-align: center;
-        text-transform: capitalize;      
+        text-transform: capitalize;   
     }
     
     .btn-contenedore {
@@ -234,32 +188,55 @@ body li[data-clase="marcar"] input[type="text"] {
   }
 }
 
+
+
+
+
 @media (min-width: 500px) {
 .listare {
-   border-bottom: 2px solid #f8dcdb;
    display: flex;
    flex-direction: row;
    align-items: center;
-   height: 50px;
+   background-color: white;
+   height: 70px;
    width: 100%;
+   margin-bottom: 10px;
+   border-radius: 10px;
+   border: 1px solid #ebd6de;
+}
+.listare:hover {
+    height: 70px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #493b27;
+    box-shadow: 0px 0px 2px 2px #ebd6de;
+}
+
+.input-btn:hover {
+    box-shadow: 0px 0px 2px 2px #ebd6de;
 }
 
 .input-contenedor {
     display: flex;
     height: 40px;
     flex-direction: row;
-    align-items: center; 
+    align-items: center;
+    cursor: pointer;
 }
 
 .input-tarea {   
-    border: 1px solid #493b27;
+    border: 1px solid #ebd6de;
     width: 100%;
-    height: 35px;
+    height: 40px;
     font-size: 25px;
     font-weight: 700;
     border-radius: 10px;
     text-align: center;
-    text-transform: capitalize;      
+    text-transform: capitalize;
+}
+.input-tarea:hover {   
+    border: 1px solid #493b27;
 }
 
 .btn-contenedor {
@@ -275,9 +252,21 @@ body li[data-clase="marcar"] input[type="text"] {
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: 2px solid #493b27;
+    border: 2px solid #ebd6de;
     color: #493b27;
-    background-color: #f8dcdb;
+    background-color: #f7e8ee;
+    font-size: 18px;
+}
+.circulosEditando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #f8dcdb;
+    color: #7ddcf5;
+    background-color: white;
     font-size: 18px;
 }
 
@@ -285,17 +274,17 @@ body li[data-clase="marcar"] input[type="text"] {
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: 2px solid #f8dcdb;
-    color: #7ddcf5;
-    background-color: #493b27;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
 }
 
-
+/* Input de donde esta la tarea que se registra*/
 body li input[type="text"]:read-only {
     background: transparent;
     color: #493b27;
     pointer-events: none;
-    background-color: #f8dcdb;
+    background-color: white;
 }
 
 body li[data-status="completed"] input[type="checkbox"] {
@@ -303,25 +292,46 @@ body li[data-status="completed"] input[type="checkbox"] {
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    background-color: red;
-    border: 2px solid #493b27;
+    background-color: #e97070;
+    border: 1px solid #493b27;
     cursor: pointer;
 }
+body li[data-status="completed"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #e97070;
+    border: 2px solid #ebd6de;
+    cursor: pointer;
+}
+
 
 body li[data-status="pending"] input[type="checkbox"] {
     appearance: none;
     width: 40px;
     height: 40px;
-    border: 2px solid #493b27;
-    background-color: #f8dcdb;
+    border: 2px solid #f8dcdb;
+    background-color: #f7e8ee;
     cursor: pointer;
 }
 
+body li[data-status="pending"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #493b27;
+    background-color: white;
+    cursor: pointer;
+}
+
+
+
 body li[data-clase="marcar"] input[type="text"] {
     text-decoration: line-through;
-    color: red;
+    color: #e97070;
     opacity: 0.9;
-    border: 2px solid red;
+    border: 1px solid #e97070;
 }
 
 .borrarTodo {
@@ -358,17 +368,17 @@ body li[data-clase="marcar"] input[type="text"] {
     justify-content: center;
     color: #493b27;
     font-size: 20px;
-    border: 1px solid #493b27;
+    border: 2px solid #ebd6de;
     width: 170px;
-    height: 41px;
+    height: 40px;
     border-radius: 20px;
-    background-color: #f8dcdb;
+    background-color: #f7e8ee;
     font-weight: 400;
   }
   .tareas:hover {
-    background-color: #493b27;
-    color: #7ddcf5;
-    border: 2px solid #f8dcdb;
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
     font-weight: 400;
     width: 170px;
     height: 40px;
@@ -380,17 +390,17 @@ body li[data-clase="marcar"] input[type="text"] {
     justify-content: center;
     color: #493b27;
     font-size: 20px;
-    border: 2px solid #493b27;
+    border: 2px solid #ebd6de;
     width: 170px;
     height: 40px;
     border-radius: 20px;
-    background-color: #f8dcdb;
+    background-color: #f7e8ee;
     font-weight: 400;
   }
   .btn-eliminar-todo:hover {
-    background-color: #493b27;
-    color: #7ddcf5;
-    border: 2px solid #f8dcdb;
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
     font-weight: 400;
     width: 170px;
     height: 40px;
@@ -400,4 +410,4 @@ body li[data-clase="marcar"] input[type="text"] {
 
 
 
-}
+} 

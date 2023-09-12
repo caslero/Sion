@@ -32,20 +32,8 @@ let verTareasActivas = document.getElementById('mostrarTareas');
 
 
 let mostrarT = await getTareas();
-let todasTareas = await getTareasGuardadas();
-
-let t = '';
-
-
-
-let btnEliminar = document.querySelector('.btnEliminar');
-
-
-
-
 
 async function mostrarTareasUsuarioActivo(user) {
-
 
   let uActivo = user.email;
   let tarea = '';
@@ -56,70 +44,55 @@ async function mostrarTareasUsuarioActivo(user) {
   let cantidadTareas = [];
   let contador = 0;
   let contadorClase = 0;
-  let id = '';
-  //let id1 = '';
-
-  //const q1  = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+ 
   const q = query(collection(db, "Tareas"), orderBy('id', 'asc'));
 
-  //const querySnapshot = await getDocs(q1);
   const querySnapshot1 = await getDocs(q);
+  querySnapshot1.forEach((doc) => {
+    if (doc.data().Usuario == uActivo) {
+      contador++;
+      tareass = doc.data().Tarea
+      idTarea = doc.data().id
+      claseTarea = doc.data().clase
+      statusTarea = doc.data().status
 
-   // querySnapshot.forEach((doc1) => {
-      querySnapshot1.forEach((doc) => {
-        
-          if (doc.data().Usuario == uActivo) {
-            console.log(uActivo);
-            contador++;
-            tareass = doc.data().Tarea
-            idTarea = doc.data().id
-            claseTarea = doc.data().clase
-            statusTarea = doc.data().status
-
-            tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}">
-            <label class="space-x-4 pl-2 md:pl-0 input-contenedor md:basis-[80%]">
-              <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
-              <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
-            </label>
-            <div class="btn-contenedore md:basis-[20%] md:px-5 px-2 md:px-0 space-x-2">
-              <button class="js-edit   circulos" id="${doc.id}">
-                <i class="ri-pencil-fill"></i>
-              </button>
-              <button class="js-delete circulos" id="${doc.id}">
-                <i class="ri-delete-bin-fill" title="Borrar Solo uno"></i>
-              </button>
-            </div>
-          </li>`;
-          }          
-           
-          
-        
-
-        if (claseTarea == 'marcar') {
-          contadorClase++;
-          cantidadTareas.push({n: idTarea})
-        }    
-      });
-   // });
-
-
-    document.getElementById('mostrarTareas').innerHTML = tarea;
+      tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}">
+                          <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
+                            <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                            <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+                          </label>
+                          <div class="btn-contenedore md:basis-[20%] space-x-2 pe-2">
+                            <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
+                              <i class="ri-pencil-fill cambiarIcono"></i>
+                            </button>
+                            <button class="js-delete circulos" id="${doc.id}">
+                              <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
+                            </button>
+                          </div>
+                        </li>`;
+    }
+    if (claseTarea == 'marcar') {
+      contadorClase++;
+      cantidadTareas.push({n: idTarea})
+    }    
+  });
+  document.getElementById('mostrarTareas').innerHTML = tarea;
     
-    if (contador == 0) {
-      document.getElementById('mostrarTareas').innerHTML = '';
-    }
-    if (cantidadTareas.length != 0) {
-      document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
-    } else {
-      document.querySelector('.btnMarcar').innerHTML = ''
-    }
-    if (contador >= 1) {
-      document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
-      document.querySelector('.sinTareas').innerHTML = `<div class="mr-4 borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
-    } else {
-      document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
-      document.querySelector('.btnEliminarTodo').innerHTML = '';
-    }
+  if (contador == 0) {
+    document.getElementById('mostrarTareas').innerHTML = '';
+  }
+  if (cantidadTareas.length != 0) {
+    document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
+  } else {
+    document.querySelector('.btnMarcar').innerHTML = ''
+  }
+  if (contador >= 1) {
+    document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
+    document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+  } else {
+    document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+    document.querySelector('.btnEliminarTodo').innerHTML = '';
+  }
 }
 
 
@@ -139,7 +112,7 @@ function observador() {
         nombre2 = doc.data().Correo;
         if (nombre === nombre2) {
           nombreUsuarioActivo = doc.data().Usuario
-          document.getElementById('nombreUsua').value = nombreUsuarioActivo;
+          document.getElementById('nombreUsua').innerHTML = nombreUsuarioActivo;
         }
         
       })
@@ -309,27 +282,29 @@ editarTarea.addEventListener('click', actualizarTareas);
 
 function actualizarTareas(e) {
 
+  let cambiarIconoActualizarTarea = e.target.closest(".cambiarIcono");  
   let tarea = '';
   const botonEditarUnaTarea = e.target.closest(".js-edit");
  
   if (!botonEditarUnaTarea) return;
-
-  //mostrarTareasRestantes.classList.remove('mostrar-ocultar'); 
-    
     const id = botonEditarUnaTarea.id;
     const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
-  
+
+    cambiarIconoActualizarTarea.classList.remove('ri-pencil-fill');
+    botonEditarUnaTarea.classList.remove('circulos')
+
     if (input.hasAttribute("readonly")) {
       input.removeAttribute("readonly");
       barraDeProgreso()
-      console.log('Editando..');
+      cambiarIconoActualizarTarea.classList.add('ri-edit-box-fill');
+      botonEditarUnaTarea.classList.add('circulosEditando')
     } else {
       input.setAttribute("readonly", "");     
       tarea = input.value; 
 
       barraDeProgreso()
       tareaActualizada(id, {Tarea: tarea});
-      console.log('Tarea Actualizada');
+     
       observador()
       // setTimeout(() => {
       //   mostrarTareasRestantes.classList.remove('mostrar-ocultar');
@@ -535,3 +510,34 @@ function barraDeProgreso() {
     barraProgreso.classList.add('ocultarTarea')
   }, 1000)
 }
+
+let iconoUsuario = document.querySelector('.iconoUsuario');
+
+iconoUsuario.addEventListener('click', salirSesion);
+function salirSesion() {
+  let btnCerrarSesion = document.querySelector('.btnCerrarSesion');
+  btnCerrarSesion.classList.remove('hidden')
+
+  setTimeout(() => {
+    btnCerrarSesion.classList.add('hidden');
+  }, 5000);
+}
+
+
+
+let today = new Date();
+
+let nDia = { weekday: 'long'};
+let dia = { day: 'numeric'};
+let mes = { month: 'long'};
+let year = { year: 'numeric'};
+
+let nombreDia = today.toLocaleString('es-es', nDia);
+let diaActual = today.toLocaleString('es-es', dia);
+let mesActual = today.toLocaleString('es-es', mes);
+let yearActual = today.toLocaleString('es-es', year);
+
+document.getElementById('nombreDia').innerHTML = nombreDia;
+document.getElementById('dia').innerHTML = diaActual;
+document.getElementById('mes').innerHTML = mesActual;
+document.getElementById('year').innerHTML = yearActual;

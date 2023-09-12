@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tareas</title>
     <link rel="stylesheet" href="css/tarea.css">
-    <link rel="stylesheet" href="css/index.css">
+    <!-- <link rel="stylesheet" href="css/index.css"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer>history.forward() </script>
     <script type="module" src="js/tarea.js"></script>
@@ -16,31 +16,58 @@
 <body>
 
     <div class="a b eliminarTodo">
-        <section class="mt-10 md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 space-y-4 flex flex-col justify-between items-center">
-            <div class="bg-[#939d9d] w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 md:h-[70px] h-24 -mt-5">
-                <div class="w-full flex items-center justify-center bg-white md:h-[40px] md:mt-0 md:mb-0 mb-4 md:w-[60%]  border-[1px] border-[#7ddcf5] rounded-[20px] space-x-4">
-                    <b class="md:text-xl text-sm text-[#7ddcf5]">Bienvenido:</b> 
-                    <input class="outline-none w-16 md:w-60 us bg-[#939d9d] hidden" type="text" id="usuarioLogueado" readonly>
-                    <input class="outline-none w-32 md:w-40 bg-white usa  text-[#939d9d] font-[700] text-xl" id="nombreUsua" type="text" readonly>
+        <section class="flex flex-col  justify-between items-center border-b-2 border-[#f7e8ee]">
+            <div class="bg-[#f9f7f7] px-4 sm:px-28 w-full flex flex-row items-center justify-center h-20">
+                <div class="w-[30%] sm:w-[50%] lg:w-[75%]">
+                    <img class="w-16 h-16" src="img/tareas.png" alt="">
                 </div>
-                <div class="md:w-[30%] w-40 flex items-center justify-center">
-                    <button class="mostrar text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] md:w-[250px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="cerrarSesion">Cerrar Sesion</button>
-                </div> 
+                
+                <div class="flex w-[70%] sm:w-[50%] lg:w-[25%] ">
+                    <div class="flex items-center justify-center bg-[#f9f7f7] h-16 w-[70%]">
+                        <input class="outline-none us bg-[#939d9d] hidden" type="text" id="usuarioLogueado" readonly>
+                        <!-- <input class="w-[190px] outline-none bg-white usa  text-[#493b27] font-[600] text-xl" id="nombreUsua" type="text" readonly> -->
+                    
+                        <i class="ri-user-follow-line me-2 iconoUsuario cursor-pointer"></i>
+                        <div id="nombreUsua" class=" usa text-[#493b27] font-[600] text-xl text-center" title="Nombre De Usuario Activo">
+                         
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center w-[30%]">
+                        <button class="mostrar btnCerrarSesion hidden text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] hover:bg-[#7ddcf5] hover:text-[#493b27] hover:border-1 hover:border-[#493b27]" id="cerrarSesion" title="Cerrar Sesion">Salir</button>
+                    </div>
+                </div>
             </div>       
         </section>
 
-        <section class="md:max-w-[600px] lg:max-w-[800px] mt-5 container mx-auto lg:px-28 space-y-4 px-2  flex flex-col justify-between items-center">
-            <div class="w-full flex flex-col md:flex-row items-center justify-center md:space-x-5 space-y-2 md:space-y-0 md:h-20 h-24 bg-[#7ddcf5] w-full px-4 md:px-0">
-                <div class="md:w-[60%] w-full  h-10 rounded-[30px] flex justify-center items-center bg-white  border-[1px] border-[#493b27]">
-                    <input id="agregarTarea"  class="outline-none w-[90%] h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[15px] capitalize" type="text" placeholder="Ingrese Tarea.." required>
+        <section class="mt-4 container mx-auto lg:px-28 space-y-4 sm:space-y-0 px-2">
+            <div class="flex justify-between mb-4">
+                <div>
+                    <h4 class="text-[#493b27] text-2xl font-[700]">Tareas</h4>
                 </div>
-                <div class="md:w-[30%] w-40 flex items-center justify-center">              
-                    <button class="mostrar text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] md:w-[250px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="guardarTarea">Agregar Tarea</button>
+                <div class="text-[#493b27] text-md capitalize">
+                    <span id="nombreDia"></span>
+                    <span id="dia"></span>
+                    <span id="mes"></span>
+                    <span>De</span>
+                    <span id="year"></span>
+                </div>
+            </div>
+            <div class="flex space-x-2">
+                <div class="w-full md:w-[50%] h-14  flex justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md hover:border-[#493b27] input-btn">
+                    <input id="agregarTarea"  class="outline-none h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[20px] capitalize" type="text" placeholder="Ingrese Tarea.." required>
+                </div>
+                <div class="flex items-center justify-center">              
+                    <button class="mostrar bg-white border-[1px] border-[#ebd6de] rounded-md h-14 w-20 flex items-center justify-center hover:border-[#493b27] input-btn" id="guardarTarea" title="Guardar Tarea">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
+                            <path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>        
         </section>
 
-        <section class="md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 h-12 my-2">
+        <section class="  container mx-auto lg:px-28 px-2 h-12 my-2">
             <div id="barraProgreso" class=" ocultarTarea">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      class="progreso"
@@ -53,46 +80,23 @@
             </div>
         </section>
 
-        <section class="md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 classLista">
+        <section class="  container mx-auto lg:px-28 px-2 classLista">
             <!-- <h4 class=" md:mt-10 mt-4 " id="estadoTarea">Tareas Activas</h4> -->
-            <div class="w-full bg-[#7ddcf5] flex">
-                <div class="ocultare w-full px-4">
+            <div class="w-full">
+                <div class="ocultare w-full px-4 sm:px-0">
                     <ul id="mostrarTareas" class="checkear">
 
-                        <!-- <div class="flex flex-col items-center">
-                            <button id="clase1" class="border-[1px] border-[blue]">Activas</button>
-                            <div class="activasVer activas border-[1px] border-[blue]">
-                                <div class="w-[80px]"></div>
-                                <div class="tareaActiva ocultarTarea1" id="mostrarTareasActivas"></div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="flex flex-col items-center">
-                            <button id="clase2" class="border-[1px] border-[red]">Realizadas</button>
-                            <div class="realizadasVer border-[1px] border-[red]">
-                                <div class="w-[80px]"></div>
-                                <div class="tareaRealizada ocultarTarea" id="mostrarTareasRealizadas"></div>
-                            </div>
-                        </div> -->
-                        
-                        <!-- <div class="eliminadasVer border-2 border-[green]">
-                            <button class="">Eliminadas</button>
-                            <div class="w-[80px]"></div>
-                            <div class="tareaEliminada ocultarTarea" id="mostrarTareasEliminadas"></div>
-                        </div> -->
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section class="md:max-w-[600px] lg:max-w-[800px] mt-5 container mx-auto lg:px-28 px-2 ">
-            <div  class="btnEliminar space-y-2 sm:space-y-0 w-full flex flex-col sm:flex-row items-center justify-center sm:justify-between px-2 md:flex-row  md:space-x-5 h-24 bg-[#7ddcf5] w-full">
-                <div class="sm:ms-[10px]">
+        <section class="  mt-5 container mx-auto lg:px-28 px-2 ">
+            <div  class="btnEliminar bg-white w-full h-20 flex items-center border-[1px] border-[#ebd6de] rounded-[10px]">
+                <div class="flex flex-row justify-between items-center w-full px-2">
                     <div class="sinTareas "></div>
-                </div>
-                <div class="flex justify-between space-x-4">
-                    <div class="btnEliminarTodo md:-ms-[30px]"></div>
-                    <div class="btnMarcar md:ms-2"></div>
+                    <div class="btnEliminarTodo "></div>
+                    <div class="btnMarcar "></div>
                 </div>                
             </div>        
         </section>

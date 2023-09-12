@@ -24,7 +24,6 @@ body {
 
 
 
-/** Aqui comienza la clase de la section principal de la aplicacion */
 
 
 img {
@@ -58,7 +57,6 @@ img {
     transition: all;
     transition-duration: 900ms;
 }
-/** Aqui termina la clase de la section principal de la aplicacion */
 
 
 
@@ -228,8 +226,7 @@ img {
         font-weight: 700;
     }
 
-    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
-
+    
     .titulo-secundario {
         color: #7ddcf5;
         font-size: 12px;
@@ -237,8 +234,7 @@ img {
         font-weight: 700;
         margin-top: -20px;
     }
-    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
-
+   
    
     nav {
         display: flex;
@@ -558,7 +554,6 @@ img {
         font-weight: 700;
     }
 
-    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
     .titulo-principal {
         color: #7ddcf5;
         font-size: 50px;
@@ -573,8 +568,6 @@ img {
         font-weight: 700;
         margin-top: -20px;
     }
-    /** Inicio de la clase del titulo principal y secundario de la aplicacion */
-
 
 
     .btn-entrar-tarea {
@@ -676,4 +669,4 @@ img {
 
 
 }
-    
+     
