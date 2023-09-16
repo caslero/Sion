@@ -60,3 +60,4 @@ export let borrarLista = (id) => deleteDoc(doc(db, "Tareas", id));
 
 export let tareaActualizada = (id, nuevaT) => updateDoc(doc(db, 'Tareas', id), nuevaT);
 
+

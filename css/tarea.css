@@ -1,7 +1,13 @@
 
 
+
+.filtro {
+    display: none;
+}
+
+
 .prueba {
-    color: #ebd6de;
+    color: #fcfafa;
 }
 
 
@@ -405,9 +411,6 @@ body li[data-clase="marcar"] input[type="text"] {
     width: 170px;
     height: 40px;
   }
-
-  
-
 
 
 } 

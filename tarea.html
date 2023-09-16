@@ -16,32 +16,43 @@
 <body>
 
     <div class="a b eliminarTodo">
-        <section class="flex flex-col  justify-between items-center border-b-2 border-[#f7e8ee]">
-            <div class="bg-[#f9f7f7] px-4 sm:px-28 w-full flex flex-row items-center justify-center h-20">
+        <section class="flex flex-col  justify-between items-center border-b-2 border-[#f7e8ee] quitarBuscador">
+            <div class="bg-[#fcfafa] px-4 sm:px-28 w-full flex flex-row items-center justify-center h-20">
                 <div class="w-[30%] sm:w-[50%] lg:w-[75%]">
                     <img class="w-16 h-16" src="img/tareas.png" alt="">
                 </div>
                 
-                <div class="flex w-[70%] sm:w-[50%] lg:w-[25%] ">
-                    <div class="flex items-center justify-center bg-[#f9f7f7] h-16 w-[70%]">
-                        <input class="outline-none us bg-[#939d9d] hidden" type="text" id="usuarioLogueado" readonly>
-                        <!-- <input class="w-[190px] outline-none bg-white usa  text-[#493b27] font-[600] text-xl" id="nombreUsua" type="text" readonly> -->
-                    
-                        <i class="ri-user-follow-line me-2 iconoUsuario cursor-pointer"></i>
+                <div class="flex flex-col w-[70%] sm:w-[50%] lg:w-[25%] ">                    
+                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
                         <div id="nombreUsua" class=" usa text-[#493b27] font-[600] text-xl text-center" title="Nombre De Usuario Activo">
                          
                         </div>
-                    </div>
-
-                    <div class="flex items-center justify-center w-[30%]">
-                        <button class="mostrar btnCerrarSesion hidden text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] hover:bg-[#7ddcf5] hover:text-[#493b27] hover:border-1 hover:border-[#493b27]" id="cerrarSesion" title="Cerrar Sesion">Salir</button>
+                        <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                        <!-- Dropdown menu -->
+                    <div id="dropdown" class="absolute hidden mt-10 z-10 bg-white divide-y divide-gray-100 shadow w-44 border-[1px] border-[#493b27] hover:bg-[#f8dcdb]">
+                        <ul class="py-2 text-sm flex flex-col items-center justify-center" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <button class="mostrar btnCerrarSesion text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]" id="cerrarSesion" title="Cerrar Sesion">Salir</button>
+                            </li>
+                            <li>
+                                <input class="outline-none us bg-[#939d9d] hidden" type="text" id="usuarioLogueado" readonly>                     
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>       
         </section>
 
+
+
+
+
+
         <section class="mt-4 container mx-auto lg:px-28 space-y-4 sm:space-y-0 px-2">
-            <div class="flex justify-between mb-4">
+            <div class="flex justify-between mb-4 quitarBuscador2">
                 <div>
                     <h4 class="text-[#493b27] text-2xl font-[700]">Tareas</h4>
                 </div>
@@ -53,21 +64,70 @@
                     <span id="year"></span>
                 </div>
             </div>
-            <div class="flex space-x-2">
-                <div class="w-full md:w-[50%] h-14  flex justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md hover:border-[#493b27] input-btn">
-                    <input id="agregarTarea"  class="outline-none h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[20px] capitalize" type="text" placeholder="Ingrese Tarea.." required>
+            <div class="flex justify-between">
+                <div class="flex w-[60%]  quitarBuscador3">
+                    <div class="w-full h-14  flex justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md hover:border-[#493b27] input-btn">
+                        <input id="agregarTarea" class="outline-none h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[20px] capitalize" type="text" placeholder="Buscar Tarea.." required>
+                    </div>
+                    <div class="flex items-center justify-center">             
+                        <button class="bg-white border-[1px] border-[#ebd6de] rounded-md h-14 w-20 flex items-center justify-center hover:border-[#493b27] input-btn" id="guardarTarea"  title="Guardar Tarea">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
+                                <path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex items-center justify-center">              
-                    <button class="mostrar bg-white border-[1px] border-[#ebd6de] rounded-md h-14 w-20 flex items-center justify-center hover:border-[#493b27] input-btn" id="guardarTarea" title="Guardar Tarea">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-                            <path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path>
-                        </svg>
-                    </button>
+
+
+
+
+                <!-- Aqui comienza la mini seccion para ordenar la lista -->
+                <div class="w-[30%] flex flex-row justify-between space-x-2">
+                    <div>                  
+                        <button id="filtrado" data-dropdown-toggle="dropdown" class="w-full bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md" type="button">Filtrar
+                            <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                            <!-- Dropdown menu -->
+                        <div id="menufiltrado" class="ocultarFiltrado absolute hidden -ms-24 mt-[2px] z-10 bg-[#f7e8ee] divide-y divide-gray-100 shadow w-[300px] border-[1px] border-[#493b27] hover:bg-[#f8dcdb]">
+                            <ul class="py-2 text-sm flex flex-col items-center justify-center" aria-labelledby="dropdownDefaultButton">
+                                <li class="flex items-center justify-center px-2 w-full">
+                                    <div class="flex items-center justify-center border-[1px] border-[#f8dcdb] bg-white w-[85%] h-[42px] rounded-md hover:border-[#493b27]">
+                                        <input id="buscandoTarea" type="text" class="outline-none h-8 text-center w-[80%]" placeholder="Buscar tareas...">
+                                    </div>                                    
+                                </li>                               
+                            </ul>
+                        </div>
+                    </div> 
+                    
+                    
+                    <div class="quitarBuscador4">                  
+                        <button id="ordenando" class="w-full bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md" type="button">Descendente</button>
+                    </div>  
                 </div>
+                <!-- Aqui termina la mini seccion para ordenar la lista -->
             </div>        
         </section>
 
-        <section class="  container mx-auto lg:px-28 px-2 h-12 my-2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        <section class="  container mx-auto lg:px-28 px-2 h-12 my-2  quitarBuscador5">
             <div id="barraProgreso" class=" ocultarTarea">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      class="progreso"
@@ -80,18 +140,19 @@
             </div>
         </section>
 
-        <section class="  container mx-auto lg:px-28 px-2 classLista">
+        <section class="  container mx-auto lg:px-28 px-2 classLista  quitarBuscador6">
             <!-- <h4 class=" md:mt-10 mt-4 " id="estadoTarea">Tareas Activas</h4> -->
             <div class="w-full">
                 <div class="ocultare w-full px-4 sm:px-0">
                     <ul id="mostrarTareas" class="checkear">
-
+                        
                     </ul>
+                    <div class="w-full h-10  hidden justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md font-medium hover:border-[#493b27]" id="ningunaTarea"></div>
                 </div>
             </div>
         </section>
 
-        <section class="  mt-5 container mx-auto lg:px-28 px-2 ">
+        <section class="  my-5 container mx-auto lg:px-28 px-2  quitarBuscador7">
             <div  class="btnEliminar bg-white w-full h-20 flex items-center border-[1px] border-[#ebd6de] rounded-[10px]">
                 <div class="flex flex-row justify-between items-center w-full px-2">
                     <div class="sinTareas "></div>
@@ -100,14 +161,7 @@
                 </div>                
             </div>        
         </section>
-
-        
-
     </div>
-
-    
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 </body>
 </html>
