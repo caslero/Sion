@@ -74,15 +74,15 @@ quitarBuscador5.addEventListener('click', () => {
   ningunaTarea.classList.add('hidden');
 })
 
-let quitarBuscador6 = document.querySelector('.quitarBuscador6');
+// let quitarBuscador6 = document.querySelector('.quitarBuscador6');
 
-quitarBuscador6.addEventListener('click', () => {
-  let buscandoTarea = document.getElementById('buscandoTarea');
-  buscandoTarea.value = '';
-  ocultarFiltrado.classList.add('hidden')
-  observador()
-  ningunaTarea.classList.add('hidden');
-})
+// quitarBuscador6.addEventListener('click', () => {
+//   let buscandoTarea = document.getElementById('buscandoTarea');
+//   buscandoTarea.value = '';
+//   ocultarFiltrado.classList.add('hidden')
+//   observador()
+//   ningunaTarea.classList.add('hidden');
+// })
 
 let quitarBuscador7 = document.querySelector('.quitarBuscador7');
 
@@ -174,9 +174,9 @@ async function mostrarTareasUsuarioActivo(user) {
     }
     if (contador >= 1) {
       document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
-      document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
     } else {
-      document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
       document.querySelector('.btnEliminarTodo').innerHTML = '';
     }
   } else {
@@ -223,9 +223,9 @@ async function mostrarTareasUsuarioActivo(user) {
   }
   if (contador >= 1) {
     document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
-    document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+    document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
   } else {
-    document.querySelector('.sinTareas').innerHTML = `<div class="borrarTodo tareas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+    document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
     document.querySelector('.btnEliminarTodo').innerHTML = '';
   }
   }
@@ -384,8 +384,10 @@ async function cambiarEstadoTarea(e) {
 let editarTarea = document.querySelector('.checkear');
 editarTarea.addEventListener('click', actualizarTareas);
 
-function actualizarTareas(e) {
+async function actualizarTareas(e) {
 
+  let menufiltrado = document.getElementById('menufiltrado');
+  let uActivo = document.getElementById('usuarioLogueado').value;
   let cambiarIconoActualizarTarea = e.target.closest(".cambiarIcono");  
   let tarea = '';
   const botonEditarUnaTarea = e.target.closest(".js-edit");
@@ -394,91 +396,92 @@ function actualizarTareas(e) {
     const id = botonEditarUnaTarea.id;
     const input = botonEditarUnaTarea.closest("li").querySelector('input[type="text"]');
 
+    menufiltrado.classList.add('hidden')
     cambiarIconoActualizarTarea.classList.remove('ri-pencil-fill');
     botonEditarUnaTarea.classList.remove('circulos')
+
+    cambiarIconoActualizarTarea.classList.add('ri-edit-box-fill');
+    botonEditarUnaTarea.classList.add('circulosEditando')
+
+    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+    const querySnapshot = await getDocs(q);
+      
 
     if (input.hasAttribute("readonly")) {
       input.removeAttribute("readonly");
       barraDeProgreso()
-      cambiarIconoActualizarTarea.classList.add('ri-edit-box-fill');
-      botonEditarUnaTarea.classList.add('circulosEditando')
     } else {
       input.setAttribute("readonly", "");     
-      tarea = input.value; 
-
-      barraDeProgreso()
-      tareaActualizada(id, {Tarea: tarea});
-     
-      observador()
-      // setTimeout(() => {
-      //   mostrarTareasRestantes.classList.remove('mostrar-ocultar');
-      //   
-      //   mostrarTareasUsuarioActivo();
-      // }, 100);
+      tarea = input.value;
+      querySnapshot.forEach((doc) => {
+        if (doc.id == id) {
+          cambiarIconoActualizarTarea.classList.remove('ri-edit-box-fill');
+          botonEditarUnaTarea.classList.remove('circulosEditando')
+          cambiarIconoActualizarTarea.classList.add('ri-pencil-fill');
+          botonEditarUnaTarea.classList.add('circulos')
+          barraDeProgreso()
+          tareaActualizada(id, {Tarea: tarea});     
+          observador()
+        }
+      })
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
 async function eliminarElementos(e)  {
 
+  let modalConfirmado = document.getElementById('modalConfirmar')
+  let modalConfirmar1 = document.getElementById('modalConfirmar1')
+  let modalConfirmar2 = document.getElementById('modalConfirmar2')
+  let menufiltrado = document.getElementById('menufiltrado');
   let uActivo = document.getElementById('usuarioLogueado').value;
   const borrarUnaTarea = e.target.closest(".js-delete");
   if (!borrarUnaTarea) return;  
-  let id = borrarUnaTarea.id;
+    let id = borrarUnaTarea.id;
 
+  
+    menufiltrado.classList.add('hidden')
+    modalConfirmar1.classList.remove('hidden');
+    modalConfirmar2.classList.remove('hidden');
+    modalConfirmar2.classList.add('flex');
+    body.classList.add('overflow-y-hidden');
+    
+    modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
+                                <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
 
-  let respuesta = confirm("Eliminar Tarea");
-  if (respuesta == true) {
-    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
-    const querySnapshot = await getDocs(q);
+  
+    let aceptar = document.querySelector('.aceptar');
+    aceptar.addEventListener('click', async () => {
+      const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
+      const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      if (doc.id == id) {
-        barraDeProgreso()
-        borrarTarea(id)      
-        observador()       
-      }
-    });
-  }
+      querySnapshot.forEach((doc) => {
+        if (doc.id == id) {
+          modalConfirmar1.classList.remove('flex');
+          modalConfirmar1.classList.add('hidden');
+          modalConfirmar2.classList.add('hidden');
+          body.classList.remove('overflow-y-hidden'); 
+          barraDeProgreso()
+          borrarTarea(id)      
+          observador()
+        }
+      });
+      return
+    })
+
+    let cancelar = document.getElementById('cancelar');
+    cancelar.addEventListener('click', () => {
+      modalConfirmar1.classList.remove('flex');
+      modalConfirmar1.classList.add('hidden');
+      modalConfirmar2.classList.add('hidden');
+      body.classList.remove('overflow-y-hidden');
+      barraDeProgreso()
+      observador()
+      return
+    })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -487,25 +490,55 @@ borrarT.addEventListener('click', eliminarListaCompleta);
 
 async function eliminarListaCompleta(e) {
   
-  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let modalConfirmado = document.getElementById('modalConfirmar')
+  let modalConfirmar1 = document.getElementById('modalConfirmar1')
+  let modalConfirmar2 = document.getElementById('modalConfirmar2')
+  let uActivo = document.getElementById('usuarioLogueado').value;
   let id = 0;
   const borrarTodasTarea = e.target.closest(".borrado");
   if (!borrarTodasTarea) return;
 
-  let respuesta = confirm("Eliminar Tarea");
-  if (respuesta == true) {
-    const q = query(collection(db, "Tareas"), where("Usuario", "==", correoUsuarioActivo));  
+  let menufiltrado = document.getElementById('menufiltrado');
+  menufiltrado.classList.add('hidden')
+  modalConfirmar1.classList.remove('hidden');
+  modalConfirmar2.classList.remove('hidden');
+  modalConfirmar2.classList.add('flex');
+  body.classList.add('overflow-y-hidden');
+  
+  modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
+                               <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
+
+  
+  let aceptar = document.querySelector('.aceptar');
+  aceptar.addEventListener('click', async () => {
+    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
     const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        id = doc.id;
-        if (id) {
-          barraDeProgreso()
-          borrarLista(id)
-          observador()
-        }
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
+      if (id) {
+        modalConfirmar1.classList.remove('flex');
+        modalConfirmar1.classList.add('hidden');
+        modalConfirmar2.classList.add('hidden');
+        body.classList.remove('overflow-y-hidden');
+        barraDeProgreso()
+        borrarLista(id)
+        observador()
+      }
     });
-  }
+    return
+  })
+
+  let cancelar = document.getElementById('cancelar');
+  cancelar.addEventListener('click', () => {
+    modalConfirmar1.classList.remove('flex');
+    modalConfirmar1.classList.add('hidden');
+    modalConfirmar2.classList.add('hidden');
+    body.classList.remove('overflow-y-hidden');
+    barraDeProgreso()
+    observador()
+    return
+  })
 }
 
 
@@ -521,25 +554,58 @@ borrarMarcados.addEventListener('click', eliminarMarcados);
 
 async function eliminarMarcados(e) {
 
-  let correoUsuarioActivo = document.getElementById('usuarioLogueado').value;
+  let modalConfirmado = document.getElementById('modalConfirmar')
+  let modalConfirmar1 = document.getElementById('modalConfirmar1')
+  let modalConfirmar2 = document.getElementById('modalConfirmar2')
+  let uActivo = document.getElementById('usuarioLogueado').value;
   let clase = '';
   let id = 0;
   
   const borrarMarcado = e.target.closest(".marcado");
   if (!borrarMarcado) return; 
+
+  let menufiltrado = document.getElementById('menufiltrado');
+  menufiltrado.classList.add('hidden')
+  modalConfirmar1.classList.remove('hidden');
+  modalConfirmar2.classList.remove('hidden');
+  modalConfirmar2.classList.add('flex');
+  body.classList.add('overflow-y-hidden');
   
-  let respuesta = confirm("Eliminar Tarea");
-  if (respuesta == true) {
-    const q = query(collection(db, "Tareas"), where("Usuario", "==", correoUsuarioActivo), where("clase", "==", 'marcar'));  
+  modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
+                               <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
+
+  
+
+  let aceptar = document.querySelector('.aceptar');
+  aceptar.addEventListener('click', async () => {
+    const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo), where("clase", "==", 'marcar'));
     const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        id = doc.id;
-              barraDeProgreso()
-              borrarLista(id)
-              observador()
-      })
-  }
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
+      if (id) {
+        modalConfirmar1.classList.remove('flex');
+        modalConfirmar1.classList.add('hidden');
+        modalConfirmar2.classList.add('hidden');
+        body.classList.remove('overflow-y-hidden');
+        barraDeProgreso()
+        borrarLista(id)
+        observador()
+      }
+    });
+    return
+  })
+
+  let cancelar = document.getElementById('cancelar');
+  cancelar.addEventListener('click', () => {
+    modalConfirmar1.classList.remove('flex');
+    modalConfirmar1.classList.add('hidden');
+    modalConfirmar2.classList.add('hidden');
+    body.classList.remove('overflow-y-hidden');
+    barraDeProgreso()
+    observador()
+    return
+  })
 }
 
 
@@ -589,6 +655,10 @@ function menuSalir() {
   
   let mostrarMenu = document.getElementById('dropdown');
   mostrarMenu.classList.toggle('hidden')
+
+  setTimeout(() => {
+    mostrarMenu.classList.add('hidden')
+  }, 4000)
 }
 
 
