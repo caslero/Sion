@@ -147,7 +147,7 @@ async function mostrarTareasUsuarioActivo(user) {
                             <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
                             <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
                           </label>
-                          <div class="btn-contenedore md:basis-[20%] space-x-2 pe-2">
+                          <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
                             <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
                               <i class="ri-pencil-fill cambiarIcono"></i>
                             </button>
@@ -196,7 +196,7 @@ async function mostrarTareasUsuarioActivo(user) {
                             <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
                             <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
                           </label>
-                          <div class="btn-contenedore md:basis-[20%] space-x-2 pe-2">
+                          <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
                             <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
                               <i class="ri-pencil-fill cambiarIcono"></i>
                             </button>
@@ -240,7 +240,6 @@ function observador() {
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
-
       let nombre = user.email
       let nombre2 = '';
       let nombreUsuarioActivo = '';
@@ -380,7 +379,7 @@ async function cambiarEstadoTarea(e) {
 
 
 
-
+let ocultarTarea = document.querySelector('.barraProgresos'); 
 let editarTarea = document.querySelector('.checkear');
 editarTarea.addEventListener('click', actualizarTareas);
 
@@ -388,7 +387,8 @@ async function actualizarTareas(e) {
 
   let menufiltrado = document.getElementById('menufiltrado');
   let uActivo = document.getElementById('usuarioLogueado').value;
-  let cambiarIconoActualizarTarea = e.target.closest(".cambiarIcono");  
+  let cambiarIconoActualizarTarea = e.target.closest(".cambiarIcono");
+   
   let tarea = '';
   const botonEditarUnaTarea = e.target.closest(".js-edit");
  
@@ -406,13 +406,18 @@ async function actualizarTareas(e) {
     const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
     const querySnapshot = await getDocs(q);
       
-
+    
     if (input.hasAttribute("readonly")) {
-      input.removeAttribute("readonly");
-      barraDeProgreso()
+      input.removeAttribute("readonly");      
+      ocultarTarea.classList.remove('ocultarTarea');
+      document.getElementById('estadoTarea').innerHTML = 'Editando Tarea...';
+      
+      //barraDeProgreso()
     } else {
+      document.getElementById('estadoTarea').innerHTML = '';
       input.setAttribute("readonly", "");     
       tarea = input.value;
+      document.getElementById('estadoTarea').innerHTML = 'Tarea actualizada...';
       querySnapshot.forEach((doc) => {
         if (doc.id == id) {
           cambiarIconoActualizarTarea.classList.remove('ri-edit-box-fill');
@@ -642,9 +647,11 @@ function contarCerrarSesion(e) {
 
 function barraDeProgreso() {
   barraProgreso.classList.remove('ocultarTarea');
+  
 
   setTimeout(() => {
     barraProgreso.classList.add('ocultarTarea')
+    document.getElementById('estadoTarea').innerHTML = '';
   }, 1000)
 }
 

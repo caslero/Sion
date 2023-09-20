@@ -17,10 +17,10 @@
 
     <div class="a b eliminarTodo relative">
         <header class="border-b-2 border-[#f7e8ee] quitarBuscador">
-            <div class="bg-[#fcfafa] w-full  h-20">
-                <div class="container mx-auto lg:px-28 flex flex-row items-center justify-center">
+            <div class="bg-[#fcfafa] w-full h-14  sm:h-20">
+                <div class="container mx-auto px-2 sm:px-0 lg:px-28 flex flex-row items-center justify-center">
                     <div class="basis-1/2 h-full flex items-center">
-                        <img class="w-16 h-16" src="img/tareas.png" alt="">
+                        <img class="w-12 h-12 sm:w-16 sm:h-16" src="img/tareas.png" alt="">
                     </div>
                 
                     <div class="basis-1/2 h-full flex flex-col items-end justify-center">                    
@@ -49,16 +49,12 @@
         </header>
 
 
-
-
-
-
-        <section class="mt-8 container mx-auto lg:px-28 space-y-4 sm:space-y-0 px-2">
-            <div class="flex justify-between mb-4 quitarBuscador2">
+        <section class="mt-8 container mx-auto lg:px-28 px-2">
+            <div class="flex items-center justify-between quitarBuscador2">
                 <div>
                     <h4 class="text-[#493b27] text-2xl font-[700]">Tareas</h4>
                 </div>
-                <div class="text-[#493b27] text-md capitalize">
+                <div class="text-[#493b27] text-xs sm:text-md capitalize">
                     <span id="nombreDia"></span>
                     <span id="dia"></span>
                     <span id="mes"></span>
@@ -68,15 +64,16 @@
             </div>
         </section>
 
+
         <section class="mt-4 container mx-auto lg:px-28 space-y-4 sm:space-y-0 px-2">
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0">
                 <!-- Aqui comienza la seccion para agregar tareas -->
-                <div class="flex w-[60%] space-x-2  quitarBuscador3">
-                    <div class="w-full h-14  flex justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md hover:border-[#493b27] input-btn transition-all ease-in duration-[300ms]">
-                        <input id="agregarTarea" class="outline-none h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[20px] capitalize" type="text" placeholder="Agregar Tarea.." required>
+                <div class="flex w-full sm:w-[60%] space-x-2  quitarBuscador3">
+                    <div class="w-full h-10 sm:h-14  flex justify-center items-center bg-white  border-[1px] border-[#ebd6de] rounded-md hover:border-[#493b27] input-btn transition-all ease-in duration-[300ms]">
+                        <input id="agregarTarea" class="outline-none h-[30px] rounded-[30px] text-center text-[15px] md:text-[20px] placeholder:text-[20px] capitalize" type="text" placeholder="Agregar Tarea.." required autofocus>
                     </div>
                     <div class="flex items-center justify-center">             
-                        <button class="bg-white border-[1px] border-[#ebd6de] rounded-md h-14 w-20 flex items-center justify-center  hover:border-[#493b27] input-btn transition-all ease-in duration-[300ms]" id="guardarTarea"  title="Guardar Tarea">
+                        <button class="w-20 h-10 sm:h-14 bg-white border-[1px] border-[#ebd6de] rounded-md flex items-center justify-center  hover:border-[#493b27] input-btn transition-all ease-in duration-[300ms]" id="guardarTarea"  title="Guardar Tarea">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
                                 <path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path>
                             </svg>
@@ -86,10 +83,10 @@
                 <!-- Aqui termina la seccion para agregar tareas -->
 
                 
-                <div class="w-[30%] flex flex-row justify-end space-x-4">
+                <div class="w-full sm:w-[30%] flex flex-row justify-center sm:justify-end space-x-4">
                     <!-- Aqui comienza la mini seccion para buscar tareas x un filtro -->
                     <div>                  
-                        <button id="filtrado" data-dropdown-toggle="dropdown" class="w-full h-[54px] bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md border-[1px] border-[#ebd6de] hover:border-[1px] hover:border-[#493b27] hover:font-semibold transition-all ease-in duration-[300ms]" type="button">Filtrar
+                        <button id="filtrado" data-dropdown-toggle="dropdown" class="w-full h-10 sm:h-[54px] bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md border-[1px] border-[#ebd6de] hover:border-[1px] hover:border-[#493b27] hover:font-semibold transition-all ease-in duration-[300ms]" type="button">Filtrar
                             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                             </svg>
@@ -109,48 +106,42 @@
                     
                     <!-- Aqui comienza la mini seccion para ordenar la lista -->
                     <div class="quitarBuscador4">                  
-                        <button id="ordenando" class="w-full h-[54px] bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md border-[1px] border-[#ebd6de] hover:border-[1px] hover:border-[#493b27] hover:font-semibold transition-all ease-in duration-[300ms]" type="button">Descendente</button>
+                        <button id="ordenando" class="w-full h-10 sm:h-[54px] bg-white font-medium text-sm px-5 py-2.5 text-center inline-flex items-center rounded-md border-[1px] border-[#ebd6de] hover:border-[1px] hover:border-[#493b27] hover:font-semibold transition-all ease-in duration-[300ms]" type="button">Descendente</button>
                     </div>
                     <!-- Aqui termina la mini seccion para ordenar la lista --> 
-                </div>
-                
+                </div>                
             </div>        
         </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        <section class="  container mx-auto lg:px-28 px-2 h-12 my-2  quitarBuscador5">
-            <div id="barraProgreso" class=" ocultarTarea">
+        <!-- Inicio de la seccion donde esta el loading-->
+        <section class="container mx-auto lg:px-28 px-2 h-10 sm:h-12 my-2  quitarBuscador5">
+            <div id="barraProgreso" class="ocultarTarea barraProgresos">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      class="progreso"
-                     width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                     width="50" height="50" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                     <path d="M82 50A32 32 0 1 1 23.533421623214014 32.01333190873183 L21.71572875253809 21.7157287525381 L32.013331908731814 23.53342162321403 A32 32 0 0 1 82 50" stroke-width="5" stroke="#493b27" fill="#ebd6de"></path>
                     <circle cx="50" cy="50" r="20" stroke-width="3" stroke="#493b27" stroke-dasharray="31.41592653589793 31.41592653589793" fill="none" stroke-linecap="round">
                       <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
                     </circle>
-                    <!-- [ldio] generated by https://loading.io/ --></svg>
+                </svg>
             </div>
+            
         </section>
+        <!-- Fin de la seccion donde esta el loading-->
+
+
+
+
+
+
+
+
 
         <section class="  container mx-auto lg:px-28 px-2 classLista  quitarBuscador6">
-            <!-- <h4 class=" md:mt-10 mt-4 " id="estadoTarea">Tareas Activas</h4> -->
             <div class="w-full">
-                <div class="ocultare w-full px-4 sm:px-0">
+                <h4 class="text-xl text-[#493b27] -mt-[30px] fixed w-full " id="estadoTarea"></h4> <!--Titulo que muestra: editando tarea y tarea editada-->
+                <div class="ocultare w-full">
                     <ul id="mostrarTareas" class="checkear">
                         
                     </ul>
@@ -160,11 +151,13 @@
         </section>
 
         <section class="  my-5 container mx-auto lg:px-28 px-2  quitarBuscador7">
-            <div  class="btnEliminar bg-white w-full h-20 flex items-center border-[1px] border-[#ebd6de] rounded-[10px]">
-                <div class="flex flex-row justify-between items-center w-full px-2">
-                    <div class="sinTareas "></div>
-                    <div class="btnEliminarTodo "></div>
-                    <div class="btnMarcar "></div>
+            <div  class="btnEliminar bg-white w-full h-28 sm:h-20 flex items-center border-[1px] border-[#ebd6de] rounded-[10px]">
+                <div class="flex flex-col sm:flex-row justify-between items-center w-full px-2 space-y-4 sm:space-y-0">
+                    <div class="sinTareas basis-1/3"></div>
+                    <div class="flex justify-between basis-2/3 w-full">
+                        <div class="btnEliminarTodo"></div>
+                        <div class="btnMarcar"></div>
+                    </div>
                 </div>                
             </div>        
         </section>
