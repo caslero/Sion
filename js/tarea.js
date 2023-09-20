@@ -431,7 +431,7 @@ let borrarIndividual = document.querySelector('.checkear');
 borrarIndividual.addEventListener('click', eliminarElementos);
 
 async function eliminarElementos(e)  {
-
+  
   let modalConfirmado = document.getElementById('modalConfirmar')
   let modalConfirmar1 = document.getElementById('modalConfirmar1')
   let modalConfirmar2 = document.getElementById('modalConfirmar2')
@@ -449,6 +449,7 @@ async function eliminarElementos(e)  {
     modalConfirmar2.classList.add('w-[100%]');
     modalConfirmar2.classList.add('right-0');
     body.classList.add('overflow-y-hidden');
+    alerta.innerHTML = 'Desea eliminar esta tarea?'
     
     modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
                                 <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
@@ -510,9 +511,9 @@ async function eliminarListaCompleta(e) {
   medio.classList.remove('subModalConfirmar')
   modalConfirmar1.classList.add('w-[100%]');
   modalConfirmar2.classList.add('w-[100%]');
-  modalConfirmar2.classList.add('right-0');
-  
+  modalConfirmar2.classList.add('right-0');  
   body.classList.add('overflow-y-hidden');
+  alerta.innerHTML = 'Desea eliminar todas las tareas?'
   
   modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
                                <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
@@ -553,16 +554,8 @@ async function eliminarListaCompleta(e) {
 }
 
 
-
-
-
-
-
 let borrarMarcados = document.querySelector('.btnEliminar');
 borrarMarcados.addEventListener('click', eliminarMarcados);
-
-
-
 async function eliminarMarcados(e) {
 
   let modalConfirmado = document.getElementById('modalConfirmar')
@@ -584,6 +577,7 @@ async function eliminarMarcados(e) {
     modalConfirmar2.classList.add('w-[100%]');
     modalConfirmar2.classList.add('right-0');    
     body.classList.add('overflow-y-hidden');
+    alerta.innerHTML = 'Desea eliminar las tareas marcadas?'
   
   modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
                                <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
@@ -623,6 +617,14 @@ async function eliminarMarcados(e) {
     return
   })
 }
+
+
+
+
+
+
+
+
 
 
 function contarCerrarSesion(e) {
