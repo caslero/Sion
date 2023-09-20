@@ -215,6 +215,8 @@ body li[data-clase="marcar"] input[type="text"] {
    margin-bottom: 10px;
    border-radius: 10px;
    border: 1px solid #ebd6de;
+   transition: all;
+   transition-duration: 600ms;
 }
 .listare:hover {
     height: 70px;
@@ -223,7 +225,10 @@ body li[data-clase="marcar"] input[type="text"] {
     border-radius: 10px;
     border: 1px solid #493b27;
     box-shadow: 0px 0px 2px 2px #ebd6de;
+    transition: all;
+    transition-duration: 600ms;
 }
+/*  transition-all ease-in duration-[300ms] */
 
 .input-btn:hover {
     box-shadow: 0px 0px 2px 2px #ebd6de;
@@ -246,9 +251,13 @@ body li[data-clase="marcar"] input[type="text"] {
     border-radius: 10px;
     text-align: center;
     text-transform: capitalize;
+    transition: all;
+    transition-duration: 600ms;
 }
 .input-tarea:hover {   
     border: 1px solid #493b27;
+    transition: all;
+    transition-duration: 600ms;
 }
 
 .btn-contenedor {
@@ -268,20 +277,9 @@ body li[data-clase="marcar"] input[type="text"] {
     color: #493b27;
     background-color: #f7e8ee;
     font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
 }
-.circulosEditando {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    border: 2px solid #f8dcdb;
-    color: #7ddcf5;
-    background-color: white;
-    font-size: 18px;
-}
-
 .circulos:hover {
     width: 40px;
     height: 40px;
@@ -289,7 +287,35 @@ body li[data-clase="marcar"] input[type="text"] {
     border: 2px solid #493b27;
     color: #493b27;
     background-color: white;
+    transition: all;
+    transition-duration: 600ms;
 }
+
+.circulosEditando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #e3c8d2;
+    color: #f8dcdb;
+    background-color: white;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
+}
+.circulosEditando:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
+    transition: all;
+    transition-duration: 600ms;
+}
+
 
 /* Input de donde esta la tarea que se registra*/
 body li input[type="text"]:read-only {
@@ -307,6 +333,8 @@ body li[data-status="completed"] input[type="checkbox"] {
     background-color: #e97070;
     border: 1px solid #493b27;
     cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
 }
 body li[data-status="completed"] input[type="checkbox"]:hover {
     appearance: none;
@@ -316,6 +344,8 @@ body li[data-status="completed"] input[type="checkbox"]:hover {
     background-color: #e97070;
     border: 2px solid #ebd6de;
     cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
 }
 
 
@@ -326,6 +356,8 @@ body li[data-status="pending"] input[type="checkbox"] {
     border: 2px solid #f8dcdb;
     background-color: #f7e8ee;
     cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
 }
 
 body li[data-status="pending"] input[type="checkbox"]:hover {
@@ -335,6 +367,8 @@ body li[data-status="pending"] input[type="checkbox"]:hover {
     border: 2px solid #493b27;
     background-color: white;
     cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
 }
 
 
@@ -347,30 +381,13 @@ body li[data-clase="marcar"] input[type="text"] {
 }
 
 .borrarTodo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    height: 45px;
-    border: 1px solid #7ddcf5;
-    background-color: white;
-    border-radius: 30px;
-    color: #7ddcf5;
-    font-size: 20px;
-    font-weight: 700;
+    transition: all;
+    transition-duration: 600ms;
+    
 }
 .borrarTodo:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    height: 45px;
-    border: 2px solid white;
-    background-color: #7ddcf5;
-    border-radius: 30px;
-    color: #939d9d;
-    font-size: 20px;
-    font-weight: 700;
+    transition: all;
+    transition-duration: 600ms;
 }
 
 
@@ -417,6 +434,50 @@ body li[data-clase="marcar"] input[type="text"] {
     width: 170px;
     height: 40px;
   }
+
+
+
+.subModalConfirmar {
+    margin-left: -300px;
+    transition: all;
+    transition-duration: 1s;
+}
+
+.text {
+    font-size: 40px;
+    font-family: helvetica;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+  
+@-moz-keyframes parpadeo{  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+  
+@-webkit-keyframes parpadeo {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+}
+  
+@keyframes parpadeo {  
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
 
 
 } 

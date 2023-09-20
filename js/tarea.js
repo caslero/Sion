@@ -436,6 +436,7 @@ async function eliminarElementos(e)  {
   let modalConfirmar1 = document.getElementById('modalConfirmar1')
   let modalConfirmar2 = document.getElementById('modalConfirmar2')
   let menufiltrado = document.getElementById('menufiltrado');
+  let medio = document.getElementById('medio')
   let uActivo = document.getElementById('usuarioLogueado').value;
   const borrarUnaTarea = e.target.closest(".js-delete");
   if (!borrarUnaTarea) return;  
@@ -443,9 +444,10 @@ async function eliminarElementos(e)  {
 
   
     menufiltrado.classList.add('hidden')
-    modalConfirmar1.classList.remove('hidden');
-    modalConfirmar2.classList.remove('hidden');
-    modalConfirmar2.classList.add('flex');
+    medio.classList.remove('subModalConfirmar')
+    modalConfirmar1.classList.add('w-[100%]');
+    modalConfirmar2.classList.add('w-[100%]');
+    modalConfirmar2.classList.add('right-0');
     body.classList.add('overflow-y-hidden');
     
     modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
@@ -459,9 +461,11 @@ async function eliminarElementos(e)  {
 
       querySnapshot.forEach((doc) => {
         if (doc.id == id) {
-          modalConfirmar1.classList.remove('flex');
-          modalConfirmar1.classList.add('hidden');
-          modalConfirmar2.classList.add('hidden');
+          medio.classList.add('subModalConfirmar')
+          modalConfirmar1.classList.remove('w-[100%]');
+          modalConfirmar2.classList.remove('w-[100%]');
+          modalConfirmar2.classList.remove('right-0');
+          
           body.classList.remove('overflow-y-hidden'); 
           barraDeProgreso()
           borrarTarea(id)      
@@ -473,12 +477,13 @@ async function eliminarElementos(e)  {
 
     let cancelar = document.getElementById('cancelar');
     cancelar.addEventListener('click', () => {
-      modalConfirmar1.classList.remove('flex');
-      modalConfirmar1.classList.add('hidden');
-      modalConfirmar2.classList.add('hidden');
+      medio.classList.add('subModalConfirmar')
+      modalConfirmar1.classList.remove('w-[100%]');
+      modalConfirmar2.classList.remove('w-[100%]');
+      modalConfirmar2.classList.remove('right-0');
       body.classList.remove('overflow-y-hidden');
       barraDeProgreso()
-      observador()
+      observador()      
       return
     })
 }
@@ -493,16 +498,20 @@ async function eliminarListaCompleta(e) {
   let modalConfirmado = document.getElementById('modalConfirmar')
   let modalConfirmar1 = document.getElementById('modalConfirmar1')
   let modalConfirmar2 = document.getElementById('modalConfirmar2')
+  let menufiltrado = document.getElementById('menufiltrado');
+  let medio = document.getElementById('medio')
   let uActivo = document.getElementById('usuarioLogueado').value;
   let id = 0;
   const borrarTodasTarea = e.target.closest(".borrado");
   if (!borrarTodasTarea) return;
 
-  let menufiltrado = document.getElementById('menufiltrado');
+  
   menufiltrado.classList.add('hidden')
-  modalConfirmar1.classList.remove('hidden');
-  modalConfirmar2.classList.remove('hidden');
-  modalConfirmar2.classList.add('flex');
+  medio.classList.remove('subModalConfirmar')
+  modalConfirmar1.classList.add('w-[100%]');
+  modalConfirmar2.classList.add('w-[100%]');
+  modalConfirmar2.classList.add('right-0');
+  
   body.classList.add('overflow-y-hidden');
   
   modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
@@ -517,9 +526,10 @@ async function eliminarListaCompleta(e) {
     querySnapshot.forEach((doc) => {
       id = doc.id;
       if (id) {
-        modalConfirmar1.classList.remove('flex');
-        modalConfirmar1.classList.add('hidden');
-        modalConfirmar2.classList.add('hidden');
+        medio.classList.add('subModalConfirmar')
+        modalConfirmar1.classList.remove('w-[100%]');
+        modalConfirmar2.classList.remove('w-[100%]');
+        modalConfirmar2.classList.remove('right-0');        
         body.classList.remove('overflow-y-hidden');
         barraDeProgreso()
         borrarLista(id)
@@ -531,9 +541,10 @@ async function eliminarListaCompleta(e) {
 
   let cancelar = document.getElementById('cancelar');
   cancelar.addEventListener('click', () => {
-    modalConfirmar1.classList.remove('flex');
-    modalConfirmar1.classList.add('hidden');
-    modalConfirmar2.classList.add('hidden');
+    medio.classList.add('subModalConfirmar')
+    modalConfirmar1.classList.remove('w-[100%]');
+    modalConfirmar2.classList.remove('w-[100%]');
+    modalConfirmar2.classList.remove('right-0');    
     body.classList.remove('overflow-y-hidden');
     barraDeProgreso()
     observador()
@@ -557,6 +568,8 @@ async function eliminarMarcados(e) {
   let modalConfirmado = document.getElementById('modalConfirmar')
   let modalConfirmar1 = document.getElementById('modalConfirmar1')
   let modalConfirmar2 = document.getElementById('modalConfirmar2')
+  let menufiltrado = document.getElementById('menufiltrado');
+  let medio = document.getElementById('medio')
   let uActivo = document.getElementById('usuarioLogueado').value;
   let clase = '';
   let id = 0;
@@ -564,12 +577,13 @@ async function eliminarMarcados(e) {
   const borrarMarcado = e.target.closest(".marcado");
   if (!borrarMarcado) return; 
 
-  let menufiltrado = document.getElementById('menufiltrado');
-  menufiltrado.classList.add('hidden')
-  modalConfirmar1.classList.remove('hidden');
-  modalConfirmar2.classList.remove('hidden');
-  modalConfirmar2.classList.add('flex');
-  body.classList.add('overflow-y-hidden');
+  
+    menufiltrado.classList.add('hidden')
+    medio.classList.remove('subModalConfirmar')
+    modalConfirmar1.classList.add('w-[100%]');
+    modalConfirmar2.classList.add('w-[100%]');
+    modalConfirmar2.classList.add('right-0');    
+    body.classList.add('overflow-y-hidden');
   
   modalConfirmado.innerHTML = `<button id="${id}" class="aceptar text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Aceptar</button>
                                <button id="cancelar" class="text-[#493b27] text-[13px] font-[500] border-[2px] w-[100px] border-[#ebd6de] h-[30px] rounded-[30px] bg-[#f8dcdb] font-semibold hover:bg-white hover:text-[#493b27] hover:border-1 hover:border-[#493b27]">Cancelar</button>                        `;
@@ -584,9 +598,10 @@ async function eliminarMarcados(e) {
     querySnapshot.forEach((doc) => {
       id = doc.id;
       if (id) {
-        modalConfirmar1.classList.remove('flex');
-        modalConfirmar1.classList.add('hidden');
-        modalConfirmar2.classList.add('hidden');
+        medio.classList.add('subModalConfirmar')
+        modalConfirmar1.classList.remove('w-[100%]');
+        modalConfirmar2.classList.remove('w-[100%]');
+        modalConfirmar2.classList.remove('right-0');        
         body.classList.remove('overflow-y-hidden');
         barraDeProgreso()
         borrarLista(id)
@@ -598,9 +613,10 @@ async function eliminarMarcados(e) {
 
   let cancelar = document.getElementById('cancelar');
   cancelar.addEventListener('click', () => {
-    modalConfirmar1.classList.remove('flex');
-    modalConfirmar1.classList.add('hidden');
-    modalConfirmar2.classList.add('hidden');
+    medio.classList.add('subModalConfirmar')
+    modalConfirmar1.classList.remove('w-[100%]');
+    modalConfirmar2.classList.remove('w-[100%]');
+    modalConfirmar2.classList.remove('right-0');    
     body.classList.remove('overflow-y-hidden');
     barraDeProgreso()
     observador()
@@ -727,4 +743,19 @@ document.addEventListener('keyup', (e) => {
       buscador.classList.add('hidden')      
     }   
   }
+})
+
+let alerta = document.querySelector('.alerta');
+let confirmarModal = document.querySelector('.confirmarModal');
+confirmarModal.addEventListener('click', () => {
+  
+  alerta.classList.add('text-3xl')
+  alerta.classList.add('parpadea', 'texto')
+  
+
+  setTimeout(() => {
+    alerta.classList.remove('parpadea', 'texto')
+    alerta.classList.remove('text-3xl')
+  }, 3000)
+   
 })
