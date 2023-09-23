@@ -267,7 +267,7 @@ body li[data-clase="marcar"] input[type="text"] {
     color: #493b27;
     font-size: 15px;
     border: 2px solid #ebd6de;
-    width: 150px;
+    width: 120px;
     height: 40px;
     border-radius: 20px;
     background-color: #f7e8ee;
@@ -278,9 +278,32 @@ body li[data-clase="marcar"] input[type="text"] {
     color: #493b27;
     border: 2px solid #493b27;
     font-weight: 400;
-    width: 150px;
+    width: 120px;
     height: 40px;
 }
+
+.btn-paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 15px;
+    border: 2px solid #ebd6de;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+}
+.btn-paginacion:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 120px;
+    height: 40px;
+}
+
 
 
 .subModalConfirmar {
@@ -540,6 +563,29 @@ body li[data-clase="marcar"] input[type="text"] {
     height: 40px;
 }
 
+
+
+.btn-paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 20px;
+    border: 2px solid #ebd6de;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+}
+.btn-paginacion:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 170px;
+    height: 40px;
+}
 
 
 

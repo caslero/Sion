@@ -92,7 +92,7 @@
                             </svg>
                         </button>
                             <!-- Dropdown menu -->
-                        <div id="menufiltrado" class="ocultarFiltrado absolute hidden -ms-24 z-10 divide-y divide-gray-100 w-[300px]">
+                        <div id="menufiltrado" class="ocultarFiltrado absolute hidden border-[1px] border-[#ebd6de] hover:border-[1px] hover:border-[#493b27] rounded-md shadow  -ms-24 z-10 divide-y divide-gray-100 w-[300px]">
                             <ul class="py-2 text-sm flex flex-col items-center justify-center" aria-labelledby="dropdownDefaultButton">
                                 <li class="flex items-center justify-center px-2 w-full">
                                     <div class="flex items-center justify-center bg-white w-[85%] h-[40px] rounded-md border-2 border-[#ebd6de] hover:shadow hover:border-[1px] hover:border-[#493b27] transition-all ease-in duration-[300ms]">
@@ -150,13 +150,31 @@
             </div>
         </section>
 
-        <section class="  my-5 container mx-auto lg:px-28 px-2  quitarBuscador7">
-            <div  class="btnEliminar bg-white w-full h-28 sm:h-20 flex items-center border-[1px] border-[#ebd6de] rounded-[10px]">
-                <div class="flex flex-col sm:flex-row justify-between items-center w-full px-2 space-y-4 sm:space-y-0">
-                    <div class="sinTareas basis-1/3"></div>
-                    <div class="flex justify-between basis-2/3 w-full">
-                        <div class="btnEliminarTodo"></div>
-                        <div class="btnMarcar"></div>
+        <div class="quitarBuscador7"></div>
+        <section class="  my-5 container mx-auto lg:px-28 px-2  ">
+            <div  class="btnEliminar bg-white w-full h-28 sm:h-32 flex items-center justify-center border-[1px] border-[#ebd6de] rounded-[10px]">
+                <div class="flex flex-col justify-center items-center w-full px-2 space-y-4 ">
+                    <div class="w-full flex items-center justify-between">
+                        <div class="basis-1/3 flex justify-start">
+                            <div id="btnAnterior" class="hidden">
+                                <button id="anterior" class="btn-paginacion borrarTodo">Anterior</button>
+                            </div>
+                        </div>
+                        <div class="basis-1/3 flex justify-center">
+                            <div id="btnPagina" class="hidden">
+                                <div id="pagina"></div>
+                            </div>
+                        </div>
+                        <div class="basis-1/3 flex justify-end">
+                            <div id="btnSiguiente" class="hidden">
+                                <button id="siguiente" class="btn-paginacion borrarTodo">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between w-full space-x-2">
+                        <div class="btnEliminarTodo basis-1/3 flex justify-start"></div>
+                        <div class="sinTareas basis-1/3 flex justify-center"></div>
+                        <div class="btnMarcar basis-1/3 flex justify-end"></div>
                     </div>
                 </div>                
             </div>        

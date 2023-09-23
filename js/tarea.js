@@ -2,7 +2,7 @@
 
 import './index.js'
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { collection, addDoc, query, where, getDocs, orderBy} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
+import { collection, addDoc, query, where, getDocs, orderBy, limit} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js"
 import { auth, db } from './index.js';
 //import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
 import { getTareas, getTareasGuardadas, onGetTareas, borrarTarea, tareaActualizada, borrarLista } from './index.js'
@@ -111,8 +111,14 @@ let verTareasActivas = document.getElementById('mostrarTareas');
 
 
 
-
 let mostrarT = await getTareas();
+
+
+
+
+
+let limite = 3
+let pagina = 1
 
 async function mostrarTareasUsuarioActivo(user) {
   
@@ -126,46 +132,133 @@ async function mostrarTareasUsuarioActivo(user) {
   let statusTarea = '';
   let claseTarea = '';
   let cantidadTareas = [];
-  
   let contador = 0;
   let contadorClase = 0;
- 
+  let idFirebase = '';
+
   if (orden == 'Ascendente') {
-    const q = query(collection(db, "Tareas"), orderBy('Tarea', 'asc'));
-
+    
+    //const q = query(collection(db, "Tareas"), orderBy('Tarea', 'asc'));
+    const q = query(collection(db, "Tareas"), where('Usuario', '==', uActivo));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      if (doc.data().Usuario == uActivo) {
-        contador++;
-        tareass = doc.data().Tarea
-        idTarea = doc.data().id
-        claseTarea = doc.data().clase
-        statusTarea = doc.data().status
 
-        tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
-                          <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
-                            <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
-                            <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
-                          </label>
-                          <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
-                            <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
-                              <i class="ri-pencil-fill cambiarIcono"></i>
-                            </button>
-                            <button class="js-delete circulos" id="${doc.id}">
-                              <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
-                            </button>
-                          </div>
-                        </li>`;
-    }
-    if (claseTarea == 'marcar') {
-      contadorClase++;
-      cantidadTareas.push({n: idTarea})
-    }    
-    });
-    document.getElementById('mostrarTareas').innerHTML = tarea;
+    let todas = [];
+    let todos = [];
+    let nuevoTodos = [];
+    todas = querySnapshot.docs;
+
+    todas.forEach(doc => {
+     
+      nuevoTodos.push({
+        id: doc.data().id,
+        Usuario: doc.data().Usuario,
+        Tarea: doc.data().Tarea,
+        status: doc.data().status,
+        clase: doc.data().clase,
+        idFirebase: doc.id
+      })
+      if (doc.data().clase === 'marcar') {
+        contadorClase++;
+        cantidadTareas.push({n: idTarea})
+      }
+    })
+
+    todos = nuevoTodos 
+    todos.sort((a , b) => {
+      if (a.Tarea < b.Tarea) {
+        return -1;
+      } else if (a.Tarea > b.Tarea) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+
+
+
+    const tareasTotales = todos.length;
+    let cantidadPaginas = tareasTotales / limite;
+    let x = Math.ceil(cantidadPaginas);
+    document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+    const tareasPorPaginas = (pagina - 1) * limite;
+    let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas); 
+
+    contador = todos.length
+    // querySnapshot.forEach((doc) => {     
+    //   if (doc.data().Usuario == uActivo) {
+    //     claseTarea = doc.data().clase
+        
+    //   }
+    //   if (claseTarea == 'marcar') {
+    //     contadorClase++;
+    //     cantidadTareas.push({n: idTarea})
+    //   }
+    // })
+
+    if (contador != 0) {
+      document.getElementById('btnPagina').classList.remove('hidden')
       
+      if (pagina == 2 && pagina != x) {
+        document.getElementById('btnPagina').classList.remove('hidden')
+        siguiente.classList.remove('hidden')
+      }
+    }
+    if (x > 1) {
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+    } else {
+      document.getElementById('btnSiguiente').classList.add('hidden')
+    }
+    if (pagina > 1 && pagina == x) {
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+      document.getElementById('btnAnterior').classList.remove('hidden')
+      anterior.classList.remove("hidden");
+      siguiente.classList.add("hidden");
+    } else if (pagina > 1 && pagina < x) {
+      console.log('entrando sub a la pagina mayor de 2');
+
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+      document.getElementById('btnAnterior').classList.remove('hidden')
+      anterior.classList.remove("hidden");
+      anterior.classList.remove("hidden");
+    }
+    if (pagina > x) {
+      retroceder()     
+    }
+
+    
+    
+    items.map((doc) => {
+      //if (doc.data().Usuario == uActivo) {
+        
+        
+        tareass = doc.Tarea
+        idTarea = doc.id
+        claseTarea = doc.clase
+        statusTarea = doc.status
+        idFirebase = doc.idFirebase
+        tarea = tarea +  `<li class="listare" id="${idFirebase}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
+                            <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
+                              <input id="${idFirebase}" type="checkbox"  clase="sin-checkear cambiar" value="${idFirebase}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                              <input id="${idFirebase}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+                            </label>
+                            <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
+                              <button class="js-edit   circulos cambioEditarTarea" id="${idFirebase}" title="Editar tarea">
+                                <i class="ri-pencil-fill cambiarIcono"></i>
+                              </button>
+                              <button class="js-delete circulos" id="${idFirebase}">
+                                <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
+                              </button>
+                            </div>
+                          </li>`;
+        //}
+        
+    });  
+
+    document.getElementById('mostrarTareas').innerHTML = tarea;
+     
     if (contador == 0) {
       document.getElementById('mostrarTareas').innerHTML = '';
+      document.getElementById('btnSiguiente').classList.add('hidden')
     }
     if (cantidadTareas.length != 0) {
       document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
@@ -173,64 +266,454 @@ async function mostrarTareasUsuarioActivo(user) {
       document.querySelector('.btnMarcar').innerHTML = ''
     }
     if (contador >= 1) {
+      
       document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
-      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
     } else {
-      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
+      document.querySelector('.sinTareas').innerHTML = '';
       document.querySelector('.btnEliminarTodo').innerHTML = '';
     }
   } else {
-    const q = query(collection(db, "Tareas"), orderBy('Tarea', 'desc'));
+    //const q = query(collection(db, "Tareas"), orderBy('Tarea', 'desc'));
+    const q = query(collection(db, "Tareas"), where('Usuario', '==', uActivo));
+    const querySnapshot = await getDocs(q);
 
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    if (doc.data().Usuario == uActivo) {
-      contador++;
-      tareass = doc.data().Tarea
-      idTarea = doc.data().id
-      claseTarea = doc.data().clase
-      statusTarea = doc.data().status
+    let todas = [];
+    let todos = [];
+    let nuevoTodos = [];
+    todas = querySnapshot.docs;
 
-      tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
-                          <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
-                            <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
-                            <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
-                          </label>
-                          <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
-                            <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
-                              <i class="ri-pencil-fill cambiarIcono"></i>
-                            </button>
-                            <button class="js-delete circulos" id="${doc.id}">
-                              <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
-                            </button>
-                          </div>
-                        </li>`;
-    }
-    if (claseTarea == 'marcar') {
-      contadorClase++;
-      cantidadTareas.push({n: idTarea})
-    }    
-  });
-  document.getElementById('mostrarTareas').innerHTML = tarea;
+    todas.forEach(doc => {
+      
+      nuevoTodos.push({
+        id: doc.data().id,
+        Usuario: doc.data().Usuario,
+        Tarea: doc.data().Tarea,
+        status: doc.data().status,
+        clase: doc.data().clase,
+        idFirebase: doc.id
+      })
+      if (doc.data().clase === 'marcar') {
+        contadorClase++;
+        cantidadTareas.push({n: idTarea})
+      }
+    })
     
-  if (contador == 0) {
-    document.getElementById('mostrarTareas').innerHTML = '';
+    todos = nuevoTodos
+    todos.sort((a , b) => {
+      if (a.Tarea > b.Tarea) {
+        return -1;
+      } else if (a.Tarea < b.Tarea) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })
+   
+    contador = todos.length
+
+    const tareasTotales = contador;
+    let cantidadPaginas = tareasTotales / limite;
+    let x = Math.ceil(cantidadPaginas);
+    
+    document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+    const tareasPorPaginas = (pagina - 1) * limite;
+    let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas); 
+
+    
+
+    if (contador != 0) {
+      document.getElementById('btnPagina').classList.remove('hidden')
+      
+      if (pagina == 2 && pagina != x) {
+        document.getElementById('btnPagina').classList.remove('hidden')
+        siguiente.classList.remove('hidden')
+      }
+    }
+    if (x > 1) {
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+    } else {
+      document.getElementById('btnSiguiente').classList.add('hidden')
+    }
+    if (pagina > 1 && pagina == x) {
+
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+      document.getElementById('btnAnterior').classList.remove('hidden')
+      anterior.classList.remove("hidden");
+      siguiente.classList.add("hidden");
+    } else if (pagina > 1 && pagina < x) {
+
+      document.getElementById('btnSiguiente').classList.remove('hidden')
+      document.getElementById('btnAnterior').classList.remove('hidden')
+      anterior.classList.remove("hidden");
+      anterior.classList.remove("hidden");
+    }
+    if (pagina > x) {
+      retroceder()     
+    }
+
+    
+    
+    items.forEach((doc) => {
+      //if (doc.data().Usuario == uActivo) {
+        
+        tareass = doc.Tarea
+        idTarea = idFirebase
+        claseTarea = doc.clase
+        statusTarea = doc.status
+        idFirebase = doc.idFirebase
+        tarea = tarea +  `<li class="listare" id="${idFirebase}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
+                            <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
+                              <input id="${idFirebase}" type="checkbox"  clase="sin-checkear cambiar" value="${idFirebase}" ${statusTarea === "completed" ? "checked" : null}/>                       
+                              <input id="${idFirebase}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+                            </label>
+                            <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
+                              <button class="js-edit   circulos cambioEditarTarea" id="${idFirebase}" title="Editar tarea">
+                                <i class="ri-pencil-fill cambiarIcono"></i>
+                              </button>
+                              <button class="js-delete circulos" id="${idFirebase}">
+                                <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
+                              </button>
+                            </div>
+                          </li>`;
+       // }
+        
+    });  
+
+    document.getElementById('mostrarTareas').innerHTML = tarea;
+     
+    if (contador == 0) {
+      document.getElementById('mostrarTareas').innerHTML = '';
+      document.getElementById('btnSiguiente').classList.add('hidden')
+    }
+    if (cantidadTareas.length != 0) {
+      document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
+    } else {
+      document.querySelector('.btnMarcar').innerHTML = ''
+    }
+    if (contador >= 1) {
+      
+      document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
+      document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
+    } else {
+      document.querySelector('.sinTareas').innerHTML = '';
+      document.querySelector('.btnEliminarTodo').innerHTML = '';
+    }
   }
-  if (cantidadTareas.length != 0) {
-    document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
-  } else {
-    document.querySelector('.btnMarcar').innerHTML = ''
+}
+//   let ascendente = document.getElementById('ordenando');
+//   let orden = ascendente.innerHTML;
+
+//   let uActivo = user.email;
+//   let tarea = '';
+//   let tareass = '';
+//   let idTarea = '';
+//   let statusTarea = '';
+//   let claseTarea = '';
+//   let cantidadTareas = [];
+  
+//   let contador = 0;
+//   let contadorClase = 0;
+ 
+//   if (orden == 'Ascendente') {
+
+//     const q = query(collection(db, "Tareas"), orderBy('Tarea', 'asc'));
+//     const querySnapshot = await getDocs(q);
+
+//     querySnapshot.forEach((doc) => {     
+//       if (doc.data().Usuario == uActivo) {
+//         claseTarea = doc.data().clase
+//         contador++;
+//       }
+//       if (claseTarea == 'marcar') {
+//         contadorClase++;
+//         cantidadTareas.push({n: idTarea})
+//       }
+//     })
+
+//     let todos = [];
+//     todos = querySnapshot.docs;
+
+//     const tareasTotales = todos.length;
+//     let cantidadPaginas = tareasTotales / limite;
+//     let x = Math.ceil(cantidadPaginas);
+//     document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+//     const tareasPorPaginas = (pagina - 1) * limite;
+//     let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas); 
+    
+    
+//     items.map((doc) => {
+//       if (doc.data().Usuario == uActivo) {
+//         contador++;
+//         tareass = doc.data().Tarea
+//         idTarea = doc.data().id
+//         claseTarea = doc.data().clase
+//         statusTarea = doc.data().status
+
+//         tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
+//                             <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
+//                               <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
+//                               <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+//                             </label>
+//                             <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
+//                               <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
+//                                 <i class="ri-pencil-fill cambiarIcono"></i>
+//                               </button>
+//                               <button class="js-delete circulos" id="${doc.id}">
+//                                 <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
+//                               </button>
+//                             </div>
+//                           </li>`;
+//         }
+        
+//     });  
+
+//     document.getElementById('mostrarTareas').innerHTML = tarea;
+     
+//     if (contador == 0) {
+//       document.getElementById('mostrarTareas').innerHTML = '';
+//     }
+//     if (cantidadTareas.length != 0) {
+//       document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
+//     } else {
+//       document.querySelector('.btnMarcar').innerHTML = ''
+//     }
+//     if (contador >= 1) {
+//       document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
+//       document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
+//     } else {
+//       document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
+//       document.querySelector('.btnEliminarTodo').innerHTML = '';
+//     }
+//   } else {
+
+
+
+//     const q = query(collection(db, "Tareas"), orderBy('Tarea', 'desc'));
+//     const querySnapshot = await getDocs(q);
+
+
+//     querySnapshot.forEach((doc) => {     
+//       if (doc.data().Usuario == uActivo) {
+//         claseTarea = doc.data().clase
+//         contador++;
+//       }
+//       if (claseTarea == 'marcar') {
+//         contadorClase++;
+//         cantidadTareas.push({n: idTarea})
+//       }
+//     })
+
+//     let todos = [];
+//     todos = querySnapshot.docs;
+
+//     const tareasTotales = todos.length;
+//     let cantidadPaginas = tareasTotales / limite;
+//     let x = Math.ceil(cantidadPaginas);
+//     document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+//     const tareasPorPaginas = (pagina - 1) * limite;
+//     let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas);
+    
+
+//     items.map((doc) => {      
+//       if (doc.data().Usuario == uActivo) {       
+//         tareass = doc.data().Tarea
+//         idTarea = doc.data().id
+//         claseTarea = doc.data().clase
+//         statusTarea = doc.data().status
+
+//         tarea = tarea +  `<li class="listare" id="${doc.id}" data-clase="${claseTarea}" data-status="${statusTarea}" data-value="${tareass}">
+//                             <label class="space-x-4 ps-2 input-contenedor md:basis-[80%]">
+//                               <input id="${doc.id}" type="checkbox"  clase="sin-checkear cambiar" value="${doc.id}" ${statusTarea === "completed" ? "checked" : null}/>                       
+//                               <input id="${doc.id}" type="text" class="asa lista input-tarea outline-none" value="${tareass}" readonly>                            
+//                             </label>
+//                             <div class="btn-contenedore ms-2 md:basis-[20%] space-x-2 pe-2">
+//                               <button class="js-edit   circulos cambioEditarTarea" id="${doc.id}" title="Editar tarea">
+//                                 <i class="ri-pencil-fill cambiarIcono"></i>
+//                               </button>
+//                               <button class="js-delete circulos" id="${doc.id}">
+//                                 <i class="ri-delete-bin-fill" title="Borrar tarea"></i>
+//                               </button>
+//                             </div>
+//                           </li>`;
+//         }
+      
+//     });
+
+//     // document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " // " + x;
+//     // // console.log('pagina ' + pagina);
+//     // // console.log('x ' + x);
+//     // if (x == 0) {
+//     //   document.getElementById('pagina').innerHTML = '';
+//     // } 
+    
+//     // if (pagina > x) {
+//     //   pagina--
+//     //  retroceder()
+//     // }
+
+//     // if (pagina <= x) {
+//     //   siguiente.classList.remove("hidden");
+//     //   anterior.classList.add("hidden");
+//     //   console.log('primera sub condicion');
+//     //   document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+//     //   if (pagina > 1 && x >= pagina) {
+//     //     console.log('segunda sub condicion');
+//     //     siguiente.classList.add("hidden");
+//     //     anterior.classList.remove("hidden");
+//     //   } else if (pagina == x) {
+//     //     console.log('tercera sub condicion');
+//     //     siguiente.classList.add("hidden");
+//     //     anterior.classList.add("hidden");
+//     //   }
+      
+      
+//     // }
+ 
+ 
+//     document.getElementById('mostrarTareas').innerHTML = tarea;
+     
+//     if (contador == 0) {
+//       document.getElementById('mostrarTareas').innerHTML = '';
+//     }
+//     if (cantidadTareas.length != 0) {
+//       document.querySelector('.btnMarcar').innerHTML = `<button id="${idTarea}" class="${claseTarea} marcado borrarTodo btn-eliminar-todo">Borrar marcados</button>`;
+//     } else {
+//       document.querySelector('.btnMarcar').innerHTML = ''
+//     }
+//     if (contador >= 1) {
+//       document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
+//       document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
+//     } else {
+//       document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas</div>`;
+//       document.querySelector('.btnEliminarTodo').innerHTML = '';
+//     }
+//   }  
+// }
+
+
+
+
+let anterior = document.getElementById("anterior");
+let siguiente = document.getElementById("siguiente");
+
+anterior.addEventListener('click', retroceder)
+siguiente.addEventListener('click', avanzar)
+
+async function retroceder() {
+ 
+  pagina = pagina - 1;
+
+  let uActivo = document.getElementById('usuarioLogueado').value;
+  const q = query(collection(db, "Tareas"), orderBy('Tarea', 'desc'));
+  const querySnapshot = await getDocs(q);
+
+  
+  let todos = [];
+  todos = querySnapshot.docs;
+
+  const tareasTotales = todos.length;
+  let cantidadPaginas = tareasTotales / limite;
+  let x = Math.ceil(cantidadPaginas);
+  //document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+  const tareasPorPaginas = (pagina - 1) * limite;
+  let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas);
+  let userActivo = ''
+
+  if (pagina <= 1) {
+    document.getElementById('btnPagina').classList.add('hidden')
+    pagina = 1
+    items.map((todo) => {
+      observador(todo)
+    });
   }
-  if (contador >= 1) {
-    document.querySelector('.btnEliminarTodo').innerHTML = `<button id="${idTarea}" class="${claseTarea} borrado borrarTodo btn-eliminar-todo">Borrar Lista</button>`;
-    document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
-  } else {
-    document.querySelector('.sinTareas').innerHTML = `<div class="tareasActivas"><b class="me-2">${contador}</b> Tareas activas</div>`;
-    document.querySelector('.btnEliminarTodo').innerHTML = '';
-  }
-  }
+
+
+ 
+    if (pagina <= 1 && pagina <= x) {
+      anterior.classList.add("hidden");
+      siguiente.classList.remove("hidden");    
+      items.map((todo) => {
+        observador(todo)
+      });
+    } else if (pagina > 1 && pagina < x) {
+      anterior.classList.remove("hidden");
+      siguiente.classList.remove("hidden");
+      items.map((todo) => {
+        observador(todo)
+      });
+    } else if (pagina > 1 && pagina <= x) {
+      anterior.classList.remove("hidden");
+      siguiente.classList.add("hidden");
+      items.map((todo) => {
+        observador(todo)
+      });
+    }
+  
+
   
 }
+
+
+async function avanzar() {
+  pagina = pagina + 1;
+  let uActivo = document.getElementById('usuarioLogueado').value;
+  const q = query(collection(db, "Tareas"), orderBy('Tarea', 'desc'));
+  const querySnapshot = await getDocs(q);
+
+ 
+  let todos = [];
+  todos = querySnapshot.docs;
+
+  const tareasTotales = todos.length;
+  let cantidadPaginas = tareasTotales / limite;
+  let x = Math.ceil(cantidadPaginas);
+  //document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+  const tareasPorPaginas = (pagina - 1) * limite;
+  let items = todos.slice(tareasPorPaginas, limite + tareasPorPaginas); 
+  
+
+  if (pagina >= x) {
+    //document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+    siguiente.classList.add("hidden");
+    anterior.classList.remove("hidden");
+    
+    items.map((todo) => {
+      observador(todo)
+    });
+  } else if (pagina < x) {
+    //document.getElementById('pagina').innerHTML = "Pagina: " + pagina + " / " + x;
+    siguiente.classList.remove("hidden");
+    anterior.classList.remove("hidden");
+    items.map((todo) => {
+      observador(todo)
+    });
+  }
+  if (pagina >= 2 && pagina < x) {
+   
+    document.getElementById('btnAnterior').classList.remove('hidden')
+    document.getElementById('btnSiguiente').classList.remove('hidden')
+    siguiente.classList.remove("hidden");
+    anterior.classList.remove("hidden");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -370,9 +853,32 @@ async function cambiarEstadoTarea(e) {
     const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
     const querySnapshot = await getDocs(q);
 
-    barraDeProgreso()
-    tareaActualizada(id, {status: status, clase: clase});
-    observador()       
+    let todas = [];
+    let todos = [];
+    let nuevoTodos = [];
+    todas = querySnapshot.docs;
+
+    todas.forEach(doc => {
+     
+      nuevoTodos.push({
+        id: doc.data().id,
+        Usuario: doc.data().Usuario,
+        Tarea: doc.data().Tarea,
+        status: doc.data().status,
+        clase: doc.data().clase,
+        idFirebase: doc.id
+      })
+    })
+
+    todos = nuevoTodos
+
+    todos.forEach((doc) => {
+      if (doc.idFirebase == id) {
+        barraDeProgreso()
+        tareaActualizada(id, {status: status, clase: clase});
+        observador() 
+      }
+    })  
 }
 
 
@@ -444,10 +950,11 @@ async function eliminarElementos(e)  {
   let medio = document.getElementById('medio')
   let uActivo = document.getElementById('usuarioLogueado').value;
   const borrarUnaTarea = e.target.closest(".js-delete");
+  
+
   if (!borrarUnaTarea) return;  
     let id = borrarUnaTarea.id;
 
-  
     menufiltrado.classList.add('hidden')
     medio.classList.remove('subModalConfirmar')
     modalConfirmar1.classList.add('w-[100%]');
@@ -465,20 +972,38 @@ async function eliminarElementos(e)  {
       const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo));
       const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        if (doc.id == id) {
+      let todas = [];
+      let todos = [];
+      let nuevoTodos = [];
+      todas = querySnapshot.docs;
+  
+      todas.forEach(doc => {
+       
+        nuevoTodos.push({
+          id: doc.data().id,
+          Usuario: doc.data().Usuario,
+          Tarea: doc.data().Tarea,
+          status: doc.data().status,
+          clase: doc.data().clase,
+          idFirebase: doc.id
+        })
+      })
+
+      todos = nuevoTodos
+
+      todos.forEach((doc) => {
+        if (doc.idFirebase == id) {
           medio.classList.add('subModalConfirmar')
           modalConfirmar1.classList.remove('w-[100%]');
           modalConfirmar2.classList.remove('w-[100%]');
-          modalConfirmar2.classList.remove('right-0');
-          
+          modalConfirmar2.classList.remove('right-0');          
           body.classList.remove('overflow-y-hidden'); 
+
           barraDeProgreso()
-          borrarTarea(id)      
-          observador()
+          borrarTarea(id)          
+          observador()          
         }
       });
-      return
     })
 
     let cancelar = document.getElementById('cancelar');
@@ -542,7 +1067,6 @@ async function eliminarListaCompleta(e) {
         observador()
       }
     });
-    return
   })
 
   let cancelar = document.getElementById('cancelar');
@@ -594,20 +1118,16 @@ async function eliminarMarcados(e) {
     const q = query(collection(db, "Tareas"), where("Usuario", "==", uActivo), where("clase", "==", 'marcar'));
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      id = doc.id;
-      if (id) {
+    querySnapshot.forEach((doc) => {    
         medio.classList.add('subModalConfirmar')
         modalConfirmar1.classList.remove('w-[100%]');
         modalConfirmar2.classList.remove('w-[100%]');
         modalConfirmar2.classList.remove('right-0');        
         body.classList.remove('overflow-y-hidden');
         barraDeProgreso()
-        borrarLista(id)
-        observador()
-      }
+        borrarLista(doc.id)
+        observador()      
     });
-    return
   })
 
   let cancelar = document.getElementById('cancelar');
@@ -726,19 +1246,11 @@ document.addEventListener('keyup', (e) => {
       ? tareas.classList.remove('hidden')
       : tareas.classList.add('hidden')
 
-      // console.log('input buscado ' + tareas.dataset.value.toLowerCase().includes(e.target.value));
-      // console.log('input q busca ' + e.target.value);
-
       let a = tareas.dataset.value.toLowerCase().includes(e.target.value);
       verdaderos++
 
-       if (a == false) {
+      if (a == false) {
         falsos++
-      //   contandoCoincidencias++;
-      //   console.log(contandoCoincidencias);
-      //   //document.getElementById('ningunaTarea').innerHTML = ''
-      // } else {
-      //   //document.getElementById('ningunaTarea').innerHTML = 'cero tareas'
       }
       
     })
