@@ -120,6 +120,10 @@ let mostrarT = await getTareas();
 let limite = 3
 let pagina = 1
 
+// let paginacion = document.getElementById('paginacion');
+// console.log(paginacion);
+
+
 async function mostrarTareasUsuarioActivo(user) {
   
   let ascendente = document.getElementById('ordenando');
