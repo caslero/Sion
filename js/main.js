@@ -158,14 +158,25 @@ function mostrarCirculoTareas() {
     let seccionRegistrar = document.getElementById('seccionRegistrar');
     let seccionCirculo = document.getElementById('seccionCirculo');
     let margenCirculo = document.getElementById('margenCirculo');
+    let centrarCirculo = document.getElementById('centrarCirculo');
+    let mostrarOcultarCirculo = document.getElementById('mostrarOcultarCirculo');    
 
     seccionRegistrar.classList.toggle('flex')
     seccionRegistrar.classList.toggle('hidden')
     seccionCirculo.classList.toggle('basis-1/3')
     seccionCirculo.classList.toggle('basis-full')
+    seccionCirculo.classList.toggle('h-[570px]')
+    seccionCirculo.classList.toggle('h-[670px]')
+   
 
     margenCirculo.classList.toggle('margenCirculo')
     margenCirculo.classList.toggle('margenCirculo2')
+
+    centrarCirculo.classList.toggle('centar-contenido-circulo')
+    centrarCirculo.classList.toggle('centar-contenido-circulo-movil')
+
+    mostrarOcultarCirculo.classList.toggle('ri-arrow-left-s-line')
+    mostrarOcultarCirculo.classList.toggle('ri-arrow-right-s-line')
 }
 
 observador();

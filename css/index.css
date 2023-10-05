@@ -70,7 +70,7 @@ img {
 }
     
 .margenCirculo2 {
-    margin-left: 300px;
+    margin-left: 200px;
 }
 
 .separar-form-circulo {
@@ -79,6 +79,11 @@ img {
 
 .centar-contenido-circulo {
     margin-left: -180px;
+    margin-top: -150px;
+}
+
+.centar-contenido-circulo-movil {
+    margin-left: -250px;
     margin-top: -150px;
 }
 
