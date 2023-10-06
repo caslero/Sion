@@ -4,13 +4,11 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/fi
 import { db, getTareas } from './index.js';
 
 let mostrarT = await getTareas();
-let barraProgreso = document.getElementById('barraProgreso');
 let registroUsuarios = document.getElementById('registrar');
-let mostrarCirculo = document.getElementById('mostrarCirculo')
+let mostrarCirculo = document.getElementById('mostrarCirculo');
 
 registroUsuarios.addEventListener('click', registrar);
 mostrarCirculo.addEventListener('click', mostrarCirculoTareas)
-
 
 function registrar() {
     let nombreUsuario = '';
@@ -20,8 +18,7 @@ function registrar() {
     let clave = document.getElementById('clave').value;
     let nombre = document.getElementById('nombre').value;
 
-    if (correo == '' || clave == '' || nombre == '') {
-        barraDeProgreso()
+    if (correo == '' || clave == '' || nombre == '') {        
         msjUsuario.classList.remove('viejoHidden');
         msjUsuario.classList.add('nuevoHidden');
         msjUsuario.innerHTML = '<div>Error, uno o varios campos vacios</div>'
@@ -30,14 +27,12 @@ function registrar() {
             msjUsuario.innerHTML = '';
         }, "4000");
     } else {
-        const auth = getAuth();
-        
+        const auth = getAuth();        
         mostrarT.forEach((doc) => {
             nombreUsuario = doc.data().Correo;
         });
         
-        if (correo === nombreUsuario) {
-            barraDeProgreso()
+        if (correo === nombreUsuario) {            
             msjUsuario.classList.remove('viejoHidden');
             msjUsuario.classList.add('nuevoHidden');         
             msjUsuario.innerHTML = `<span>Correo en uso</span>`;
@@ -46,8 +41,7 @@ function registrar() {
                 msjUsuario.classList.add('viejoHidden');
                 msjUsuario.innerHTML = '';
             }, "3000");
-        }  else {
-            barraDeProgreso()
+        }  else {            
             createUserWithEmailAndPassword(auth, correo, clave)
                 .then(() => {
                 addDoc(collection(db, "Usuarios"), {
@@ -58,24 +52,20 @@ function registrar() {
                 
                 msjUsuario.classList.remove('viejoHidden');
                 msjUsuario.classList.add('nuevoHidden');
-                msjUsuario.innerHTML = `<span>Usuario Registrado con exito</span>`;
-                
+                msjUsuario.innerHTML = `<span>Usuario Registrado con exito</span>`;                
                 setTimeout(() => {
                     msjUsuario.classList.add('viejoHidden');
                     msjUsuario.innerHTML = '';
                 }, "2000");
                 
                 verificar();
-                setTimeout(function(){
-                    barraDeProgreso()
+                setTimeout(function(){                    
                     location = 'login.html';
                 }, 2000);
             }).then((userCredential) => {
                 const user = userCredential.user;
-            }).catch((error) => {
-                barraDeProgreso()
-                const errorCode = error.code;
-                
+            }).catch((error) => {                
+                const errorCode = error.code;                
                 if (errorCode == 'auth/invalid-email') {
                     msjUsuario.classList.remove('viejoHidden');
                     msjUsuario.classList.add('nuevoHidden');
@@ -120,7 +110,6 @@ function observador() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             if (user.emailVerified == true) {
-                barraDeProgreso()
                 location = "tarea.html"
                 const uid = user.uid;
             } else {
@@ -130,8 +119,7 @@ function observador() {
     });
 }
 
-function verificar() {
-    barraDeProgreso()
+function verificar() {    
     const auth = getAuth();
     sendEmailVerification(auth.currentUser)
     .then(() => {
@@ -144,36 +132,20 @@ function verificar() {
     });
 }
 
-
-function barraDeProgreso() {
-    barraProgreso.classList.remove('ocultarTarea');
-  
-    setTimeout(() => {
-      barraProgreso.classList.add('ocultarTarea')
-    }, 3000)
-}
-
-
 function mostrarCirculoTareas() {
-    let seccionRegistrar = document.getElementById('seccionRegistrar');
-    let seccionCirculo = document.getElementById('seccionCirculo');
-    let margenCirculo = document.getElementById('margenCirculo');
-    let centrarCirculo = document.getElementById('centrarCirculo');
-    let mostrarOcultarCirculo = document.getElementById('mostrarOcultarCirculo');    
+    let loginMovil = document.getElementById('loginMovil');
+    let circuloMovil = document.getElementById('circuloMovil');
+    let mostrarOcultarCirculo = document.getElementById('mostrarOcultarCirculo');
+    let circuloCompleto = document.getElementById('circuloCompleto');
+    
+    loginMovil.classList.toggle('flex')
+    loginMovil.classList.toggle('hidden')
 
-    seccionRegistrar.classList.toggle('flex')
-    seccionRegistrar.classList.toggle('hidden')
-    seccionCirculo.classList.toggle('basis-1/3')
-    seccionCirculo.classList.toggle('basis-full')
-    seccionCirculo.classList.toggle('h-[570px]')
-    seccionCirculo.classList.toggle('h-[670px]')
-   
+    circuloMovil.classList.toggle('w-[30%]')
+    circuloMovil.classList.toggle('w-[100%]')
 
-    margenCirculo.classList.toggle('margenCirculo')
-    margenCirculo.classList.toggle('margenCirculo2')
-
-    centrarCirculo.classList.toggle('centar-contenido-circulo')
-    centrarCirculo.classList.toggle('centar-contenido-circulo-movil')
+    circuloCompleto.classList.toggle('ms-[40%]')
+    circuloCompleto.classList.toggle('ms-[10%]')
 
     mostrarOcultarCirculo.classList.toggle('ri-arrow-left-s-line')
     mostrarOcultarCirculo.classList.toggle('ri-arrow-right-s-line')

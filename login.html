@@ -1,171 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css">
-    <script src="https://cdn.tailwindcss.com"></script>    
-    <script type="module" src="js/login.js"></script>
-</head>
-<body class="bg-[#fbfaff] overflow-y-hidden">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css">
+        <script src="https://cdn.tailwindcss.com"></script>    
+        <script type="module" src="js/login.js"></script>
+    </head>
+    <body>
 
-
-    <section class="">
-        <div class="login-usuarios flex justify-between ">
-
-            <div id="seccionRegistrar" class="basis-2/3 sm:basis-1/2 ps-4 sm:ps-[10%] flex flex-col items-center justify-center transition-all ease-in duration-[300ms]">
-                <div class="w-full">
+        <section class="w-screen min-h-[100vh]  flex flex-row">
+            <!-- Inicio. Aqui estan los campos de inicio de sesion de los usuarios-->
+            <div id="loginMovil" class="w-[70%] md:w-1/2 px-2 md:ps-[10%] flex flex-col justify-center ease-in duration-[600ms]">
+                <h2 class="text-[#8f7ad7] text-center text-2xl mb-10 font-[600]">Login</h2>
                 
-                    <h2 class="text-[#bb88cb] text-center text-2xl mb-10 -mt-20 font-[600]">Login</h2>
-                    
-                    <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
-                        <p class="w-full mb-[2px]">Usuario:</p>
-                        <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
-                            <input id="correo1" type="email"   class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px]  placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] lowercase  transition-all ease-in duration-[400ms]" placeholder="ejemplo@ejemplo.com" required autofocus>
-                        </div>
-                    </div>
-
-                    <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
-                        <p class="w-full mb-[2px]">Clave:</p>
-                        <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
-                            <input id="clave1" type="password" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px]  placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] lowercase  transition-all ease-in duration-[400ms]" placeholder="*******************" required>
-                        </div>
-                    </div>
-
-                    <!-- Inicio de los mensajes de validacion-->
-                    <div id="validar" class="ocultar-validacion ocultarMsjValidacion flex flex-col">
-                            
-                    </div>
-                    <!-- Fin de los mensajes de validacion-->
-
-                    <div class="w-full flex justify-between px-2 my-4 space-x-2">                    
-                        <a href="usuarios.html" class="text-md sm:text-lg text-blue-500 hover:text-red-500" id="regresarLogin">Registrarse</a>
-                        <a class="text-md sm:text-lg text-blue-500 hover:text-red-500 cursor-pointer claveOlvidada" id="claveOlvidada">Olvido su clave?</a>
-                    </div>
-                        <!-- Aqui termina el div o subseccion es para ingresar al sistema -->
-                    <div class="w-full flex justify-center mb-4">
-                        <button class="btn-login w-full hover:w-full" id="registrar1">Ingresar</button>
-                    </div>
-                </div>
-            </div>
-
-         
-
-
-            <div id="seccionCirculo" class="h-[570px] basis-1/3 sm:basis-1/2 separar-form-circulo flex items-center justify-center overflow-hidden transition-all ease-in duration-[300ms]">                
-                <div id="margenCirculo" class="margenCirculo transition-all ease-in duration-[300ms]">
-                    <div class="relative flex flex-col items-center justify-center w-[690px] h-[690px] circulo-login rounded-[100%] border-[10px] border-blue-200 border-opacity-10  ms-10">
-                        <div id="centrarCirculo" class="centar-contenido-circulo">
-                            <h3 class="text-4xl font-semibold mb-10 text-[#f9f0fa]">Lista de tareas</h3>
-                            <p class="w-60 indent-4 text-justify text-[#f9f0fa]">Si confiesas con tu boca al Señor Jesús, y crees
-                                    en tu corazón que Dios le levantó de los muertos,
-                                    serás salvo. Porque con el acorazón se cree para
-                                    justicia, pero con la boca se hace confesión
-                                    para salvación. Romanos 9. 9-10</p>
-                        </div>
-                        <div id="mostrarCirculo" class="quitarMostrarCirculo ponerMostrarCirculo text-3xl font-[400] rounded-[100%] text-[#493b27] -ms-[570px] -mt-[150px] border-[1px] border-[#493b27] w-10 h-10 relative hover:border-2 hover:border-white hover:text-white transition-all ease-in duration-[300ms]">
-                            <i id="mostrarOcultarCirculo" class="ri-arrow-left-s-line"></i>
-                        </div>
-                    </div>
-                </div>                
-            </div>            
-        </div>
-
-        <div class="container mx-auto lg:px-28 px-2 h-12 my-2">
-            <div id="barraProgreso" class=" ocultarTarea">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     class="progreso"
-                     width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                     <path d="M82 50A32 32 0 1 1 23.533421623214014 32.01333190873183 L21.71572875253809 21.7157287525381 L32.013331908731814 23.53342162321403 A32 32 0 0 1 82 50" stroke-width="5" stroke="#8f7ad7" fill="#8ddcf5"></path>
-                     <circle cx="50" cy="50" r="20" stroke-width="3" stroke="#e28ba8" stroke-dasharray="31.41592653589793 31.41592653589793" fill="none" stroke-linecap="round">
-                        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
-                     </circle>
-                </svg>
-            </div>
-        </div>
-    </section>
-    
-</body>
-</html>
-
-
-
-
-
-
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="https://cdn.tailwindcss.com"></script> 
-</head>
-<body class="bg-[#f7e8ee] overflow-y-hidden">
-
-    <section class="">
-        <div class="login-usuarios flex justify-between ">
-
-            <div class="basis-1/2 ps-4 sm:ps-[10%] flex flex-col items-center justify-center">
-                <h2 class="text-[#493b27] text-center text-2xl my-4 font-[600]">Login</h2>
-               
-
-                <div class="w-full h-10 sm:h-20  flex flex-col items-center justify-center">
+                <!-- Inicio. Aqui se agrega el nombre del usuario para iniciar sesion-->
+                <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
                     <p class="w-full mb-[2px]">Usuario:</p>
-                    <div class="w-full border-2 border-[#f8dcdb] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#493b27] transition-all ease-in duration-[300ms]">
-                        <input id="correo1" type="email" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px]  placeholder:text-[15px] placeholder:text-[#e3c3d0]  lowercase" placeholder="ejemplo@ejemplo.com" required autofocus>
+                    <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#8f7ad7] transition-all ease-in duration-[300ms]">
+                        <input id="correo1" type="email"  class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder:text-[#8f7ad7]      lowercase" placeholder="ejemplo@ejemplo.com" required autofocus>
                     </div>
                 </div>
+                <!-- Fin. Aqui se agrega el nombre del usuario para iniciar sesion-->
 
-                <div class="w-full h-10 sm:h-20  flex flex-col items-center justify-center">
+                <!-- Inicio. Aqui se agrega la clave del usuario para iniciar sesion-->
+                <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
                     <p class="w-full mb-[2px]">Clave:</p>
-                    <div class="w-full border-2 border-[#f8dcdb] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#493b27] transition-all ease-in duration-[300ms]">
-                        <input class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px]  placeholder:text-[15px] placeholder:text-[#e3c3d0]  lowercase" id="clave1" type="password" placeholder="*********************" required>
+                    <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#8f7ad7] transition-all ease-in duration-[300ms]">
+                        <input id="clave1" type="password" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder:text-[#8f7ad7]   lowercase"  placeholder="*********************" required>
                     </div>
                 </div>
-
-               
+                <!-- Fin. Aqui se agrega la clave del usuario para iniciar sesion-->
+                
+                <!-- Inicio. Aqui se muestran los msj de error o advertencia al momento de iniciar sesion-->
                 <div id="validar" class="ocultar-validacion ocultarMsjValidacion flex flex-col">
-                        
+                                
                 </div>
-               
-
+                <!-- Fin. Aqui se muestran los msj de error o advertencia al momento de iniciar sesion-->
+                
+                <!-- Inicio. Aqui estan los enlaces para ir a la pagina principal y para registrar el usuario en casa de que aun no tenga usuario-->
                 <div class="w-full flex justify-between px-2 my-4 space-x-2">                    
-                    <a href="index.html" class="text-lg text-blue-500 hover:text-red-500" id="regresarLogin">Registrarse</a>
-                    <a class="text-lg text-blue-500 hover:text-red-500 claveOlvidada" id="claveOlvidada">Olvido su clave?</a>
+                    <a href="usuarios.html" class="text-md sm:text-lg text-blue-500 hover:text-red-500" id="regresarLogin">Registrarse</a>
+                    <a class="text-md sm:text-lg text-blue-500 hover:text-red-500 claveOlvidada" id="claveOlvidada">Olvido su clave?</a>
                 </div>
-                    
+                <!-- Fin. Aqui estan los enlaces para ir a la pagina principal y para registrar el usuario en casa de que aun no tenga usuario-->
+                
+                <!-- Inicio. Aqui esta el boton para iniciar sesion-->
                 <div class="w-full flex justify-center mb-4">
                     <button class="btn-login w-full hover:w-full" id="registrar1">Ingresar</button>
                 </div>
+                <!-- Fin. Aqui esta el boton para iniciar sesion-->
             </div>
+            <!-- fin. Aqui estan los campos de registro de usuarios-->
 
+            <!-- Inicio. Aqui esta el medio circulo donde hay informacion-->
+            <div id="circuloMovil" class="w-[30%]  md:w-1/2 overflow-hidden transition-all ease-in duration-[600ms]">
+                <div id="circuloCompleto" class="w-[800px] h-full rounded-full circulo-login ms-[40%] sm:ms-[50%] md:ms-[20%] ps-4  md:w-screen flex items-center justify-center">                    
+                    <div class="w-[100%] w-full flex justify-start md:justify-between  items-center space-x-4">
+                        <div id="mostrarCirculo" class="md:hidden flex quitarMostrarCirculo ponerMostrarCirculo text-3xl font-[400] rounded-[100%] text-[#493b27] border-[1px] border-[#493b27] w-10 h-10 relative cursor-pointer hover:border-2 hover:border-white hover:text-white transition-all ease-in duration-[300ms]">
+                            <i id="mostrarOcultarCirculo" class="ri-arrow-left-s-line"></i>
+                        </div>
 
-            <div class="h-[570px] basis-1/2 flex items-center justify-center overflow-hidden">
-                
-                    <div class="ms-[300px]">              
-                        <div class="relative flex items-center justify-center w-[670px] h-[670px] circulo-login rounded-[100%] border-[1px] border-[#e5b4c7] border-opacity-80 shadow-[0px_2px_70px_#e28ba8] ms-10">
-                            <div class="-mt-20 -ms-40">
-                                <h3 class="text-4xl font-semibold mb-10">Lista de tareas</h3>
-                                <p class="w-60 indent-4 text-justify">Si confiesas con tu boca al Señor Jesús, y crees
+                        <div class="w-[50%] text-center text-white sm:ps-10 px-2">
+                            <h3 class="text-4xl font-semibold mb-10">Lista de tareas</h3>
+                            <p class=" indent-4 text-justify">Si confiesas con tu boca al Señor Jesús, y crees
                                     en tu corazón que Dios le levantó de los muertos,
                                     serás salvo. Porque con el acorazón se cree para
                                     justicia, pero con la boca se hace confesión
-                                    para salvación. Romanos 9. 9-10</p>
-                            </div> 
+                                    para salvación. Romanos 9. 9-10
+                            </p>
                         </div>
                     </div>
-                
-            </div>              
-        </div>
 
-    </section>
-    
-</body>
-</html> -->
+                    <div class="w-[50%] flex border-2 border-blue-200"></div>
+                </div>
+            </div>
+            <!-- Fin. Aqui esta el medio circulo donde hay informacion-->
+        </section>    
+    </body>
+</html>
+

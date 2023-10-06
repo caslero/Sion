@@ -2,7 +2,6 @@ import './index.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 let bontonClaveOlvidada = document.querySelector('.claveOlvidada');
-let barraProgreso = document.getElementById('barraProgreso');
 let entrar = document.getElementById('registrar1');
 let claveOlvidada = document.getElementById('claveOlvidada');
 let mostrarCirculo = document.getElementById('mostrarCirculo');
@@ -11,13 +10,11 @@ entrar.addEventListener('click', entrarSistema);
 claveOlvidada.addEventListener('click', cambiarClave);
 mostrarCirculo.addEventListener('click', mostrarCirculoTareas);
 
-
 function observador() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
         if (user) {
             if (user.emailVerified == true) {
-                barraDeProgreso()
                 location = "tarea.html"
                 const uid = user.uid;
             } else {
@@ -88,12 +85,8 @@ function entrarSistema() {
             }
 
         }).catch((error) => {
-
-            barraDeProgreso()
             const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode);
-            
+            const errorMessage = error.message;            
 
             if (errorCode == 'auth/wrong-password') {
                 msj.classList.remove('ocultarMsjValidacion')
@@ -223,34 +216,20 @@ function cambiarClave() {
     }   
 }
 
-function barraDeProgreso() {
-    barraProgreso.classList.remove('ocultarTarea');
-  
-    setTimeout(() => {
-      barraProgreso.classList.add('ocultarTarea')
-    }, 3000)
-}
-
 function mostrarCirculoTareas() {
-    let seccionRegistrar = document.getElementById('seccionRegistrar');
-    let seccionCirculo = document.getElementById('seccionCirculo');
-    let margenCirculo = document.getElementById('margenCirculo');
-    let centrarCirculo = document.getElementById('centrarCirculo');
-    let mostrarOcultarCirculo = document.getElementById('mostrarOcultarCirculo');    
+    let loginMovil = document.getElementById('loginMovil');
+    let circuloMovil = document.getElementById('circuloMovil');
+    let mostrarOcultarCirculo = document.getElementById('mostrarOcultarCirculo');
+    let circuloCompleto = document.getElementById('circuloCompleto');
+    
+    loginMovil.classList.toggle('flex')
+    loginMovil.classList.toggle('hidden')
 
-    seccionRegistrar.classList.toggle('flex')
-    seccionRegistrar.classList.toggle('hidden')
-    seccionCirculo.classList.toggle('basis-1/3')
-    seccionCirculo.classList.toggle('basis-full')
-    seccionCirculo.classList.toggle('h-[570px]')
-    seccionCirculo.classList.toggle('h-[670px]')
-   
+    circuloMovil.classList.toggle('w-[30%]')
+    circuloMovil.classList.toggle('w-[100%]')
 
-    margenCirculo.classList.toggle('margenCirculo')
-    margenCirculo.classList.toggle('margenCirculo2')
-
-    centrarCirculo.classList.toggle('centar-contenido-circulo')
-    centrarCirculo.classList.toggle('centar-contenido-circulo-movil')
+    circuloCompleto.classList.toggle('ms-[40%]')
+    circuloCompleto.classList.toggle('ms-[10%]')
 
     mostrarOcultarCirculo.classList.toggle('ri-arrow-left-s-line')
     mostrarOcultarCirculo.classList.toggle('ri-arrow-right-s-line')
