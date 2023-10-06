@@ -77,29 +77,14 @@ body {
 
 @media (min-width: 150px) {
 
-
-/* .margenCirculo {
-    margin-left: 500px;
-}
-    
-.margenCirculo2 {
-    margin-left: 200px;
-}
-
-.separar-form-circulo {
-    padding-left: 100px;
-}
-
-.centar-contenido-circulo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.centar-contenido-circulo-movil {
-    margin-left: -250px;
-    margin-top: -150px;
-} */
+    .circulo-login {
+        padding: 20px;
+        background: #ebd6de;
+        background: linear-gradient(to bottom, #e79c87 0%, #c691c2 40%, #8f7ad7 100%);
+    }
+    .circulo-login1 {
+        box-shadow: 0px 0px 40px 5px #e28ba8;
+    }
 
    
 .circulo {
@@ -470,6 +455,8 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+
     
 
 }
@@ -783,10 +770,11 @@ body {
 
 .circulo-login {
     padding: 20px;
-    box-shadow: 0px 0px 40px 5px #e28ba8;
-
     background: #ebd6de;
     background: linear-gradient(to bottom, #e79c87 0%, #c691c2 40%, #8f7ad7 100%);
+}
+.circulo-login1 {
+    box-shadow: 0px 0px 40px 5px #e28ba8;
 }
 
 
