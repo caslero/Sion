@@ -1,120 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sion</title>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="https://cdn.tailwindcss.com"></script>    
-    <!-- <script type="module" src="js/main.js"></script> -->
-</head>
-<body>
-
-    <section class=" w-screen min-h-[100vh] container mx-auto xl:px-28 px-4 flex items-center justify-center">
-        <div class="space-y-4  flex flex-col items-center w-full max-w-[700px]">
-            <h1 class="w-full text-[#8f7ad7] text-4xl text-center sm:text-5xl tracking-[6px] sm:tracking-[10px] font-[700]">Tareas Diarias</h1>
-            <img src="img/tareas.png" alt="">
-
-
-            <div class="w-full flex justify-center mb-4 space-x-4">
-                <a href="usuarios.html" class="btn-index w-[210px] font-semibold h-14 text-md hover:w-[300px] text-white hover:h-14 hover:border-2 hover:border-blue-200">Registrar Usuario</a>
-                <a href="login.html"    class="btn-index w-[210px] font-semibold h-14 text-md hover:w-[300px] text-white hover:h-14 hover:border-2 hover:border-blue-200">Ingresar Al Sistema</a>                    
-            </div> 
-
-
-
-            <!-- <div class="px-2 flex justify-between items-center space-x-2 w-full h-16">
-                <a href="usuarios.html" class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] registrarUsuario">Registrar Usuario</a>
-                <a href="login.html" class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-14 rounded-[30px] bg-[#4dbcbe] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#4dbcbe] loginUsuario">Ingresar Al Sistema</a>
-            </div> -->
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <section
+      class="w-screen min-h-[100vh] container mx-auto xl:px-28 px-4 flex items-center justify-center"
+    >
+      <div class="space-y-4 flex flex-col items-center w-full max-w-[700px]">
+        <h1
+          class="w-full text-[#8f7ad7] text-4xl text-center sm:text-5xl tracking-[6px] sm:tracking-[10px] font-[700]"
+        >
+          Tareas Diarias
+        </h1>
+        <img src="img/tareas.png" alt="" />
+        <div class="w-full flex justify-center mb-4 space-x-4">
+          <a
+            href="usuarios.html"
+            class="btn-index w-[210px] font-semibold h-14 text-md hover:w-[300px] text-white hover:h-14 hover:border-2 hover:border-blue-200"
+            >Registrar Usuario</a
+          >
+          <a
+            href="login.html"
+            class="btn-index w-[210px] font-semibold h-14 text-md hover:w-[300px] text-white hover:h-14 hover:border-2 hover:border-blue-200"
+            >Ingresar Al Sistema</a
+          >
         </div>
+      </div>
     </section>
-   
-  
-
-    <!-- <script src="js/a.js"></script> -->
-</body>
+  </body>
 </html>
-
-
-
-<!--  Login
-<div class="login-usuario">
-    <h2 class="text-[#493b27] text-2xl my-4 font-[600]">Ingreso De Usuarios</h2>
-    <div class="campos-registro-usuarios">
-        <b class="info-registro-usuarios">Correo</b>
-        <input class="input-registro-usuarios lowercase outline-none border-[1px] border-[#493b27] border-opacity-50" id="correo1" type="email" placeholder="ejemplo@ejemplo.com" required>
-    </div>
-    <div class="campos-registro-usuarios">
-        <b class="info-registro-usuarios">Clave</b>
-        <input class="input-registro-usuarios outline-none border-[1px] border-[#493b27] border-opacity-50" id="clave1" type="password" placeholder="*********************" required>
-    </div>
-
- 
-    <div id="validar" class="ocultar-validacion ocultarMsjValidacion flex flex-col">
-            
-    </div>
-  
-
-    <div class="w-full flex justify-between px-2 mb-4 space-x-2">
-        <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="registrar1">Entrar</button>
-        <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="regresarLogin">Registrarse</button>
-    </div>
-      
-    <div class="w-full flex justify-center mb-4">
-        <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[150px] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb] claveOlvidada" id="claveOlvidada">olvido su clave</button>
-    </div>                 
-</div>-->
-
-
-
-<!-- Registro de usuarios
-
-  <div class="a ocultarRegistro">
-        <section class="seccion-usuarioss px-2">
-            
-            <div class="registrar-usuario">
-                <h2 class="text-[#493b27] text-2xl my-4 font-[600] md:text-3xl">Registro De Usuarios</h2>
-
-                <div class="campos-registro-usuarios">
-                    <b class="info-registro-usuarios">Nombre</b>
-                    <input class="input-registro-usuarios outline-none border-[1px] border-[#493b27] border-opacity-50" id="nombre" type="email" placeholder="Ejemplo...">
-                </div>
-                <div class="campos-registro-usuarios">
-                    <b class="info-registro-usuarios">Correo</b>
-                    <input class="input-registro-usuarios lowercase  outline-none border-[1px] border-[#493b27] border-opacity-50" id="correo" type="email" placeholder="ejemplo@ejemplo.com">
-                </div>
-                <div class="campos-registro-usuarios">
-                    <b class="info-registro-usuarios">Clave</b>
-                    <input class="input-registro-usuarios  outline-none border-[1px] border-[#493b27] border-opacity-50" id="clave" type="password" placeholder="**********">
-                </div>
-
-                <div id="registroExitosoUsuario" class="viejoHidden exito mx-4">
-                    
-                </div>
-
-                <div class="w-full flex justify-between px-2 mb-4 space-x-2">
-                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="registrar">Registrar</button>
-                    <button class="text-[#493b27] text-lg font-[600] border-[2px] border-[#493b27] w-[50%] h-10 rounded-[30px] bg-[#f8dcdb] hover:bg-[#493b27] hover:text-[#4dbcbe] hover:border-2 hover:border-[#f8dcdb]" id="regresar">Regresar</button>
-                </div>
-            </div>
-
-          
-
-
-            <div class="md:max-w-[600px] lg:max-w-[800px] container mx-auto lg:px-28 px-2 h-12 my-2">
-                <div id="barraProgreso" class=" ocultarTarea">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                         class="progreso"
-                         width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                        <path d="M82 50A32 32 0 1 1 23.533421623214014 32.01333190873183 L21.71572875253809 21.7157287525381 L32.013331908731814 23.53342162321403 A32 32 0 0 1 82 50" stroke-width="5" stroke="#493b27" fill="#7ddcf5"></path>
-                        <circle cx="50" cy="50" r="20" stroke-width="3" stroke="#493b27" stroke-dasharray="31.41592653589793 31.41592653589793" fill="none" stroke-linecap="round">
-                          <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
-                        </circle>
-                        </svg>
-                    </div>
-                </div>
-    
-               
-            </section>
-        </div>-->
